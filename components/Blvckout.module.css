@@ -1,0 +1,19 @@
+.blvckout {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px); 
+    z-index: 999999999999;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+}
+
+.blvckout.active {
+    pointer-events: auto; 
+}

@@ -1,0 +1,129 @@
+.box {
+    border: 10px solid #d832f9;
+    padding: 25px 40px;
+    text-align: left;
+    border-radius: 0px;
+    display: flex;
+    flex-direction: column;
+    flex: 1 auto;
+    height: 320px;
+    background-color: #000000;
+    gap: 0;
+    margin-bottom: 60px;
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .box:hover {
+    cursor: pointer;
+  }
+  
+  .box:first-child {
+    border: 10px solid transparent;
+    -webkit-border-image: -webkit-linear-gradient(to right, 
+      red 0%, 
+      orange 15%, 
+      yellow 30%, 
+      green 45%, 
+      blue 60%, 
+      indigo 75%, 
+      violet 90%) 1 stretch;
+    border-image: conic-gradient(#e7b3a9 0%, #d7fa5e 16.67%, #00ff00 33.33%, #00ffff 50%, #0000ff 66.67%, #ff00ff 83.33%, #e7b3a9 100%) 1 stretch;
+  }
+  
+  .box h2 {
+    text-align: left;
+    color: #ffffff;
+    font-size: 38px;
+    font-weight: 900;
+    font-family: 'HelveticaNeueCyr-Heavy';
+  }
+  
+  .box h2 span {
+    font-style: italic;
+  }
+  
+  .box p {
+    font-size: 28px;
+    color: #ffffff;
+  }
+  
+  .box img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .box::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #00000045;
+  }
+  
+  .box .boxHeader {
+    flex: 1;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .box .boxFooter {
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    z-index: 2;
+  }
+  
+  .subtitle, .description {
+    margin-bottom: 15px;
+  }
+  
+  .box .date {
+    align-self: end;
+    margin-bottom: 0;
+    font-size: 24px;
+  }
+  
+  @media (min-width: 993px) and (max-width: 1200px) {
+    .box {
+      height: 300px !important;
+      min-height: 150px !important;
+      padding: 10px 15px !important;
+      margin-bottom: 25px !important;
+      border-width: 6px !important;
+    }
+  
+    .box h2 {
+      font-size: 35px !important;
+    }
+  
+    .box p {
+      font-size: 25x !important;
+    }
+  }
+  
+  @media (max-width: 992px) {
+    .box {
+      height: 195px !important;
+      min-height: 150px !important;
+      padding: 10px 15px !important;
+      margin-bottom: 25px !important;
+      border-width: 6px !important;
+    }
+  
+    .box h2 {
+      font-size: 20px !important;
+    }
+  
+    .box p {
+      font-size: 18px !important;
+    }
+  }
+  

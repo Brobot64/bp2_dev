@@ -1,0 +1,22 @@
+.activationPage{
+    background-color: #000000;
+    animation: fadeInNew 0.5s ease-in-out;
+    padding: 45px 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .pageContainer {
+    max-width: 991px !important;
+    margin: 0 auto !important;
+    padding: 45px;
+    background-color: #000000 !important;
+  }
+
+.cardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 65px;
+    color: #ffffff;
+  }

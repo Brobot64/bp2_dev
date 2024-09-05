@@ -1,0 +1,104 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 80%;
+    text-align: center;
+    color: black;
+    justify-content: center;
+  }
+  
+  .imageContainer {
+    margin-bottom: 20px;
+  }
+
+  .imageContainer h1{
+        font-size: 180px !important;
+        position: relative;
+  padding: 0 10px;
+  display: inline-block;
+  text-align: center;
+  line-height: 100%;
+  margin-bottom: 50px;
+  }
+
+  .imageContainer h1 span:first-child{
+    left: -10px;
+    position: relative;
+    animation: moveLeftAnimation 1s ease-in-out 0.8s forwards;
+    transform: translateX(-10px);
+    opacity: 0;
+  }
+ 
+  .imageContainer h1 span:last-child{
+    right: -10px;
+    position: relative;
+    animation: moveRightAnimation 1s ease-in-out 0.8s forwards;
+    opacity: 0;
+  }
+
+  @keyframes moveLeftAnimation {
+    to {
+        left: 0;
+        opacity: 1;
+    }
+  }
+  
+  @keyframes moveRightAnimation {
+    to {
+        right: 0;
+        opacity: 1;
+    }
+  }
+  
+  .image {
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  .textContainer {
+    max-width: 500px;
+  }
+
+  .textContainer p{
+    margin-bottom: 1rem;
+    font-size: 16px !important;
+  }
+
+  .textContainer a{
+    color: #f000ff;
+    font-size: 16px !important;
+    text-align: center;
+    display: block;
+  }
+  
+  @media (min-width: 1192px) {
+    .content {
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      text-align: left;
+    }
+  
+    .imageContainer {
+      margin-bottom: 0;
+      margin-right: 20px;
+    }
+
+    .textContainer p{
+        text-align: center;
+    }
+
+    .imageContainer h1{
+        font-size: 220px !important;
+        margin-bottom: 55px !important;
+    }
+  }
+  

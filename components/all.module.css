@@ -1,0 +1,621 @@
+.cardContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px; 
+}
+
+.cardContainer .body{
+  padding: 12px 5px;
+}
+
+.mainContent{
+    margin-left: 16rem;
+    background: #d6d6d6;
+    position: fixed;
+    width: calc(100% - 16rem);
+    height: calc(100vh);
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+    transition: 500ms all;
+}
+
+.mainContent main{
+    overflow: auto;
+    top: 44px;
+    position: relative;
+    height: calc(100% - 44px);
+    padding: 20px;
+}
+
+.card {
+    padding: 16px;
+    border: 0;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #000000;
+    font-family: HelveticaNeueCyr-Roman;
+}
+
+.card .header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+  .card .header .headerBtn{
+    color: #000000;
+    padding: 12px 15px;
+    background-color: #f8f8f8;
+    box-shadow: 1px 4px 1px #cecece;
+    border-radius: 50px;
+    font-size: 13px;
+    transition: 500ms all;
+  }
+
+  .card .header .headerBtn svg{
+    background-color: #000000;
+    color: #ffffff;
+    padding: 2px;
+    font-size: 18px;
+    border-radius: 100%;
+  }
+
+  .card .header .headerBtn:hover{
+    background-color: #000000;
+    color: #ffffff;
+    box-shadow: -1px 3px 1px #ffffff;
+  }
+
+  .card .header .headerBtn:hover svg{
+
+  }
+
+.card .header .options{
+    display: flex;
+    gap: 20px;
+    align-items: baseline;
+    justify-content: baseline;
+}
+
+.card .header .options button{
+    display: flex;
+    align-items: center;
+}
+
+.card .header .options button svg{
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+}
+
+.card .header input {
+    background-color: transparent;
+    border-bottom: 1px solid rgb(0, 0, 0);
+    padding: 10px 4px;
+    color: rgb(0, 0, 0);
+    position: relative;
+    display: block;
+}
+
+.card .header input:focus, .card .header input:focus-visible{
+    outline: 0;
+}
+
+.stickyHeader {
+    position: -webkit-sticky; 
+    position: sticky;
+    top: 0;
+}
+
+.formWrap .formGroup{
+    padding: 12px 0;
+}
+.formWrap label{
+    display: none;
+}
+
+.formWrap input{
+    background-color: transparent;
+    border-bottom: solid 1px #000000;
+    padding: 10px 4px;
+    color: #000000;
+    position: relative;
+    display: block;
+    width: 100%;
+    font-size: 13px;
+}
+
+.formWrap textarea{
+  background-color: transparent;
+  border-bottom: solid 1px #000000;
+  padding: 0px 4px;
+  color: #000000;
+  position: relative;
+  display: block;
+  width: 100%;
+  font-size: 13px;
+}
+
+.formWrap select{
+  background-color: transparent;
+  color: #000000;
+  position: relative;
+  display: block;
+  font-size: 13px;
+}
+
+.formWrap input[type="date"]::-webkit-datetime-edit {
+  color: #999;
+}
+
+.formWrap input[type="date"]::-webkit-datetime-edit-year-field,
+.formWrap input[type="date"]::-webkit-datetime-edit-month-field,
+.formWrap input[type="date"]::-webkit-datetime-edit-day-field {
+  color: #999;
+}
+
+/* For Firefox */
+.formWrap input[type="date"]::-moz-placeholder {
+  color: #999;
+}
+
+.formWrap input:focus, .formWrap input:focus-visible{
+    outline: 0;
+}
+
+.formWrap inptextareaut:focus, .formWrap textarea:focus-visible{
+  outline: 0;
+}
+
+.formGroup.centerContent{
+    text-align: center;
+}
+
+
+
+
+
+
+.customUploadButton {
+  display: none;
+}
+
+.customUploadLabel {
+  display: inline-block;
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none; 
+  border-radius: 4px; 
+  font-size: 14px;
+}
+
+.customUploadLabel:hover,
+.customUploadLabel:focus {
+  background-color: #0056b3;
+  outline: none;
+}
+
+.imagePreviewContainer {
+  margin-top: 10px; 
+  position: relative; 
+}
+
+.imagePreview {
+  max-width: 100%; 
+  display: block; 
+  margin-top: 10px; 
+}
+
+.deleteButton {
+  position: absolute;
+  top: 5px; 
+  right: 5px;
+  background-color: #dc3545;
+  color: #fff;
+  border: none; 
+  padding: 5px; 
+  border-radius: 50%;
+  cursor: pointer; 
+  transition: background-color 0.3s ease;
+}
+
+.deleteButton:hover {
+  background-color: #c82333;
+}
+
+
+
+.delButton{
+  
+}
+
+
+
+.w25 {
+    flex: 1 1 25%;
+}
+
+.w50 {
+    flex: 1 1 50%;
+}
+
+.w20 {
+    flex: 1 1 20%;
+}
+
+.w100 {
+    flex: 1 1 100%;
+}
+
+.header{
+    padding: 12px 5px;
+    z-index: 9;
+}
+
+
+@media (max-width: 768px) {
+    .w25, .w50, .w20, .w100 {
+        flex: 1 1 100%;
+    }
+}
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    z-index: 1000;
+    max-width: 80%;
+}
+
+.popupContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.close {
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.close:hover {
+    color: #ff7f50;
+}
+
+.popup p {
+    margin: 0;
+    padding: 10px 0;
+}
+
+
+
+
+.tableContainer {
+    width: 100%;
+    overflow:inherit
+  }
+  
+ .tableContainer .tableHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .tableContainer .searchInput {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .tableContainer .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .tableContainer .pagination button {
+    padding: 8px 12px;
+    margin: 0 5px;
+    border: none;
+    background-color: #000000;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .tableContainer .pagination button.activePage {
+    background-color: #000000;
+  }
+  
+  .tableContainer .pagination button:hover {
+    background-color: #000000;
+  }
+
+  .tableContainer table{
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .table tr{
+    border-bottom: 1px solid #f0f0f0;
+    padding: 5px 0;
+
+  }
+
+  .table th{
+    font-weight: 600;
+  }
+  
+  .tableContainer .table th,
+.table td {
+  padding: 12px 15px;
+  text-align: left;
+  font-size: 13px;
+}
+
+.tableContainer .table th {
+  background-color: #f8f8f8;
+}
+
+.tableContainer .table td {
+  background-color: #fff;
+  padding: 10px 15px;
+}
+
+.tableContainer .table thead.theadInfo th{
+  background-color: #cecece;
+}
+
+.tableContainer .table thead.theadInfo th,
+.table td {
+  padding: 0px 15px;
+}
+
+.tableContainer .table thead.theadInfo th{
+  padding: 0px 0px;
+
+}
+
+.tableContainer .table thead.theadInfo th tr{
+font-size: 12px;
+}
+
+.tableContainer .table tbody td tr{
+ font-size: 12px;
+ width: 100%;
+ }
+
+ .tableContainer td.image{
+  display: flex;
+ }
+
+ .tableContainer td.image img{
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+ }
+  
+.actionsColumn {
+    position: relative;
+  }
+
+.menu {
+  position: absolute;
+  left: 0;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  top: 50%;
+  transform: translateX(14px);
+  }
+  
+  .menu button {
+    display: flex;
+    align-items: center;
+    padding: 5px 15px;
+    width: 100%;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 12px;
+  }
+  
+  .menu button:hover {
+    background: #f0f0f0;
+  }
+
+  .menu button svg{
+    width: 15px;
+    height: 15px;
+    margin-right: 5px;
+  }
+
+  .checkbox {
+    width: 20px;
+    height: 20px;
+    accent-color: #f035ff;
+    border-radius: 4px;
+  }
+
+  .checkbox:checked {
+    background-color: #000000 !important;
+  }
+
+
+  
+
+
+  /* all.module.css */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  max-width: 500px;
+  width: 100%;
+}
+
+.modalCloseButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.imagePreviewContainer{
+  width: 100px;
+  position: relative;
+  margin-top: 15px;
+}
+
+.imagePreviewContainer button{
+  background-color: #000000d6;
+  color: #ffffff;
+  padding: 5px;
+  position: absolute;
+  right: 2px;
+  top: 2px;
+  border-radius: 4px;
+  font-size: 10px;
+}
+
+.uploadContainer {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.customUploadLabel {
+    display: block !important;
+    margin-top: 10px;
+    cursor: pointer;
+    background-color: transparent;
+    color: #999;
+    text-align: center;
+}
+
+.customUploadLabel svg{
+  color: #999;
+  margin: 0 auto;
+  font-size: 25px;
+  margin-bottom: 40px;
+}
+
+.customUploadLabel:hover{
+  background-color: transparent;
+}
+
+.statsContainer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.statsBox {
+  background-color: black;
+  color: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 10px;
+  width: 100%;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.title {
+  font-size: 18px;
+  margin: 0;
+  margin-bottom: 5px;
+}
+
+.count {
+  font-size: 44px;
+  font-weight: bold;
+  margin: 0;
+}
+
+
+
+
+
+
+.previewContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.imagePreview {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.imagePreview img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 8px;
+  transition: opacity 0.3s;
+  object-fit: contain;
+}
+
+.deleteButton {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: rgba(255, 255, 255, 0.7);
+  border: none;
+  border-radius: 50%;
+  padding: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  color: #000000;
+}
+
+.deleteButton:hover {
+  background-color: rgba(255, 255, 255, 1);
+  color: #000000;
+}
+
+.imagePreview:hover img {
+  opacity: 0.8;
+}

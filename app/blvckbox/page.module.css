@@ -1,0 +1,89 @@
+
+.blvckbook {
+  animation: fadeIn 0.5s ease-in-out;
+  background-color: #000000;
+  padding: 45px 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.pageContainerWide {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 65px;
+  background-color: #000000;
+}
+
+.blvckbook h1 {
+  font-size: 40px;
+  font-family: 'HelveticaNeueCyr-Black';
+  font-weight: bolder;
+  margin-bottom: 20px;
+  color: #ffffff
+}
+
+.blvckbook h1 span {
+  font-style: italic;
+  color: #ffffff
+}
+
+.blvckbook p {
+  margin-bottom: 50px;
+  font-size: 22px;
+  color: #ffffff
+}
+
+@media (min-width: 993px) and (max-width: 1200px) {
+  .blvckbook {
+    padding: 40px 0;
+  }
+
+  .pageContainer {
+    padding: 40px !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+  }
+
+  .pageContainerWide {
+    padding: 40px !important;
+  }
+
+  .blvckbook h1 {
+    font-size: 35px !important;
+  }
+
+  .blvckbook p {
+    font-size: 20px !important;
+  }
+}
+
+@media (max-width: 992px) {
+  .blvckbook {
+    padding: 30px 0;
+  }
+
+  .pageContainer {
+    padding: 30px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .pageContainerWide {
+    padding: 30px !important;
+  }
+
+  .blvckbook h1 {
+    font-size: 28px !important;
+  }
+
+  .blvckbook p {
+    font-size: 18px !important;
+  }
+}

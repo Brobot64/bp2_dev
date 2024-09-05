@@ -1,0 +1,63 @@
+/* components/ShareModal.module.css */
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalContent {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  width: 300px;
+  text-align: center;
+}
+
+.modalContent  h2{
+  color: #ffffff;
+  margin-bottom: 15px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  font-size: 24px;
+  cursor: pointer;
+  color: #000;
+}
+
+.shareButtons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.shareButton {
+  margin: 0 5px;
+}
+
+.copyButton {
+  background: #ffffff;
+  color: #000000;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}

@@ -1,0 +1,252 @@
+
+body{
+  overflow-y: hidden;
+}
+
+.container {
+  width: 100%;
+  max-width: none;
+  overflow-y: scroll;
+  height: 100vh;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+.parent {
+  height: 100vh;
+  scroll-snap-align: start;
+  transition: opacity 0s ease;
+  position: relative;
+}
+
+.parent .scroll-anim{
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  z-index: 999;
+  transform: translateX(-50%);
+  width: 100px;
+}
+
+.parent.content{
+  display: flex;
+  flex-direction: column;
+  padding: 50px 70px;
+}
+
+.parent.content .wrapper{
+  /* align-self: baseline; */
+  height: 100%;
+}
+
+.parent.content .wrapper .swiper{
+  height: 100%;
+  display: flex;
+}
+
+.parent.content .wrapper .swiper-slide{
+  display: flex;
+  align-items: flex-end;
+}
+
+
+
+
+p{
+  margin-bottom: 18px;
+}
+
+#who-we-are .logo{
+  position: relative;
+  padding-left: 50px;
+}
+
+#who-we-are .logo::after{
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 35px;
+  height: 35px;
+  background: url(/logo-cube-transparent-bck.png) no-repeat;
+  background-size: contain;
+  transform: translateY(-50%);
+} 
+
+.fade-section {
+  opacity: 0;
+
+}
+
+.fade-section.active {
+  opacity: 1;
+  transform: translateZ(0);
+  transition: opacity 500ms ease, transform 500ms ease;
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 0 ease;
+}
+
+.fade-in {
+  opacity: 0;
+  transition: opacity 10s ease-in-out;
+}
+
+.fade-in.active {
+  opacity: 1;
+}
+
+
+/* move left animation */
+.move-right-animation {
+  animation: moveItRightAnimation 1s ease-in-out forwards;
+}
+
+@keyframes moveItRightAnimation {
+  0% {
+    transform: translateX(100px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* move up animation */
+
+.move-up-animation > * {
+  animation: moveUpAnimation 3s ease-in-out forwards;
+  opacity: 0;
+}
+
+@keyframes moveUpAnimation {
+  0% {
+    transform: translateY(25px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
+.fade-animation {
+  animation: fadeAnimation 3s ease-in-out forwards;
+  opacity: 0;
+}
+
+@keyframes fadeAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
+
+
+
+.move-left-up-animation.vision h1{
+  position: relative;
+  padding: 0 10px;
+}
+
+.move-left-up-animation.vision h1::after {
+  content: '[';
+  position: absolute;
+  top: 0;
+  transform: scaleX(0) translateY(-50%);
+  transform-origin: right;
+}
+
+.move-left-up-animation.vision h1::before {
+  content: ']';
+  position: absolute;
+  top: 0;
+  transform: scaleX(0) translateX(-50%);
+  transform-origin: right;
+}
+
+.move-left-up-animation.vision h1::before {
+  left: 100%;
+  animation: moveLeftAnimation 3s ease-in-out 0.2s forwards;
+}
+
+.move-left-up-animation.vision h1::after {
+  left: 0;
+  animation: moveRightAnimation 3s ease-in-out 0.2s forwards;
+}
+
+.move-left-up-animation.vision span{
+  font-size: 40px;
+  font-family: 'HelveticaNeueCyr-Light';
+  opacity: 0;
+  animation: showFadeAnimation 3s ease-in-out 1s forwards;
+}
+
+@keyframes showFadeAnimation {
+  to {
+    opacity: 1;
+  }
+}
+
+
+
+
+
+@keyframes moveLeftAnimation {
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes moveRightAnimation {
+  to {
+    transform: translateX(0);
+  }
+}
+
+.move-left-up-animation-late {
+  opacity: 0;
+  transform: translateX(0) translateY(-100px);
+  animation: fadeInUpAnimation 1s ease-in-out 1s forwards;
+}
+
+@keyframes fadeInUpAnimation {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-300px);
+  }
+}
+
+.logo {
+  position: relative;
+  opacity: 1;
+  left: 2vh;
+  /* animation: fadeIn 2s ease-in-out 1s forwards, fadeOut 2s ease-in-out 8s forwards; */
+}
+
+
+
+

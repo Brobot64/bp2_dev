@@ -1,0 +1,161 @@
+body{
+    overflow-x: hidden;
+}
+
+
+h1, h2, h3, h5{
+    font-family: HelveticaNeueCyr-Light !important;
+}
+
+h1{
+    font-size: 40px;
+}
+
+p{
+    font-family: 'HelveticaNeueCyr-Light';
+    font-size: 28px;
+}
+
+ul{
+    font-family: 'HelveticaNeueCyr-Light';
+    font-size: 20px;
+    line-height: 25px
+}
+
+
+ul li:last-child{
+    margin-bottom: 0;
+}
+
+.blackColor{
+    color: #000000;
+}
+
+.purpleColor{
+    color: #f000ff;
+}
+
+.greyColor{
+    color: #d6d6d6;
+}
+
+
+.slide h1{
+    font-size: 40px;
+    margin-bottom: 10px;
+    font-weight: normal;
+}
+
+.slide h1 span{
+    line-height: 1;
+    display: flex;
+    position: relative;
+    align-items: center;
+}
+
+.slide h1.foresight{
+    font-family:unset;
+    font-family: 'HelveticaNeueCyr-Light';
+}
+
+.slide h3{
+    font-size: 18px;
+    width: 30%;
+    margin-bottom: 15px;
+    line-height: 1.5rem;
+}
+
+.slide h5{
+    font-size: 12px;
+}
+
+
+#journal{
+    background-color: #000000;
+}
+
+#journal h1, #journal p{
+    color: #ffffff;
+}
+
+.header{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    left: 0;
+    z-index: 9;
+    display: flex;
+    justify-content: end;
+    padding: 15px 35px;
+}
+
+.header a{
+    font-size: 12px;
+    font-family: 'HelveticaNeueCyr-Light';
+    padding: 0 12px;
+    position: relative;
+}
+
+.header a::after{
+    content: '';
+    position: absolute;
+    right: 0;
+    height: 60%;
+    width: 1px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #ffffff;
+}
+
+.header a:last-child:after{
+    display: none;
+}
+
+.footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    z-index: 9;
+    display: flex;
+    justify-content: end;
+    padding: 15px 35px;
+}
+
+.footer a{
+    font-size: 12px;
+    font-family: 'HelveticaNeueCyr-Light';
+    padding: 0 12px;
+    position: relative;
+}
+
+.footer a::after{
+    content: '';
+    position: absolute;
+    right: 0;
+    height: 60%;
+    width: 1px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #ffffff;
+}
+
+.footer a:last-child:after{
+    display: none;
+}
+
+
+
+
+#main-section .slide-wrapper{
+    padding: 0 70px;
+}
+
+/* #main-section.fade-out *{
+    background-image: none !important;
+    color: transparent !important;
+    transition: all 0.1s ease-in-out;
+} */
+
+
+

@@ -1,0 +1,168 @@
+.snippetDetail{
+  animation: fadeInNew 0.5s ease-in-out;
+  padding: 70px 0;
+  width: 100%;
+  background-size: cover;
+  scroll-snap-align: start;
+  display: flex;
+  justify-content: center;
+  scroll-snap-align: start;
+  position: relative;
+}
+
+@keyframes fadeInNew {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.pageContainerWide {
+  margin: 0 auto !important;
+  padding: 65px;
+  width: 100%;
+}
+
+.editorialSection{
+  background-size: cover;
+  scroll-snap-align: start;
+  display: flex;
+  justify-content: center;
+  flex: 1 0 100vh;
+  scroll-snap-align: start;
+  position: relative;
+}
+
+.editorialSection::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+
+.editorialSection h1{
+  color: #ffffff;
+  font-size: 44px;
+  margin-bottom: 20px;
+}
+
+.editorialSection p{
+  color: #ffffff;
+  text-justify: auto;
+  text-align: justify;
+}
+  
+.editorialSection .wrapper{
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  position: relative;
+  z-index: 9;
+}
+
+.editorialSection .wrapper .col{
+  width: 50%;
+  /* justify-self: revert; */
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.editorialSection .signature{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.editorialSection .signature h3{
+  color: #ffffff;
+  font-size: 26px;
+}
+
+.outerSectionsWrapper{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  scroll-snap-type: y mandatory; 
+  overflow-y: scroll;
+}
+
+  
+  @media (min-width: 993px) and (max-width: 1200px) {
+    .snippetDetail{
+      padding: 40px 0;
+    }
+
+    .pageContainer{
+      padding: 40px !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+
+    .pageContainerWide{
+      padding: 35px !important;
+    }
+  }
+
+  @media (max-width: 992px){
+    .snippetDetail{
+      padding: 30px 0;
+    }
+
+    .pageContainer{
+      padding: 30px !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+
+    .pageContainerWide{
+      padding: 30px !important;
+    }
+  }
+
+  @media (max-width: 992px){
+    .wrapper img{
+      height: 200px !important;
+    }
+
+    .wrapper video{
+      height: 200px !important;
+    }
+
+    .wrapper h1{
+      font-size: 16px !important;
+    }
+
+    .wrapper p{
+      font-size: 14px !important;
+    }
+
+    .navigation button{
+      margin: 0 5px !important;
+    }
+
+    .wrapper h1{
+      font-size: 16px;
+    }
+
+    .wrapper p{
+      font-size: 14px !important;
+    }
+
+    .snippet{
+      padding: 15px !important;
+      padding-right: 5px !important;
+    }
+  }
+
+

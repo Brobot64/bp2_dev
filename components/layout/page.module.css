@@ -1,0 +1,30 @@
+
+
+.main{
+    position: relative;
+    flex: 1;
+    overflow: auto;
+    margin-left: 16rem;
+    height: 100vh;
+    background-color: #d6d6d6;
+}
+
+.main *{
+    /* color: #000000; */
+    font-family: HelveticaNeueCyr-Roman;
+}
+
+.main .header{
+    background-color: antiquewhite;
+}
+
+.stickyHeader {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+}
+
+.content{
+    padding: 110px 48px;
+    overflow: auto;
+}

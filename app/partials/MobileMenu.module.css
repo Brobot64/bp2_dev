@@ -1,0 +1,151 @@
+.mobileMenu{
+    display: none;
+}
+
+.popupContainer {
+    position: fixed;
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999999;
+    height: auto !important;
+    top: 40px!important;
+    left: 50%;
+    transform: translateX(-50%) translateY(0%) !important;
+    width: 80% !important;
+  }
+
+  .popupContainer.mobile{
+    height: auto !important;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 75%;
+}
+
+.popup {
+    border-radius: 16px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.3s ease-in-out;
+    width: 90%;
+    max-width: 1000px;
+    color: #000;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 15px !important;
+    height: 100% !important;
+    max-height: 100vh !important;
+    background: #ffffff;
+    justify-content: flex-start;
+  }
+
+.popupContainer .popup .menuPopup{
+  display: block !important;
+  width: 100% !important;
+  position: relative !important;
+  top: auto !important;
+  overflow: auto !important;
+  left: auto !important;
+  right: auto !important;
+  margin: 0 !important;
+}
+
+.popupContainer .popup .menuPopup ul{
+  height: 100%; 
+  overflow-y: scroll;
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+}
+
+.popupContainer .popup .menuPopup ul li{
+  padding: 6px 4px;
+}
+
+.popupContainer .popup .menuPopup ul a.active{
+
+}
+
+
+
+.menuItems a{
+    font-family: HelveticaNeueCyr-Light;
+    font-size: 11px;
+    text-align: center;
+    color: rgba(0,0,0,.4);
+    margin: 0 0 2px;
+    display: inline-block;
+    padding: 0 8px;
+    display: block;
+    transition: all .3s ease;
+}
+
+.menuItems a.active {
+    color: #000000 !important;
+    font-family: 'HelveticaNeueCyr-Roman';
+    font-size: 16.5px;
+    position: relative;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+  .menuItems a.bactive{
+    color: rgba(0,0,0,.6)
+  }
+  
+  .menuItems a.active:before {
+    content: "]";
+    position: absolute;
+    right: 0;
+    }
+
+    .menuItems a.active:after {
+        content: "[";
+        position: absolute;
+        left: 0;
+    }
+
+
+    .popupContainer.invert .popup{
+        background-color: #000000;
+        color: #ffffff;
+    }
+
+    .popupContainer.invert .menuItems a{
+        color: rgba(255, 255, 255, 0.4) !important;
+    }
+
+    .popupContainer.invert .menuItems a.active {
+        color: #ffffff !important;
+    }
+
+    .popupContainer.invert .menuItems a.bactive {
+        color: rgba(255, 255, 255, 0.6) !important;
+    }
+
+@media(max-width: 991px){   
+    .mobileMenu{
+        display: block;
+        position: fixed;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #000000 !important;
+        font-size: 12px;
+        z-index: 99;
+    }
+
+    .mobileMenu.invert{
+        display: block;
+        position: fixed;
+        top: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #ffffff !important;
+        font-size: 12px;
+        z-index: 99;
+    }
+}

@@ -1,0 +1,130 @@
+.header{
+    position: absolute;
+    top: 0;
+    width: 100%;
+    left: 0;
+    z-index: 9;
+    display: flex;
+    justify-content: end;
+    padding: 25px 10px;
+    justify-content: space-between;
+  }
+  
+  .header a{
+    font-size: 12px;
+    font-family: 'HelveticaNeueCyr-Light';
+    padding: 0 12px;
+    position: relative;
+    color: #000000;
+  }
+  
+  .header a::after{
+    content: '';
+    position: absolute;
+    right: 0;
+    height: 60%;
+    width: 1px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #ffffff;
+    display: none;
+  }
+  
+
+  .header a:last-child:after{
+    display: none;
+  }
+
+  .header.invert{
+    background-color: #000000 !important;
+  }
+
+  .header.invert a{
+    color: #ffffff !important;
+  }
+
+  .header.fixed{
+    position: fixed;
+  }
+
+  .goBack{
+    font-size: 12px;
+    font-family: 'HelveticaNeueCyr-Light';
+    padding: 0 12px;
+    position: relative;
+    color: #000000 !important;
+  }
+
+  .homeMenu{
+    display:  flex;
+    margin-left: auto; 
+    align-items: center;
+  }
+
+  .homeMenushowHome{
+    display:  flex;
+  }
+
+  .homeMenuhideHome{
+    display:  none;
+  }
+
+  @media (max-width: 991px) {
+    .header .homeMenu{
+        display: none !important;
+    }
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropbtn {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .dropdown a {
+    color: #000000;
+    text-decoration: none;
+  }
+  
+  .dropdownContent {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdownContent a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdownContent a:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .dropdown:hover .dropdownContent {
+    display: block;
+  }
+
+  .sidebarToggle{
+    color: #ffffff !important;
+    display: flex;
+    align-items: center;
+  }
+
+  .sidebarToggle img{
+    width: 16px;
+    margin-left: 10px;
+  }
