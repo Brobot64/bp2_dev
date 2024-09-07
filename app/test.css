@@ -340,7 +340,7 @@ body{
  .scrollanimation.hide {
    opacity: 0;
    pointer-events: none;
- 
+ }
  .move-up-animation > * {
   animation: moveUpAnimation 1s ease-in-out forwards;
    opacity: 0;
