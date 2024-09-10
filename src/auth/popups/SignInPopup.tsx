@@ -1,10 +1,10 @@
-"use client";
-import React, { useState, FormEvent, ChangeEvent, useEffect } from "react";
-import style from "./SignInPopup.module.css";
-import axios, { AxiosError } from "axios";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useAuth } from "../../context/AuthProvider";
-import { useRouter } from "next/navigation";
+'use client';
+import React, { useState, FormEvent, ChangeEvent, useEffect } from 'react';
+import style from './SignInPopup.module.css';
+import axios, { AxiosError } from 'axios';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useAuth } from '../../context/AuthProvider';
+import { useRouter } from 'next/navigation';
 
 interface SignInPopupProps {
   onClose: () => void;
@@ -27,53 +27,58 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
   onSignInSuccess,
   onEditProfile,
   onLoggedOut,
-  showCloseButton = true
+  showCloseButton = true,
 }) => {
-  const { setToken, token, logout, loggedUser, hasPackage, setHasPackage } = useAuth();
-  
-  const [activeTab, setActiveTab] = useState<"signin" | "subscribe" | "forget">("signin");
+  const { setToken, token, logout, loggedUser, hasPackage, setHasPackage } =
+    useAuth();
+
+  const [activeTab, setActiveTab] = useState<'signin' | 'subscribe' | 'forget'>(
+    'signin'
+  );
   const [activeProfileTab, setActiveProfileTab] = useState<
-    "account" | "subscription" | "subscribe"
-  >("account");
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+    'account' | 'subscription' | 'subscribe'
+  >('account');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
   const [buttonText, setButtonText] = useState<JSX.Element | string>(
-    "[ enter ]"
+    '[ enter ]'
   );
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const [confirmPassword, setConfirmPassword] = useState('');
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [selectedPackage, setSelectedPackage] = useState<number | null>(null);
-  const [selectedPackageName, setSelectedPackageName] = useState<string | null>(null);
-  const [name, setName] = useState<string>("");
-  const [phone, setPhone] = useState<string>("");
+  const [selectedPackageName, setSelectedPackageName] = useState<string | null>(
+    null
+  );
+  const [name, setName] = useState<string>('');
+  const [phone, setPhone] = useState<string>('');
   const [registrationSuccess, setRegistrationSuccess] =
     useState<boolean>(false);
-  const [animationClass, setAnimationClass] = useState<string>("");
+  const [animationClass, setAnimationClass] = useState<string>('');
   const [counter, setCounter] = useState<number>(7);
   const [errors, setErrors] = useState<{ [key: string]: string[] }>({});
   const [editable, setEditable] = useState<boolean>(false);
-  const [userRole, setUserRole] = useState<string>("");
+  const [userRole, setUserRole] = useState<string>('');
   const router = useRouter();
   const [authUser, setAuthUser] = useState<boolean>(false);
   const [packages, setPackages] = useState<any[]>([]);
-  const [showPackageSelection, setShowPackageSelection] = useState<boolean>(false);
+  const [showPackageSelection, setShowPackageSelection] =
+    useState<boolean>(false);
 
   const [showForgotPassword, setShowForgotPassword] = useState<boolean>(false);
 
-
   const handleDashboardNavigation = () => {
-    router.push("/dashboard")
+    router.push('/dashboard');
   };
 
   const handleChangeClick = () => {
     setSelectedPackage(null);
     setSelectedPackageName(null);
-    setActiveProfileTab("subscribe");
+    setActiveProfileTab('subscribe');
   };
-  
+
   const toggleForgotPassword = () => {
     setShowForgotPassword(!showForgotPassword);
   };
@@ -81,16 +86,17 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
   useEffect(() => {
     const fetchPackages = async () => {
       try {
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/packages`);
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/packages`
+        );
         setPackages(response.data);
       } catch (error) {
-        console.error("Failed to fetch packages", error);
+        console.error('Failed to fetch packages', error);
       }
     };
 
     fetchPackages();
   }, []);
-
 
   useEffect(() => {
     if (loggedUser?.role_id == 1 || loggedUser?.role_id == 2) {
@@ -104,7 +110,7 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
         setCounter((prevCounter) => {
           if (prevCounter === 1) {
             clearInterval(timer);
-            window.location.href = "/";
+            window.location.href = '/';
           }
           return prevCounter - 1;
         });
@@ -117,7 +123,7 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
     if (onEditProfile) {
       const fetchUserData = async () => {
         try {
-          const token = localStorage.getItem("token");
+          const token = localStorage.getItem('token');
           if (token) {
             const response = await axios.get(
               `${process.env.NEXT_PUBLIC_API_BASE_URL}/user`,
@@ -132,15 +138,12 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
             setUserRole(userData.user.role);
           }
         } catch (error) {
-          console.error("Failed to fetch user data", error);
+          console.error('Failed to fetch user data', error);
         }
       };
       fetchUserData();
     }
   }, [onEditProfile]);
-
-
-
 
   const handleLogin = async (event: FormEvent) => {
     event.preventDefault();
@@ -154,30 +157,38 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
           password,
         }
       );
-      console.log("Login successful", response.data);
+      console.log('Login successful', response.data);
       setLoading(false);
       setSuccess(true);
-      setButtonText("✔");
+      setButtonText('✔');
       const { token, user } = response.data;
-      localStorage.setItem("token", token);
+      localStorage.setItem('token', token);
       setToken(token);
       onSignInSuccess(token);
     } catch (error) {
-      console.error("Login failed", error);
+      console.error('Login failed', error);
       const axiosError = error as AxiosError<LoginErrorResponse>;
-      if (axiosError.response && axiosError.response.data && axiosError.response.data.error) {
+      if (
+        axiosError.response &&
+        axiosError.response.data &&
+        axiosError.response.data.error
+      ) {
         if (axiosError.response.status === 401) {
-          setErrors({ error: ["Unauthorized: Invalid email or password."] });
+          setErrors({ error: ['Unauthorized: Invalid email or password.'] });
         } else if (axiosError.response.status === 403) {
-          setErrors({ error: ["Account not activated. Please check your email."] });
+          setErrors({
+            error: ['Account not activated. Please check your email.'],
+          });
         } else {
           setErrors({ error: [axiosError.response.data.error] });
         }
       } else {
-        setErrors({ error: ["An unexpected error occurred. Please try again."] });
+        setErrors({
+          error: ['An unexpected error occurred. Please try again.'],
+        });
       }
       setLoading(false);
-      setButtonText("[ enter ]");
+      setButtonText('[ enter ]');
     } finally {
       setLoading(false);
     }
@@ -195,21 +206,26 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
           email,
         }
       );
-      console.log("Password reset link sent", response.data);
+      console.log('Password reset link sent', response.data);
       setLoading(false);
       setSuccess(true);
-      setButtonText("✔");
-
+      setButtonText('✔');
     } catch (error) {
-      console.error("Password reset failed", error);
+      console.error('Password reset failed', error);
       const axiosError = error as AxiosError<{ error: string }>;
-      if (axiosError.response && axiosError.response.data && axiosError.response.data.error) {
+      if (
+        axiosError.response &&
+        axiosError.response.data &&
+        axiosError.response.data.error
+      ) {
         setErrors({ error: [axiosError.response.data.error] });
       } else {
-        setErrors({ error: ["An unexpected error occurred. Please try again."] });
+        setErrors({
+          error: ['An unexpected error occurred. Please try again.'],
+        });
       }
       setLoading(false);
-      setButtonText("Reset Password");
+      setButtonText('Reset Password');
     } finally {
       setLoading(false);
     }
@@ -219,7 +235,7 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
     event.preventDefault();
     setLoading(true);
     setButtonText(<div className={style.spinner}></div>);
-    
+
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/register`,
@@ -229,21 +245,21 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
           password,
           password_confirmation: confirmPassword,
           selectedPackage,
-          selectedPackageName
+          selectedPackageName,
         }
       );
-  
-      console.log("SignUp successful", response.data);
+
+      console.log('SignUp successful', response.data);
       setLoading(false);
       setSuccess(true);
-      setButtonText("✔");
-  
+      setButtonText('✔');
+
       setTimeout(() => {
         setRegistrationSuccess(true);
         setAnimationClass(style.fadeIn);
       }, 2000);
     } catch (error) {
-      console.error("SignUp failed", error);
+      console.error('SignUp failed', error);
       const axiosError = error as AxiosError<SignUpErrorResponse>;
       if (
         axiosError.response &&
@@ -252,25 +268,24 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
       ) {
         setErrors(axiosError.response.data.errors);
       } else {
-        console.error("SignUp failed", error);
+        console.error('SignUp failed', error);
       }
       setLoading(false);
-      setButtonText("[ enter ]");
+      setButtonText('[ enter ]');
     } finally {
       setLoading(false);
     }
   };
-  
 
   const handleUpdateProfile = async (event: FormEvent) => {
     event.preventDefault();
     setLoading(true);
     setButtonText(<div className={style.spinner}></div>);
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem('token');
       if (token) {
         const userDataToUpdate: any = { name };
-        if (password !== "") {
+        if (password !== '') {
           userDataToUpdate.password = password;
         }
         const response = await axios.put(
@@ -280,14 +295,14 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
             headers: { Authorization: `${token}` },
           }
         );
-        console.log("Profile updated", response.data);
+        console.log('Profile updated', response.data);
         const { user } = response.data;
-        localStorage.setItem("user", JSON.stringify(response.data));
+        localStorage.setItem('user', JSON.stringify(response.data));
         onSignInSuccess(user);
-        setButtonText("✔");
+        setButtonText('✔');
       }
     } catch (error) {
-      console.error("Failed to update profile", error);
+      console.error('Failed to update profile', error);
       const axiosError = error as AxiosError<SignUpErrorResponse>;
       if (
         axiosError.response &&
@@ -297,30 +312,30 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
         setErrors(axiosError.response.data.errors);
       } else {
         setErrors({
-          error: ["An unexpected error occurred. Please try again."],
+          error: ['An unexpected error occurred. Please try again.'],
         });
       }
-      setButtonText("[ enter ]");
+      setButtonText('[ enter ]');
     } finally {
       setLoading(false);
-      setTimeout(() => setButtonText("[ enter ]"), 2000);
+      setTimeout(() => setButtonText('[ enter ]'), 2000);
     }
   };
 
-  const handleTabChange = (tab: "signin" | "subscribe" | "forget") => {
+  const handleTabChange = (tab: 'signin' | 'subscribe' | 'forget') => {
     setAnimationClass(style.fadeOut);
     setTimeout(() => {
       setActiveTab(tab);
       setAnimationClass(style.fadeIn);
     }, 500);
-  };  
+  };
 
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
 
-  const toggleConfirmPasswordVisibility = () => setConfirmPasswordVisible(!confirmPasswordVisible);
-
+  const toggleConfirmPasswordVisibility = () =>
+    setConfirmPasswordVisible(!confirmPasswordVisible);
 
   const handlePackageSelect = (pkgID: number, pkgName: string) => {
     setSelectedPackage(pkgID);
@@ -331,23 +346,21 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/update-package`,
-        { selectedPackage: pkgID,
-          selectedPackageName: pkgName
-         },
+        { selectedPackage: pkgID, selectedPackageName: pkgName },
         {
           headers: {
-            Authorization: `${token}`
-          }
+            Authorization: `${token}`,
+          },
         }
       );
-      console.log("Package updated successfully:", response.data);
+      console.log('Package updated successfully:', response.data);
       setHasPackage(pkgName);
-      setActiveProfileTab("subscription");
+      setActiveProfileTab('subscription');
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.error("Error updating package:", error.response?.data);
+        console.error('Error updating package:', error.response?.data);
       } else {
-        console.error("Unexpected error:", error);
+        console.error('Unexpected error:', error);
       }
     }
   };
@@ -367,9 +380,9 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                   <div>
                     <h2
                       className={`${style.navTab} ${
-                        activeTab === "signin" ? style.active : ""
+                        activeTab === 'signin' ? style.active : ''
                       }`}
-                      onClick={() => handleTabChange("signin")}
+                      onClick={() => handleTabChange('signin')}
                     >
                       Sign In
                     </h2>
@@ -377,9 +390,9 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                   <div>
                     <h2
                       className={`${style.navTab} ${
-                        activeTab === "subscribe" ? style.active : ""
+                        activeTab === 'subscribe' ? style.active : ''
                       }`}
-                      onClick={() => handleTabChange("subscribe")}
+                      onClick={() => handleTabChange('subscribe')}
                     >
                       Subscribe
                     </h2>
@@ -387,7 +400,7 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                 </div>
               )}
 
-              {activeTab === "subscribe" && selectedPackage && (
+              {activeTab === 'subscribe' && selectedPackage && (
                 <>
                   <button
                     onClick={() => {
@@ -413,7 +426,7 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
 
           {onEditProfile ? (
             <>
-              {activeProfileTab === "account" && (
+              {activeProfileTab === 'account' && (
                 <div className={style.searchInput}>
                   <form onSubmit={handleUpdateProfile}>
                     <h2>Hello, [{name}]</h2>
@@ -448,7 +461,7 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                     <div className={style.frmGrp}>
                       <div className={style.passwordWrapper}>
                         <input
-                          type={passwordVisible ? "text" : "password"}
+                          type={passwordVisible ? 'text' : 'password'}
                           placeholder="Password"
                           value={password}
                           onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -488,26 +501,36 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                   </form>
                 </div>
               )}
-              {activeProfileTab === "subscription" && (
+              {activeProfileTab === 'subscription' && (
                 <div className={style.searchInput}>
                   <form onSubmit={handleUpdateProfile}>
                     <h2>Hello, [{name}]</h2>
                     <div className={`${style.subscription} ${style.frmGrp}`}>
-                     <div className={` ${style.muted} `}>Your Current plan is: </div>
-                     <div className={` ${style.cPlan} `}>{hasPackage || "No Package Selected"}</div>
-                     <div className={` ${style.action} `}>{hasPackage ? (
-                      <button onClick={handleChangeClick}>[Change]</button>
-  ) : (
-    <button onClick={handleChangeClick}>[Select]</button>
-  )}</div>
+                      <div className={` ${style.muted} `}>
+                        Your Current plan is:{' '}
+                      </div>
+                      <div className={` ${style.cPlan} `}>
+                        {hasPackage || 'No Package Selected'}
+                      </div>
+                      <div className={` ${style.action} `}>
+                        {hasPackage ? (
+                          <button onClick={handleChangeClick}>[Change]</button>
+                        ) : (
+                          <button onClick={handleChangeClick}>[Select]</button>
+                        )}
+                      </div>
                     </div>
                     <div className={`${style.subscription} ${style.frmGrp}`}>
-                     <div className={` ${style.muted} `}>Method of payment: </div>
-                     <div className={` ${style.cPlan} `}>Bitcoin</div>
-                     <div className={` ${style.action} `}>[Change]</div>
+                      <div className={` ${style.muted} `}>
+                        Method of payment:{' '}
+                      </div>
+                      <div className={` ${style.cPlan} `}>Bitcoin</div>
+                      <div className={` ${style.action} `}>[Change]</div>
                     </div>
-                  
-                    <div className={`${style.subscription} ${style.buttonWrapper}`}>
+
+                    <div
+                      className={`${style.subscription} ${style.buttonWrapper}`}
+                    >
                       <button
                         type="button"
                         className={style.submit}
@@ -520,30 +543,32 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                 </div>
               )}
 
-
-{activeProfileTab === "subscribe" && !selectedPackage && (
+              {activeProfileTab === 'subscribe' && !selectedPackage && (
                 <>
                   <p>Select a package to subscribe</p>
                   <div className={style.packages}>
-                   
-                  {packages.map(pkg => (
-              <div
-                key={pkg.id}
-                className={style.package}
-                onClick={() => handlePackageUpdate(pkg.id, pkg.name)}
-              >
-                <span>{pkg.name}</span>
-                <span>{pkg.price}<sub>£</sub></span>
-                <span>
-                  <ul>
-                    {pkg.features.map((feature: string, index: number) => (
-                      <li key={index}>{feature}</li>
+                    {packages.map((pkg) => (
+                      <div
+                        key={pkg.id}
+                        className={style.package}
+                        onClick={() => handlePackageUpdate(pkg.id, pkg.name)}
+                      >
+                        <span>{pkg.name}</span>
+                        <span>
+                          {pkg.price}
+                          <sub>£</sub>
+                        </span>
+                        <span>
+                          <ul>
+                            {pkg.features.map(
+                              (feature: string, index: number) => (
+                                <li key={index}>{feature}</li>
+                              )
+                            )}
+                          </ul>
+                        </span>
+                      </div>
                     ))}
-                  </ul>
-                </span>
-              </div>
-            ))}
-                   
                   </div>
                 </>
               )}
@@ -554,7 +579,7 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
 
           {!registrationSuccess && !onEditProfile && (
             <div className={`${animationClass} ${style.tabContent}`}>
-              {activeTab === "signin" && !showForgotPassword && (
+              {activeTab === 'signin' && !showForgotPassword && (
                 <>
                   <p>Enter your credentials to access your account</p>
                   <div className={style.searchInput}>
@@ -576,7 +601,7 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                       <div className={style.frmGrp}>
                         <div className={style.passwordWrapper}>
                           <input
-                            type={passwordVisible ? "text" : "password"}
+                            type={passwordVisible ? 'text' : 'password'}
                             autoComplete="new-password"
                             placeholder="Password"
                             value={password}
@@ -602,78 +627,95 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                           {buttonText}
                         </button>
                       </div>
-                      <div className={`${style.errorAll} ${Object.keys(errors).length > 0 ? 'show' : ''}`}>
-                        {Object.keys(errors).map(key =>
+                      <div
+                        className={`${style.errorAll} ${Object.keys(errors).length > 0 ? 'show' : ''}`}
+                      >
+                        {Object.keys(errors).map((key) =>
                           errors[key].map((error, index) => (
-                            <p key={`${key}-${index}`}>{error} <a href='#' style={{textDecoration: 'underline'}} onClick={() => handleTabChange("forget")}>Forget Password?</a></p>
+                            <p key={`${key}-${index}`}>
+                              {error}{' '}
+                              <a
+                                href="#"
+                                style={{ textDecoration: 'underline' }}
+                                onClick={() => handleTabChange('forget')}
+                              >
+                                Forget Password?
+                              </a>
+                            </p>
                           ))
                         )}
-                     </div>
+                      </div>
                     </form>
                   </div>
                 </>
               )}
 
-                    {activeTab === "forget" && !showForgotPassword && (      
-                      <>                
-                      <button
-                    onClick={() => handleTabChange("signin")}
+              {activeTab === 'forget' && !showForgotPassword && (
+                <>
+                  <button
+                    onClick={() => handleTabChange('signin')}
                     className={style.backButton}
                   >
-                    ←{" "}
+                    ←{' '}
                   </button>
-                          <p>Enter your email address to receive a password reset link.</p>
-                          <div className={style.searchInput}>                          
-                          <form onSubmit={handleForgotPassword}>
-                          <div className={style.inputGroup}>
-                              <input
-                                type="email"
-                                id="resetEmail"
-                                value={email}
-                                placeholder="Email"
-                                onChange={(e: ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
-                                required
-                              />
-                            </div>
-                            <div className={style.frmGrp}>
-                            <button type="submit" className={style.submit}>
+                  <p>
+                    Enter your email address to receive a password reset link.
+                  </p>
+                  <div className={style.searchInput}>
+                    <form onSubmit={handleForgotPassword}>
+                      <div className={style.inputGroup}>
+                        <input
+                          type="email"
+                          id="resetEmail"
+                          value={email}
+                          placeholder="Email"
+                          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                            setEmail(e.target.value)
+                          }
+                          required
+                        />
+                      </div>
+                      <div className={style.frmGrp}>
+                        <button type="submit" className={style.submit}>
                           {buttonText}
                         </button>
-                            </div>
-                          </form>
-                        </div>
-                        </>  
-                      )}
-
-
-              {activeTab === "subscribe" && !selectedPackage && (
-                <>
-                  <p>Select a package to subscribe</p>
-                  <div className={style.packages}>
-                   
-                  {packages.map(pkg => (
-              <div
-                key={pkg.id}
-                className={style.package}
-                onClick={() => handlePackageSelect(pkg.id, pkg.name)}
-              >
-                <span>{pkg.name}</span>
-                <span>{pkg.price}<sub>£</sub></span>
-                <span>
-                  <ul>
-                    {pkg.features.map((feature: string, index: number) => (
-                      <li key={index}>{feature}</li>
-                    ))}
-                  </ul>
-                </span>
-              </div>
-            ))}
-                   
+                      </div>
+                    </form>
                   </div>
                 </>
               )}
 
-              {activeTab === "subscribe" && selectedPackage && (
+              {activeTab === 'subscribe' && !selectedPackage && (
+                <>
+                  <p>Select a package to subscribe</p>
+                  <div className={style.packages}>
+                    {packages.map((pkg) => (
+                      <div
+                        key={pkg.id}
+                        className={style.package}
+                        onClick={() => handlePackageSelect(pkg.id, pkg.name)}
+                      >
+                        <span>{pkg.name}</span>
+                        <span>
+                          {pkg.price}
+                          <sub>£</sub>
+                        </span>
+                        <span>
+                          <ul>
+                            {pkg.features.map(
+                              (feature: string, index: number) => (
+                                <li key={index}>{feature}</li>
+                              )
+                            )}
+                          </ul>
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
+
+              {activeTab === 'subscribe' && selectedPackage && (
                 <>
                   <p>
                     You have selected the {selectedPackageName} plan. Enter your
@@ -712,11 +754,10 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                         </div>
                       </div>
                       <div className={style.row}>
-                        
                         <div className={style.frmGrp}>
                           <div className={style.passwordWrapper}>
                             <input
-                              type={passwordVisible ? "text" : "password"}
+                              type={passwordVisible ? 'text' : 'password'}
                               autoComplete="new-password"
                               placeholder="Password"
                               value={password}
@@ -739,25 +780,35 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                         </div>
 
                         <div className={style.frmGrp}>
-          <div className={style.passwordWrapper}>
-            <input
-              type={confirmPasswordVisible ? 'text' : 'password'}
-              autoComplete="new-password"
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => setConfirmPassword(e.target.value)}
-            />
-            <span
-              className={style.eyeIcon}
-              onClick={toggleConfirmPasswordVisibility}
-            >
-              {confirmPasswordVisible ? <FaEyeSlash /> : <FaEye />}
-            </span>
-          </div>
-          {errors.confirmPassword && <div className={style.error}>{errors.confirmPassword[0]}</div>}
-        </div>
-
-
+                          <div className={style.passwordWrapper}>
+                            <input
+                              type={
+                                confirmPasswordVisible ? 'text' : 'password'
+                              }
+                              autoComplete="new-password"
+                              placeholder="Confirm Password"
+                              value={confirmPassword}
+                              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                                setConfirmPassword(e.target.value)
+                              }
+                            />
+                            <span
+                              className={style.eyeIcon}
+                              onClick={toggleConfirmPasswordVisibility}
+                            >
+                              {confirmPasswordVisible ? (
+                                <FaEyeSlash />
+                              ) : (
+                                <FaEye />
+                              )}
+                            </span>
+                          </div>
+                          {errors.confirmPassword && (
+                            <div className={style.error}>
+                              {errors.confirmPassword[0]}
+                            </div>
+                          )}
+                        </div>
                       </div>
                       <div className={style.frmGrp}>
                         <button type="submit" className={style.submit}>
@@ -786,28 +837,28 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
           {registrationSuccess && (
             <p className={`${style.thankYou} ${style.fadeIn}`}>
               Thank you for registering! Check your email to activate your
-              account. You will be redirected to the homepage in {counter}{" "}
+              account. You will be redirected to the homepage in {counter}{' '}
               seconds.
             </p>
           )}
           {showCloseButton && (
-          <button onClick={onClose} className={style.close}>
-            x
-          </button>
+            <button onClick={onClose} className={style.close}>
+              x
+            </button>
           )}
         </div>
 
         <div
-          style={{ display: onEditProfile ? "block" : "none" }}
+          style={{ display: onEditProfile ? 'block' : 'none' }}
           className={style.footer}
         >
-          --{userRole ? "yes" : "no"}
+          --{userRole ? 'yes' : 'no'}
           {onEditProfile ? (
             <>
               <div className={style.navTabs}>
-                {userRole === "admin" || userRole === "moderator" ? (
+                {userRole === 'admin' || userRole === 'moderator' ? (
                   <button
-                    onClick={() => (window.location.href = "/dashboard")}
+                    onClick={() => (window.location.href = '/dashboard')}
                     className={style.dashboardButton}
                   >
                     Go to Dashboard
@@ -816,9 +867,9 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                 <div>
                   <h2
                     className={`${
-                      activeProfileTab === "account" ? style.active : ""
+                      activeProfileTab === 'account' ? style.active : ''
                     }`}
-                    onClick={() => setActiveProfileTab("account")}
+                    onClick={() => setActiveProfileTab('account')}
                   >
                     Account
                   </h2>
@@ -826,20 +877,18 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                 <div>
                   <h2
                     className={`${
-                      activeProfileTab === "subscription" ? style.active : ""
+                      activeProfileTab === 'subscription' ? style.active : ''
                     }`}
-                    onClick={() => setActiveProfileTab("subscription")}
+                    onClick={() => setActiveProfileTab('subscription')}
                   >
                     Subscription
                   </h2>
                 </div>
-                {authUser &&
-                <div>
-                  <h2 onClick={handleDashboardNavigation}>
-                    Dashboard
-                  </h2>
-                </div>
-              }
+                {authUser && (
+                  <div>
+                    <h2 onClick={handleDashboardNavigation}>Dashboard</h2>
+                  </div>
+                )}
 
                 <div>
                   <h2 className={style.active1} onClick={onLoggedOut}>

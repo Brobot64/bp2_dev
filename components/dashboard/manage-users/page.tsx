@@ -1,15 +1,21 @@
 import axios from 'axios';
 import React, { useEffect, useState, useRef } from 'react';
 import style from '../../all.module.css';
-import { FaEdit, FaTrash, FaEllipsisH, FaCheckCircle, FaTimesCircle } from 'react-icons/fa';
+import {
+  FaEdit,
+  FaTrash,
+  FaEllipsisH,
+  FaCheckCircle,
+  FaTimesCircle,
+} from 'react-icons/fa';
 import { format, formatDistanceToNow } from 'date-fns';
-import { useAuth } from '../../../app/context/AuthProvider';
+import { useAuth } from '../../../src/context/AuthProvider';
 
 type User = {
   id: number;
   name: string;
   email: string;
-  role_id: number,
+  role_id: number;
   is_active: boolean;
   updated_at: string;
   created_at: string;
@@ -45,10 +51,12 @@ const ManageUsers: React.FC = () => {
           {
             headers: {
               Authorization: `${token}`,
-            }
+            },
           }
         );
-        const fetchedUsers: User[] = Array.isArray(response.data.users) ? response.data.users : [];
+        const fetchedUsers: User[] = Array.isArray(response.data.users)
+          ? response.data.users
+          : [];
         setUsers(fetchedUsers);
         setFilteredUsers(fetchedUsers);
       } catch (error: any) {
@@ -62,9 +70,10 @@ const ManageUsers: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const filtered = users.filter(user =>
-      user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchQuery.toLowerCase())
+    const filtered = users.filter(
+      (user) =>
+        user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        user.email.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredUsers(filtered);
   }, [searchQuery, users]);
@@ -74,17 +83,19 @@ const ManageUsers: React.FC = () => {
       setLoading(true);
       const token = localStorage.getItem('token');
       try {
-        await Promise.all(selectedUsers.map(async (userId) => {
-          await axios.delete(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}/dashboard/users/${userId}`,
-            {
-              headers: {
-                Authorization: `${token}`,
+        await Promise.all(
+          selectedUsers.map(async (userId) => {
+            await axios.delete(
+              `${process.env.NEXT_PUBLIC_API_BASE_URL}/dashboard/users/${userId}`,
+              {
+                headers: {
+                  Authorization: `${token}`,
+                },
               }
-            }
-          );
-        }));
-        setUsers(users.filter(user => !selectedUsers.includes(user.id)));
+            );
+          })
+        );
+        setUsers(users.filter((user) => !selectedUsers.includes(user.id)));
         setSelectedUsers([]);
       } catch (error: any) {
         setError('Failed to delete users.');
@@ -100,7 +111,7 @@ const ManageUsers: React.FC = () => {
 
   const toggleSelectUser = (userId: number) => {
     if (selectedUsers.includes(userId)) {
-      setSelectedUsers(selectedUsers.filter(id => id !== userId));
+      setSelectedUsers(selectedUsers.filter((id) => id !== userId));
     } else {
       setSelectedUsers([...selectedUsers, userId]);
     }
@@ -156,84 +167,108 @@ const ManageUsers: React.FC = () => {
         </div>
         <div className={style.body}>
           <div className={style.tableContainer}>
-          <table className={style.table}>
-  <thead>
-    <tr>
-      <th>
-        <input
-          type="checkbox"
-          onChange={() => {
-            const allUserIds = currentUsers.map(user => user.id);
-            if (selectedUsers.length === allUserIds.length) {
-              setSelectedUsers([]);
-            } else {
-              setSelectedUsers(allUserIds);
-            }
-          }}
-          checked={selectedUsers.length === currentUsers.length}
-          className={style.checkbox} 
-        />
-      </th>
-      <th>Name</th>
-      <th>Email</th>
-      <th>First Login</th>
-      <th>Member Since</th>
-      <th>Last Login</th>
-      <th>User Role</th>
-      <th>Status</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    {currentUsers.map((user) => (
-      <tr key={user.id} className={Number(loggedUser?.id) === user.id ? style.disabledRow : ''}>
-        <td>
-          <input
-            type="checkbox"
-            onChange={() => toggleSelectUser(user.id)}
-            checked={selectedUsers.includes(user.id)}
-            className={style.checkbox}
-          />
-        </td>
-        <td>{user.name}</td>
-        <td>{user.email}</td>
-        <td>{format(new Date(user.first_login_at), 'PPpp')}</td>
-        <td>{format(new Date(user.created_at), 'PPpp')}</td>
-        <td>{formatDistanceToNow(new Date(user.updated_at), { addSuffix: true })}</td>
-        <td>
-          {user.role_id === 1 ? 'Administrator' :
-           user.role_id === 2 ? 'Moderator' :
-           user.role_id === 3 ? 'User' :
-           'Unknown'}
-        </td>   
-        <td style={{textAlign: 'center'}}>
-          {user.is_active ? (
-            <FaCheckCircle style={{ color: 'green' }} title="Active" />
-          ) : (
-            <FaTimesCircle style={{ color: 'red' }} title="Inactive" />
-          )}
-        </td>   
-        <td className={style.actionsColumn}>
-          <button className={style.menuButton} onClick={() => toggleMenu(user.id)}>
-            <FaEllipsisH />
-          </button>
-          {openMenuId === user.id && (
-            <div ref={menuRef} className={style.menu}>
-              {Number(loggedUser?.id) !== user.id && user.role_id !== 1 && ( // Hide Delete button if loggedUser?.id matches user.id
-                <button onClick={() => handleDelete()}>
-                  <FaTrash /> Delete
-                </button>
-              )}
-              <button>
-                <FaEdit /> Edit
-              </button>
-            </div>
-          )}
-        </td>
-      </tr>
-    ))}
-  </tbody>
-</table>
+            <table className={style.table}>
+              <thead>
+                <tr>
+                  <th>
+                    <input
+                      type="checkbox"
+                      onChange={() => {
+                        const allUserIds = currentUsers.map((user) => user.id);
+                        if (selectedUsers.length === allUserIds.length) {
+                          setSelectedUsers([]);
+                        } else {
+                          setSelectedUsers(allUserIds);
+                        }
+                      }}
+                      checked={selectedUsers.length === currentUsers.length}
+                      className={style.checkbox}
+                    />
+                  </th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>First Login</th>
+                  <th>Member Since</th>
+                  <th>Last Login</th>
+                  <th>User Role</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentUsers.map((user) => (
+                  <tr
+                    key={user.id}
+                    className={
+                      Number(loggedUser?.id) === user.id
+                        ? style.disabledRow
+                        : ''
+                    }
+                  >
+                    <td>
+                      <input
+                        type="checkbox"
+                        onChange={() => toggleSelectUser(user.id)}
+                        checked={selectedUsers.includes(user.id)}
+                        className={style.checkbox}
+                      />
+                    </td>
+                    <td>{user.name}</td>
+                    <td>{user.email}</td>
+                    <td>{format(new Date(user.first_login_at), 'PPpp')}</td>
+                    <td>{format(new Date(user.created_at), 'PPpp')}</td>
+                    <td>
+                      {formatDistanceToNow(new Date(user.updated_at), {
+                        addSuffix: true,
+                      })}
+                    </td>
+                    <td>
+                      {user.role_id === 1
+                        ? 'Administrator'
+                        : user.role_id === 2
+                          ? 'Moderator'
+                          : user.role_id === 3
+                            ? 'User'
+                            : 'Unknown'}
+                    </td>
+                    <td style={{ textAlign: 'center' }}>
+                      {user.is_active ? (
+                        <FaCheckCircle
+                          style={{ color: 'green' }}
+                          title="Active"
+                        />
+                      ) : (
+                        <FaTimesCircle
+                          style={{ color: 'red' }}
+                          title="Inactive"
+                        />
+                      )}
+                    </td>
+                    <td className={style.actionsColumn}>
+                      <button
+                        className={style.menuButton}
+                        onClick={() => toggleMenu(user.id)}
+                      >
+                        <FaEllipsisH />
+                      </button>
+                      {openMenuId === user.id && (
+                        <div ref={menuRef} className={style.menu}>
+                          {Number(loggedUser?.id) !== user.id &&
+                            user.role_id !== 1 && ( // Hide Delete button if loggedUser?.id matches user.id
+                              <button onClick={() => handleDelete()}>
+                                <FaTrash /> Delete
+                              </button>
+                            )}
+                          <button>
+                            <FaEdit /> Edit
+                          </button>
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
 
             <div className={style.pagination}>
               {Array.from({ length: totalPages }, (_, index) => (

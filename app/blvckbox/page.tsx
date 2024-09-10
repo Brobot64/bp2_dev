@@ -2,11 +2,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import style from './page.module.css';
 import { useRouter } from 'next/navigation';
-import Header from '../partials/Header';
-import SignInPopup from '../auth/popups/SignInPopup';
-import SearchPopup from '../popups/SearchPopup';
+import Header from '../../src/partials/Header';
+import SignInPopup from '../../src/auth/popups/SignInPopup';
+import SearchPopup from '../../src/popups/SearchPopup';
 import axios from 'axios';
-import { useAuth } from '../context/AuthProvider';
+import { useAuth } from '../../src/context/AuthProvider';
 import Box from '../../components/blvckbox/box/page';
 import Blvckout from '../../components/Blackout';
 
@@ -16,14 +16,14 @@ interface BoxProps {
   title: string;
   subtitle: string;
   description: string;
-  date: string,
+  date: string;
   background: string;
 }
 
 const Page: React.FC = () => {
   const router = useRouter();
   const [boxesData, setBoxesData] = useState<BoxProps[]>([]);
-  const [isLoading, setIsLoading] = useState(true); 
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { logout } = useAuth();
   const [editProfile, setEditProfile] = useState(false);
@@ -31,10 +31,10 @@ const Page: React.FC = () => {
   const [isSearchPopupVisible, setSearchPopupVisible] = useState(false);
 
   useEffect(() => {
-    document.body.style.backgroundColor = '#000000'; 
+    document.body.style.backgroundColor = '#000000';
 
     return () => {
-      document.body.style.backgroundColor = ''; 
+      document.body.style.backgroundColor = '';
     };
   }, []);
 
@@ -42,7 +42,7 @@ const Page: React.FC = () => {
     const fetchBoxesData = async () => {
       setIsLoading(true);
       setError('');
-  
+
       const token = localStorage.getItem('token');
       try {
         const response = await axios.get<BoxProps[]>(
@@ -50,10 +50,12 @@ const Page: React.FC = () => {
           {
             headers: {
               Authorization: `${token}`,
-            }
+            },
           }
         );
-        const fetchedBoxesData: BoxProps[] = Array.isArray(response.data) ? response.data : [];
+        const fetchedBoxesData: BoxProps[] = Array.isArray(response.data)
+          ? response.data
+          : [];
         setBoxesData(fetchedBoxesData);
       } catch (error: any) {
         setError('Failed to fetch data.');
@@ -62,10 +64,9 @@ const Page: React.FC = () => {
         setIsLoading(false);
       }
     };
-  
+
     fetchBoxesData();
   }, []);
-  
 
   const handleBoxClick = (slug: string) => {
     router.push(`/blvckbox/${slug}`);
@@ -97,37 +98,41 @@ const Page: React.FC = () => {
     }
   };
 
-
-
   const handleMenuClick = (index: number) => {
     // Handle menu click logic
   };
 
   const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
-    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long' };
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'long',
+    };
     return date.toLocaleDateString(undefined, options);
   };
 
   return (
     <>
       <Header
-            openEditProfile={handleEditProfile}
-            handleGoBack={handleGoBack}
-            openSearchPopup={openSearchPopup}
-            openSignInPopup={openSignInPopup}
-            displayGoBack={false}
-            showHome={true}
-            invert={true}
-            fixedNav={false}
-            showToggleButton={true}
-          />
+        openEditProfile={handleEditProfile}
+        handleGoBack={handleGoBack}
+        openSearchPopup={openSearchPopup}
+        openSignInPopup={openSignInPopup}
+        displayGoBack={false}
+        showHome={true}
+        invert={true}
+        fixedNav={false}
+        showToggleButton={true}
+      />
       <section className={style.blvckbook}>
-        <div className={style.pageContainerWide} id='blvckbook'>
-          <h1>BLVCK<span>BOX</span></h1>
+        <div className={style.pageContainerWide} id="blvckbook">
+          <h1>
+            BLVCK<span>BOX</span>
+          </h1>
           <p>
-            Got foresight? Read our last papers and forecasts to see [ what’s after next ]. You have to subscribe, but hey,
-            it’s addictive. The first one is free… ;
+            Got foresight? Read our last papers and forecasts to see [ what’s
+            after next ]. You have to subscribe, but hey, it’s addictive. The
+            first one is free… ;
           </p>
           <div className={style.boxes}>
             {isLoading ? (
@@ -154,15 +159,14 @@ const Page: React.FC = () => {
       </section>
       {isSignInPopupVisible && (
         <SignInPopup
-        onLoggedOut={handleLogout}
-        onClose={closeSignInPopup}
-        onSignInSuccess={handleSignInSuccess}
-        onEditProfile={editProfile}
-      />
+          onLoggedOut={handleLogout}
+          onClose={closeSignInPopup}
+          onSignInSuccess={handleSignInSuccess}
+          onEditProfile={editProfile}
+        />
       )}
       {isSearchPopupVisible && <SearchPopup onClose={closeSearchPopup} />}
       <Blvckout />
-
     </>
   );
 };

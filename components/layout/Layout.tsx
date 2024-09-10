@@ -1,13 +1,13 @@
 // components/Layout/Layout.tsx
 'use client';
-import React, { useState } from "react";
-import styles from "../all.module.css";
-import Header from "../../app/partials/Header";
-import Sidebar from "./sidebar/Sidebar";
-import SignInPopup from "../../app/auth/popups/SignInPopup";
-import SearchPopup from "../../app/popups/SearchPopup";
-import { useRouter } from "next/navigation";
-import { useAuth } from "../../app/context/AuthProvider";
+import React, { useState } from 'react';
+import styles from '../all.module.css';
+import Header from '../../src/partials/Header';
+import Sidebar from './sidebar/Sidebar';
+import SignInPopup from '../../src/auth/popups/SignInPopup';
+import SearchPopup from '../../src/popups/SearchPopup';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '../../src/context/AuthProvider';
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isSignInPopupVisible, setSignInPopupVisible] = useState(false);
@@ -54,12 +54,11 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <div
         className={styles.mainContent}
         style={{
-          marginLeft: isSidebarOpen ? "16rem" : "0",
-          width: isSidebarOpen ? "-16rem" : "auto",
+          marginLeft: isSidebarOpen ? '16rem' : '0',
+          width: isSidebarOpen ? '-16rem' : 'auto',
         }}
       >
         <div className={`${styles.header} ${styles.stickyHeader}`}>
-          
           <Header
             toggleSidebar={toggleSidebar}
             openEditProfile={handleEditProfile}
@@ -89,4 +88,4 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   );
 };
 
-export default (Layout);
+export default Layout;

@@ -22,7 +22,12 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "paths": {
+      "@components/*": ["./components/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@/*": ["./*"],
+    }
   },
   "include": [
     "next-env.d.ts",

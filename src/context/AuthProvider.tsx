@@ -1,5 +1,11 @@
 'use client';
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from 'react';
 import axios from 'axios';
 
 interface User {
@@ -23,7 +29,9 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
   const [loggedUser, setLoggedUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(() => {
     if (typeof window !== 'undefined') {
@@ -34,26 +42,30 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [loading, setLoading] = useState<boolean>(true);
   const [hasPackage, setHasPackage] = useState<string | null>(null);
 
-
   useEffect(() => {
     const fetchUserData = async () => {
       if (token) {
         try {
-          const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/getuserdata`, {
-            headers: { Authorization: `${token}` },
-          });
+          const response = await axios.get(
+            `${process.env.NEXT_PUBLIC_API_BASE_URL}/getuserdata`,
+            {
+              headers: { Authorization: `${token}` },
+            }
+          );
           const userData = response.data;
           setLoggedUser(userData);
           if (userData.selected_package) {
             setHasPackage(userData.selected_package);
-            console.log("User has a selected package:", userData.selected_package);
+            console.log(
+              'User has a selected package:',
+              userData.selected_package
+            );
           } else {
-            setHasPackage(userData.selected_package)
-            console.log("User does not have a selected package");
+            setHasPackage(userData.selected_package);
+            console.log('User does not have a selected package');
           }
 
           await logUserAccess();
-
         } catch (error) {
           console.error('Failed to fetch user data', error);
           handleLogout();
@@ -73,14 +85,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       }
     };
 
-
     fetchUserData();
   }, [token]);
-
-
-
-
-
 
   const handleLogout = () => {
     setLoggedUser(null);
@@ -97,10 +103,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       }
 
       const headers = {
-        Authorization: `${token}`
+        Authorization: `${token}`,
       };
 
-      await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/logout`, {}, { headers });
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/logout`,
+        {},
+        { headers }
+      );
 
       handleLogout();
     } catch (error) {
@@ -119,7 +129,18 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }, [token]);
 
   return (
-    <AuthContext.Provider value={{ logout, loggedUser, setLoggedUser, token, setToken, loading, hasPackage, setHasPackage }}>
+    <AuthContext.Provider
+      value={{
+        logout,
+        loggedUser,
+        setLoggedUser,
+        token,
+        setToken,
+        loading,
+        hasPackage,
+        setHasPackage,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

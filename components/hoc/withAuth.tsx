@@ -1,7 +1,7 @@
 'use Client';
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '../../app/context/AuthProvider';
+import { useAuth } from '../../src/context/AuthProvider';
 
 const withAuth = (WrappedComponent: React.FC, allowedRoles: number[]) => {
   const WithAuthComponent: React.FC = (props) => {
@@ -10,14 +10,21 @@ const withAuth = (WrappedComponent: React.FC, allowedRoles: number[]) => {
 
     useEffect(() => {
       if (!loading) {
-        if (!token || (loggedUser && !allowedRoles.includes(loggedUser.role_id))) {
+        if (
+          !token ||
+          (loggedUser && !allowedRoles.includes(loggedUser.role_id))
+        ) {
           router.replace('/');
         }
       }
     }, [loggedUser, token, router, loading, allowedRoles]);
 
-    if (loading || !token || (loggedUser && !allowedRoles.includes(loggedUser.role_id))) {
-      return <div>Loading...</div>; 
+    if (
+      loading ||
+      !token ||
+      (loggedUser && !allowedRoles.includes(loggedUser.role_id))
+    ) {
+      return <div>Loading...</div>;
     }
 
     return <WrappedComponent {...props} />;

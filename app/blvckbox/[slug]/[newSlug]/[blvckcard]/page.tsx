@@ -6,10 +6,10 @@ import Slider from 'react-slick';
 import style from './page.module.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import SignInPopup from '../../../../auth/popups/SignInPopup';
-import { useAuth } from '../../../../context/AuthProvider';
-import Header from '../../../../partials/Header';
-import SearchPopup from '../../../../popups/SearchPopup';
+import SignInPopup from '../../../../../src/auth/popups/SignInPopup';
+import { useAuth } from '../../../../../src/context/AuthProvider';
+import Header from '../../../../../src/partials/Header';
+import SearchPopup from '../../../../../src/popups/SearchPopup';
 
 interface MediaProps {
   id: number;
@@ -36,7 +36,11 @@ interface BlvckCard {
 }
 
 const BlvckCardDetail: React.FC = () => {
-  const params = useParams<{ slug: string; newSlug: string; blvckcard: string }>();
+  const params = useParams<{
+    slug: string;
+    newSlug: string;
+    blvckcard: string;
+  }>();
   const slug = params?.slug || '';
   const newSlug = params?.newSlug || '';
   const blvckcard = params?.blvckcard || '';
@@ -52,10 +56,10 @@ const BlvckCardDetail: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   useEffect(() => {
-    document.body.style.backgroundColor = '#000000'; 
+    document.body.style.backgroundColor = '#000000';
 
     return () => {
-      document.body.style.backgroundColor = ''; 
+      document.body.style.backgroundColor = '';
     };
   }, []);
 
@@ -73,11 +77,15 @@ const BlvckCardDetail: React.FC = () => {
       try {
         if (!slug || !newSlug) return;
 
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/blvckcards/${newSlug}`);
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/blvckcards/${newSlug}`
+        );
         const fetchedBlvckCards = response.data.data;
         setBlvckCards(fetchedBlvckCards);
 
-        const currentCardIndex = fetchedBlvckCards.findIndex((card: BlvckCard) => card.slug === blvckcard);
+        const currentCardIndex = fetchedBlvckCards.findIndex(
+          (card: BlvckCard) => card.slug === blvckcard
+        );
         setCurrentIndex(currentCardIndex);
         setBlvckCard(fetchedBlvckCards[currentCardIndex]);
       } catch (err) {
@@ -115,7 +123,8 @@ const BlvckCardDetail: React.FC = () => {
   };
 
   const handlePrevious = () => {
-    const prevIndex = (currentIndex - 1 + blvckCards.length) % blvckCards.length;
+    const prevIndex =
+      (currentIndex - 1 + blvckCards.length) % blvckCards.length;
     setCurrentIndex(prevIndex);
     router.push(`/blvckbox/${slug}/${newSlug}/${blvckCards[prevIndex].slug}`);
   };
@@ -166,7 +175,7 @@ const BlvckCardDetail: React.FC = () => {
       />
 
       <section className={style.snippetDetail}>
-        <div className='container'>
+        <div className="container">
           <div className={`${style.snippet} ${style.wrapper}`}>
             <div className={`${style.carouselContainer}`}>
               <Slider {...settings}>
@@ -197,7 +206,9 @@ const BlvckCardDetail: React.FC = () => {
         </div>
       </section>
 
-      {isSearchPopupVisible && <SearchPopup onClose={() => setSearchPopupVisible(false)} />}
+      {isSearchPopupVisible && (
+        <SearchPopup onClose={() => setSearchPopupVisible(false)} />
+      )}
     </>
   );
 };
