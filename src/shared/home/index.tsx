@@ -74,6 +74,7 @@ const SharedHomeComponent: React.FC = () => {
 
   useEffect(() => {
     setIsOverflowYHidden(true);
+    setIsBgDark(true);
 
     return () => {
       setIsOverflowYHidden(false);
@@ -596,9 +597,11 @@ const SharedHomeComponent: React.FC = () => {
         onSlideChange={(swiper) => {
           console.log('slide change', swiper.activeIndex);
           if (swiper.activeIndex === 0) {
+            setIsBgDark(true);
             setShowSecondImage(true);
           } else {
             setShowSecondImage(false);
+            setIsBgDark(false);
           }
 
           if (swiper.activeIndex === 15) {
