@@ -6,7 +6,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import {
   Autoplay,
   EffectFade,
-  Navigation,
   Pagination,
   Mousewheel,
   Keyboard,
@@ -27,6 +26,7 @@ function JournalSharedPage() {
   const [bannerBg, setBannerBg] = React.useState('banner.jpg');
 
   useEffect(() => {
+    setIsBgDark(true);
     // reset bg color on unmount
     return () => {
       setIsBgDark(false);
@@ -84,7 +84,7 @@ function JournalSharedPage() {
         // }
         onSlideChange={(swiper) => {
           console.log('slide change', swiper.activeIndex);
-          if (swiper.activeIndex === 3) {
+          if (swiper.activeIndex === 3 || swiper.activeIndex === 0) {
             setIsBgDark(true);
           } else {
             setIsBgDark(false);
@@ -96,96 +96,32 @@ function JournalSharedPage() {
         // threshold={isMobile ? 15 : 2}
       >
         <SwiperSlide
-          className="slide-banner"
+          className="slide-banner banner-slider bg-overlay"
           style={{
             backgroundImage: `url(/${bannerBg})`,
             backgroundPosition: 'center',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
-            // transition: 'background-image 0.5s ease-in-out',
           }}
         >
-          <Swiper
-            onInit={(swiper) => (swiperRefBanner.current = swiper)}
-            slidesPerView={1}
-            navigation={false}
-            pagination={{ clickable: true }}
-            autoplay={true}
-            speed={1000}
-            loop={true}
-            className="mySwiper1 banner-slider"
-            spaceBetween={0}
-            style={{
-              width: '100%',
-              height: '100%',
-            }}
-            modules={[Autoplay, Pagination, EffectFade, Mousewheel, Keyboard]}
-            keyboard={true}
-            onSlideChangeTransitionStart={(swiper) => {
-              if (swiper.realIndex === 0) {
-                setBannerBg('banner.jpg');
-              } else if (swiper.realIndex === 1) {
-                setBannerBg('banner1.jpg');
-              }
-            }}
-            fadeEffect={{
-              crossFade: true,
-            }}
-            effect="fade"
-          >
-            <SwiperSlide
-              className=""
-              style={{
-                // paddingLeft: '70px',
-                // paddingRight: '70px',
-                height: '100%',
-              }}
-            >
-              <div className="banner-slider-content">
-                <h3>Cognitives cities</h3>
-                <p>The foresight journal - Edition of November</p>
-                <p>
-                  BLVCKPIXEL is a new-age company combining human ingenuity with
-                  machine intelligence to provide niche expertise on foresight.
-                </p>
-                <button>Click [ here ] to read the journal.</button>
-              </div>
-            </SwiperSlide>
-
-            <SwiperSlide
-              className=""
-              style={{
-                height: '100%',
-              }}
-            >
-              <div className="banner-slider-content">
-                <h3>Cognitives cities</h3>
-                <p>The foresight journal - Edition of November</p>
-                <p>
-                  BLVCKPIXEL is a new-age company combining human ingenuity with
-                  machine intelligence to provide niche expertise on foresight.
-                </p>
-                <button>Click [ here ] to read the journal.</button>
-              </div>
-            </SwiperSlide>
-
-            <SwiperSlide
-              className=""
-              style={{
-                height: '100%',
-              }}
-            >
-              <div className="banner-slider-content">
-                <h3>Cognitives cities</h3>
-                <p>The foresight journal - Edition of November</p>
-                <p>
-                  BLVCKPIXEL is a new-age company combining human ingenuity with
-                  machine intelligence to provide niche expertise on foresight.
-                </p>
-                <button>Click [ here ] to read the journal.</button>
-              </div>
-            </SwiperSlide>
-          </Swiper>
+          <div className={`scrollanimation ${true ? '' : 'hide'}`}>
+            <div className="mouse">
+              <span className="wheel"></span>
+            </div>
+            <p>[ scroll to read ]</p>
+            {/* <div className="icon">
+            <img src="/animation.gif" alt="scroll animation" />
+          </div> */}
+          </div>
+          <div className="banner-slider-content relative app_container">
+            <h3>Cognitives cities</h3>
+            <p>The foresight journal - Edition of November</p>
+            <p>
+              BLVCKPIXEL is a new-age company combining human ingenuity with
+              machine intelligence to provide niche expertise on foresight.
+            </p>
+            <button>Click [ here ] to read the journal.</button>
+          </div>
         </SwiperSlide>
 
         {/* slide 2 */}
@@ -261,54 +197,38 @@ function JournalSharedPage() {
             </h1>
 
             <div className="grid grid-cols-3 gap-[50px]">
-              <Link
-                href="/journal/[slug]/[edition]"
-                as="/journal/cognitive-cities/november"
-              >
-                <div className="border-[5px] flex items-center justify-center h-[200px]">
-                  <p className="text-[15px] font-bold">Introduction</p>
-                </div>
-              </Link>
-
-              <Link
-                href="/journal/[slug]/[edition]"
-                as="/journal/cognitive-cities/november"
-              >
-                <div className="border-[5px] flex items-center justify-center h-[200px]">
-                  <p className="text-[15px] font-bold">What’s now</p>
-                </div>
-              </Link>
-
-              <Link
-                href="/journal/[slug]/[edition]"
-                as="/journal/cognitive-cities/november"
-              >
-                <div className="border-[5px] flex items-center justify-center h-[200px]">
-                  <p className="text-[15px] font-bold">
-                    Culture / Values / Lifestyle
-                  </p>
-                </div>
-              </Link>
-
-              <Link
-                href="/journal/[slug]/[edition]"
-                as="/journal/cognitive-cities/november"
-              >
-                <div className="border-[5px] flex items-center justify-center h-[200px]">
-                  <p className="text-[15px] font-bold">
-                    What’s next the bridge
-                  </p>
-                </div>
-              </Link>
-
-              <Link
-                href="/journal/[slug]/[edition]"
-                as="/journal/cognitive-cities/last"
-              >
-                <div className="border-[5px] flex items-center justify-center h-[200px]">
-                  <p className="text-[15px] font-bold">What’s after next</p>
-                </div>
-              </Link>
+              {[
+                {
+                  title: 'Introduction',
+                  link: '/journal/cognitive-cities/november',
+                },
+                {
+                  title: 'What’s now',
+                  link: '/journal/cognitive-cities/november',
+                },
+                {
+                  title: 'Culture / Values / Lifestyle',
+                  link: '/journal/cognitive-cities/november',
+                },
+                {
+                  title: 'What’s next the bridge',
+                  link: '/journal/cognitive-cities/november',
+                },
+                {
+                  title: 'What’s after next',
+                  link: '/journal/cognitive-cities/last',
+                },
+              ].map((item, index) => (
+                <Link
+                  href="/journal/[slug]/[edition]"
+                  as={item.link}
+                  key={index}
+                >
+                  <div className="border-[8px] flex items-center justify-center h-[200px] w-[300px]">
+                    <p className="text-[15px] font-bold">{item.title}</p>
+                  </div>
+                </Link>
+              ))}
             </div>
           </div>
         </SwiperSlide>

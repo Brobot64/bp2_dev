@@ -10,8 +10,10 @@ function Description({ text }: { text: string }) {
 
   return (
     <>
-      <div className="inline">
-        <p className={`description text-[15px] ${isExpanded ? 'expand' : ''}`}>
+      <div className="">
+        <p
+          className={`description text-[20px] leading-none ${isExpanded ? 'expand' : ''}`}
+        >
           {isExpanded ? text : text.slice(0, 450) + '...'}
         </p>
         <button onClick={toggleReadMore} className="inline text-sm font-normal">

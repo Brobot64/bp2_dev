@@ -68,14 +68,14 @@ function SharedJournalEditionPage() {
         />
       )}
 
-      <div className="px-[150px] pt-[100px] bg-black min-h-screen !text-white">
+      <div className="px-[150px] pt-[100px] pb-[50px] bg-black min-h-screen !text-white">
         <div className="">
           <Swiper
             // onInit={(swiper) => (swiperRefBanner.current = swiper)}
             slidesPerView={1}
             navigation={false}
             pagination={{ clickable: true }}
-            autoplay={true}
+            autoplay={false}
             speed={1000}
             loop={true}
             className="mySwiper1"
@@ -100,7 +100,7 @@ function SharedJournalEditionPage() {
               }}
             >
               <div
-                className="h-[200px] w-full"
+                className="h-[50vh] w-full"
                 style={{
                   backgroundImage: 'url(/banner.jpg)',
                   backgroundPosition: 'center',
@@ -117,7 +117,7 @@ function SharedJournalEditionPage() {
               }}
             >
               <div
-                className="h-[200px] w-full"
+                className="h-[50vh] w-full"
                 style={{
                   backgroundImage: 'url(/banner1.jpg)',
                   backgroundPosition: 'center',
@@ -134,7 +134,7 @@ function SharedJournalEditionPage() {
               }}
             >
               <div
-                className="h-[200px] w-full"
+                className="h-[50vh] w-full"
                 style={{
                   backgroundImage: 'url(/banner.jpg)',
                   backgroundPosition: 'center',
@@ -145,7 +145,7 @@ function SharedJournalEditionPage() {
             </SwiperSlide>
           </Swiper>
 
-          <div className="mt-10">
+          <div className="mt-10 space-y-6">
             <div className="flex justify-between">
               <h1 className="text-xl font-bold">
                 History and Evolution of Urban Planning
@@ -166,7 +166,7 @@ function SharedJournalEditionPage() {
             slidesPerView={1}
             navigation={false}
             pagination={{ clickable: true }}
-            autoplay={true}
+            autoplay={false}
             speed={1000}
             loop={true}
             className="mySwiper1"
@@ -191,7 +191,7 @@ function SharedJournalEditionPage() {
               }}
             >
               <div
-                className="h-[200px] w-full"
+                className="h-[50vh] w-full"
                 style={{
                   backgroundImage: 'url(/banner.jpg)',
                   backgroundPosition: 'center',
@@ -208,7 +208,7 @@ function SharedJournalEditionPage() {
               }}
             >
               <div
-                className="h-[200px] w-full"
+                className="h-[50vh] w-full"
                 style={{
                   backgroundImage: 'url(/banner1.jpg)',
                   backgroundPosition: 'center',
@@ -225,7 +225,7 @@ function SharedJournalEditionPage() {
               }}
             >
               <div
-                className="h-[200px] w-full"
+                className="h-[50vh] w-full"
                 style={{
                   backgroundImage: 'url(/banner.jpg)',
                   backgroundPosition: 'center',
@@ -236,7 +236,7 @@ function SharedJournalEditionPage() {
             </SwiperSlide>
           </Swiper>
 
-          <div className="mt-10">
+          <div className="mt-10 space-y-6">
             <div className="flex justify-between">
               <h1 className="text-xl font-bold">
                 History and Evolution of Urban Planning
@@ -261,7 +261,10 @@ function SharedJournalEditionPage() {
               What if the city itself were the first citizen ?
             </p>
 
-            <p className="para wide" style={{ animationDelay: '0.3s' }}>
+            <p
+              className="para wide text-[20px]"
+              style={{ animationDelay: '0.3s' }}
+            >
               BLVCKPIXEL is a new-age company combining human ingenuity with
               machine intelligence to provide niche expertise on [ foresight ].
               The firm forms the most unique combination of talents working in

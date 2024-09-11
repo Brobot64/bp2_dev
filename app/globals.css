@@ -27,6 +27,9 @@
 }
 
 @layer components {
+  .app_container {
+    @apply px-[70px];
+  }
   .description {
     display: inline;
     -webkit-box-orient: vertical;

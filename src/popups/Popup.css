@@ -19,7 +19,6 @@
 .popup {
   background: rgba(255, 255, 255, 1);
   padding: 40px;
-  border-radius: 16px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   animation: fadeIn 0.3s ease-in-out;
   width: 90%;
@@ -46,7 +45,6 @@
   padding: 0;
   height: 90vh;
   width: 90%;
-  border-radius: 16px;
 }
 
 .popup.default .header {
