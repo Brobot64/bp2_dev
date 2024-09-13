@@ -1,6 +1,10 @@
 import SharePaymentPaged from '@shared/payment';
-import React from 'react';
+import React, { Suspense } from 'react';
 
 export default function PaymentPage() {
-  return <SharePaymentPaged />;
+  return (
+    <Suspense fallback={<div className="">Loading...</div>}>
+      <SharePaymentPaged />
+    </Suspense>
+  );
 }
