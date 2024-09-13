@@ -12,7 +12,7 @@ function Description({ text }: { text: string }) {
     <>
       <div className="">
         <p
-          className={`description text-[20px] leading-none ${isExpanded ? 'expand' : ''}`}
+          className={`description text-sm md:text-[20px] leading-none ${isExpanded ? 'expand' : ''}`}
         >
           {isExpanded ? text : text.slice(0, 450) + '...'}
         </p>

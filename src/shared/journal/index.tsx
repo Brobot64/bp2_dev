@@ -18,12 +18,14 @@ import 'swiper/css/navigation';
 import '../../../app/test.css';
 import { useApp } from '@/src/context/AppProvider';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 function JournalSharedPage() {
   const { isBgDark, setIsBgDark } = useApp();
   const swiperRef = useRef<SwiperCore | null>(null);
   const swiperRefBanner = useRef<SwiperCore | null>(null);
   const [bannerBg, setBannerBg] = React.useState('banner.jpg');
+  const router = useRouter();
 
   useEffect(() => {
     setIsBgDark(true);
@@ -38,7 +40,9 @@ function JournalSharedPage() {
       <Header
         fixedNav={true}
         openEditProfile={() => {}}
-        handleGoBack={() => {}}
+        handleGoBack={() => {
+          router.back();
+        }}
         openSearchPopup={() => {}}
         openSignInPopup={() => {}}
         displayGoBack={true}
@@ -120,7 +124,6 @@ function JournalSharedPage() {
               BLVCKPIXEL is a new-age company combining human ingenuity with
               machine intelligence to provide niche expertise on foresight.
             </p>
-            <button>Click [ here ] to read the journal.</button>
           </div>
         </SwiperSlide>
 
@@ -196,23 +199,27 @@ function JournalSharedPage() {
               [ contents ]
             </h1>
 
-            <div className="grid grid-cols-3 gap-[50px]">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-[50px]">
               {[
                 {
                   title: 'Introduction',
-                  link: '/journal/cognitive-cities/november',
+                  link: '/journal/cognitive-cities/introduction',
                 },
                 {
                   title: 'What’s now',
-                  link: '/journal/cognitive-cities/november',
+                  link: '/journal/cognitive-cities/whats-now',
                 },
                 {
                   title: 'Culture / Values / Lifestyle',
-                  link: '/journal/cognitive-cities/november',
+                  link: '/journal/cognitive-cities/culture-values-lifestyle',
                 },
                 {
-                  title: 'What’s next the bridge',
-                  link: '/journal/cognitive-cities/november',
+                  title: 'What’s next',
+                  link: '/journal/cognitive-cities/what-next',
+                },
+                {
+                  title: 'the bridge',
+                  link: '/journal/cognitive-cities/the-bridge',
                 },
                 {
                   title: 'What’s after next',
@@ -224,8 +231,10 @@ function JournalSharedPage() {
                   as={item.link}
                   key={index}
                 >
-                  <div className="border-[8px] flex items-center justify-center h-[200px] w-[300px]">
-                    <p className="text-[15px] font-bold">{item.title}</p>
+                  <div className="border-[3px] md:border-[8px] text-center flex items-center justify-center h-[100px] md:h-[200px] w-[100px] md:w-[300px]">
+                    <p className="text-[12px] md:text-[15px] font-bold">
+                      {item.title}
+                    </p>
                   </div>
                 </Link>
               ))}

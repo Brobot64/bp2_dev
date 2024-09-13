@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import './globals.css';
+import './_styles/globals.css';
 import { AuthProvider } from '../src/context/AuthProvider';
 import { AppProvider } from '@/src/context/AppProvider';
 

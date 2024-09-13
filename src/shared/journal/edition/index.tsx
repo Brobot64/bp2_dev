@@ -26,13 +26,14 @@ import DefaultPopup from '@/src/popups/DefaultPopup';
 import SearchPopup from '@/src/popups/SearchPopup';
 import Sharepopup from '@/src/popups/sharepopup';
 import { useApp } from '@/src/context/AppProvider';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 function SharedJournalEditionPage() {
   const { isBgDark, setIsBgDark } = useApp();
   const swiperRef = useRef<SwiperCore | null>(null);
   const [sharePopupVisible, setSharePopupVisible] = React.useState(false);
   const pathname = usePathname();
+  const router = useRouter();
 
   // get last part of path
   const path = pathname.split('/').pop();
@@ -51,7 +52,10 @@ function SharedJournalEditionPage() {
       <Header
         fixedNav={true}
         openEditProfile={() => {}}
-        handleGoBack={() => {}}
+        handleGoBack={() => {
+          router.back();
+          // router.push('/');
+        }}
         openSearchPopup={() => {}}
         openSignInPopup={() => {}}
         displayGoBack={true}
@@ -68,7 +72,7 @@ function SharedJournalEditionPage() {
         />
       )}
 
-      <div className="px-[150px] pt-[100px] pb-[50px] bg-black min-h-screen !text-white">
+      <div className="px-[20px] md:px-[150px] pt-[100px] pb-[50px] bg-black min-h-screen !text-white">
         <div className="">
           <Swiper
             // onInit={(swiper) => (swiperRefBanner.current = swiper)}
@@ -78,7 +82,7 @@ function SharedJournalEditionPage() {
             autoplay={false}
             speed={1000}
             loop={true}
-            className="mySwiper1"
+            className="mySwiper1 border-[5px] border-white"
             spaceBetween={0}
             // style={{
             //   width: '100%',
@@ -147,11 +151,14 @@ function SharedJournalEditionPage() {
 
           <div className="mt-10 space-y-6">
             <div className="flex justify-between">
-              <h1 className="text-xl font-bold">
+              <h1 className="text-base md:text-xl font-bold">
                 History and Evolution of Urban Planning
               </h1>
 
-              <button onClick={() => setSharePopupVisible(true)}>
+              <button
+                className="text-sm "
+                onClick={() => setSharePopupVisible(true)}
+              >
                 [ share ]
               </button>
             </div>
@@ -169,7 +176,7 @@ function SharedJournalEditionPage() {
             autoplay={false}
             speed={1000}
             loop={true}
-            className="mySwiper1"
+            className="mySwiper1 border-[5px] border-white"
             spaceBetween={0}
             // style={{
             //   width: '100%',
@@ -238,7 +245,7 @@ function SharedJournalEditionPage() {
 
           <div className="mt-10 space-y-6">
             <div className="flex justify-between">
-              <h1 className="text-xl font-bold">
+              <h1 className="text-base md:text-xl font-bold">
                 History and Evolution of Urban Planning
               </h1>
 
@@ -262,7 +269,7 @@ function SharedJournalEditionPage() {
             </p>
 
             <p
-              className="para wide text-[20px]"
+              className="para wide text-base md:text-[20px]"
               style={{ animationDelay: '0.3s' }}
             >
               BLVCKPIXEL is a new-age company combining human ingenuity with

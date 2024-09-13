@@ -2,7 +2,8 @@ import React, { useState, RefObject } from 'react';
 import style from './Header.module.css';
 import Image from 'next/image';
 import { useAuth } from '../context/AuthProvider';
-import { FaBars, FaArrowRight } from 'react-icons/fa';
+import { FaBars, FaArrowRight, FaSearch } from 'react-icons/fa';
+import { GoSearch } from 'react-icons/go';
 import { useApp } from '../context/AppProvider';
 
 interface HeaderProps {
@@ -89,7 +90,7 @@ const Header: React.FC<HeaderProps> = ({
             href="/dashboard/"
             className={`home ${isBgDark ? '!text-white' : ''}`}
           >
-            Home
+            home
           </a>
         ) : (
           <a
@@ -101,24 +102,26 @@ const Header: React.FC<HeaderProps> = ({
               }
             }}
           >
-            Home
+            home
           </a>
         )}
-        <a
+        {/* <a
           href="/blvckbox/"
           style={{ display: 'block' }}
           className={`home ${isBgDark ? '!text-white' : ''}`}
         >
           Blvckbox
-        </a>
+        </a> */}
         <a
           href="#"
           onClick={openSearchPopup}
           style={{ display: 'block' }}
           className={`home ${isBgDark ? '!text-white' : ''}`}
         >
-          Search
+          <GoSearch />
         </a>
+
+        <span className={`${isBgDark ? 'text-white' : ''}`}>|</span>
 
         {loggedUser ? (
           <>
@@ -147,7 +150,7 @@ const Header: React.FC<HeaderProps> = ({
               height={20}
               style={{ display: 'none' }}
             />{' '}
-            Sign In
+            [ sign in ]
           </a>
         )}
       </div>

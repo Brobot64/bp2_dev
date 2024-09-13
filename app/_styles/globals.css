@@ -20,6 +20,12 @@
   }
 }
 
+@layer base {
+  .p-FieldLabel {
+    @apply text-white;
+  }
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -28,7 +34,7 @@
 
 @layer components {
   .app_container {
-    @apply px-[70px];
+    @apply px-[20px] sm:px-[70px];
   }
   .description {
     display: inline;
@@ -40,20 +46,20 @@
   }
 
   .rainbow-border {
-    border: 10px solid transparent;
-    border-radius: 10px;
-    background-image: linear-gradient(
-      45deg,
-      red,
-      orange,
-      yellow,
-      green,
-      blue,
-      indigo,
-      violet
-    );
-    background-origin: border-box;
-    background-clip: border-box;
+    border-image: linear-gradient(
+        to right,
+        red 0%,
+        orange 16.66%,
+        yellow 33.33%,
+        green 50%,
+        blue 66.66%,
+        indigo 83.33%,
+        violet 100%
+      )
+      1;
+    border-width: 4px;
+    border-style: solid;
+    padding: 5px;
   }
 
   /* .expand {
@@ -61,10 +67,6 @@
     max-height: none;
   } */
   /* @import "./components/index.css"; */
-}
-
-@layer utilities {
-  /* @import "./utils/index.css"; */
 }
 
 .container {
@@ -346,4 +348,13 @@
   .container {
     max-width: 960px;
   }
+}
+
+/*
+  Other CSS files
+*/
+@import './others/index.css';
+
+.p-FieldLabel {
+  color: #ffffff;
 }

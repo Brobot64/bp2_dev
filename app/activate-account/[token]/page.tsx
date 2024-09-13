@@ -14,11 +14,15 @@ const Page = () => {
 
   useEffect(() => {
     if (token) {
-      axios.get<{ message: string }>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/activate-account/${token}`, {})
-        .then(response => {
+      axios
+        .get<{ message: string }>(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/activate-account/${token}`
+        )
+        .then((response) => {
+          // console.log(response.data.message);
           setStatus(response.data.message);
         })
-        .catch(error => {
+        .catch((error) => {
           setStatus('Failed to activate your account. Please try again later.');
         });
     }

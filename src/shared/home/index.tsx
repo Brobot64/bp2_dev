@@ -29,6 +29,7 @@ import Footer from '@/src/partials/Footer';
 import MobileMenuPopup from '@/src/partials/MobileMenu';
 import Link from 'next/link';
 import { useApp } from '@/src/context/AppProvider';
+import { BiSortAlt2 } from 'react-icons/bi';
 
 const SharedHomeComponent: React.FC = () => {
   const [isMenuPopupVisible, setMenuPopupVisible] = useState(false);
@@ -58,10 +59,12 @@ const SharedHomeComponent: React.FC = () => {
   const [beforeActiveMenu, setBeforeActiveMenu] = useState<number>(0);
   const [isMobile, setIsMobile] = useState(false);
   const [isActive, setIsActive] = useState(true);
-  const [showSecondImage, setShowSecondImage] = useState(true);
+  const [showSecondImage, setShowSecondImage] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [bannerBg, setBannerBg] = useState('banner.jpg');
-  const [isBlackBg, setIsBlackBg] = useState(false);
+  const [years, setYears] = useState<number[]>([2024, 2023, 2022, 2021, 2020]);
+  const [selectedYear, setSelectedYear] = useState<number>(2024);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const menus = [
     'who we are',
     'why we exist',
@@ -279,6 +282,11 @@ const SharedHomeComponent: React.FC = () => {
     }
   };
 
+  const handleJournalFilter = (year: number) => {
+    setSelectedYear(year);
+    setIsDropdownOpen(false);
+  };
+
   const scrollToActiveMenuItem = (menuIndex: number) => {
     const menuItemsContainer = document.getElementById('menu-items');
     const activeMenuItem = document.getElementById(`menu-item-${menuIndex}`);
@@ -354,9 +362,11 @@ const SharedHomeComponent: React.FC = () => {
     }, 5000);
 
     // show second image after 1.5 seconds
-    // setTimeout(() => {
-    //   setShowSecondImage(true);
-    // }, 1500);
+    setTimeout(() => {
+      if (swiperRef.current?.activeIndex === 0) {
+        setShowSecondImage(true);
+      }
+    }, 5000);
 
     // hide second image after 11.3 seconds
     // setTimeout(() => {
@@ -485,7 +495,9 @@ const SharedHomeComponent: React.FC = () => {
   return (
     <>
       <div className="rotate-icon">
-        <p>Please rotate your device to portrait mode.</p>
+        <p className={`${isBgDark ? 'text-white' : ''}`}>
+          Please rotate your device to portrait mode.
+        </p>
       </div>
       <div className="menu-items" id="menu-items">
         <a className={`selected-value `} style={{ display: 'none' }}>
@@ -640,7 +652,7 @@ const SharedHomeComponent: React.FC = () => {
             slidesPerView={1}
             navigation={false}
             pagination={{ clickable: true }}
-            autoplay={true}
+            autoplay={false}
             speed={1000}
             loop={true}
             className="mySwiper1 banner-slider"
@@ -678,7 +690,13 @@ const SharedHomeComponent: React.FC = () => {
                   BLVCKPIXEL is a new-age company combining human ingenuity with
                   machine intelligence to provide niche expertise on foresight.
                 </p>
-                <button>Click [ here ] to read the journal.</button>
+                <button
+                  onClick={() => {
+                    router.push('/journal/first');
+                  }}
+                >
+                  Click [ here ] to read the journal.
+                </button>
               </div>
             </SwiperSlide>
 
@@ -695,7 +713,13 @@ const SharedHomeComponent: React.FC = () => {
                   BLVCKPIXEL is a new-age company combining human ingenuity with
                   machine intelligence to provide niche expertise on foresight.
                 </p>
-                <button>Click [ here ] to read the journal.</button>
+                <button
+                  onClick={() => {
+                    router.push('/journal/first');
+                  }}
+                >
+                  Click [ here ] to read the journal.
+                </button>
               </div>
             </SwiperSlide>
 
@@ -712,7 +736,13 @@ const SharedHomeComponent: React.FC = () => {
                   BLVCKPIXEL is a new-age company combining human ingenuity with
                   machine intelligence to provide niche expertise on foresight.
                 </p>
-                <button>Click [ here ] to read the journal.</button>
+                <button
+                  onClick={() => {
+                    router.push('/journal/first');
+                  }}
+                >
+                  Click [ here ] to read the journal.
+                </button>
               </div>
             </SwiperSlide>
           </Swiper>
@@ -1228,7 +1258,7 @@ const SharedHomeComponent: React.FC = () => {
         >
           <div className="slide-content">
             <h1 className="fade-animation" style={{ animationDelay: '0.01s' }}>
-              the journal
+              THE BLVCKBOOK
             </h1>
             <p
               className="italics fade-animation"
@@ -1250,7 +1280,45 @@ const SharedHomeComponent: React.FC = () => {
               className="swiper-container journal"
               style={{ animationDelay: '0.3s' }}
             >
-              <button className="navigationArrow left" onClick={handlePrev}>
+              <div className="flex justify-end relative mb-4">
+                <button
+                  className="flex items-center"
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                >
+                  <BiSortAlt2 className="text-2xl" />
+
+                  <span>[ {selectedYear} ]</span>
+                </button>
+
+                {isDropdownOpen && (
+                  <div className="absolute bottom-[25px] right-0 mt-2 w-48 bg-black border border-gray-300 rounded shadow-lg z-[100]">
+                    <button className="block px-4 py-2 text-xs text-left w-full">
+                      Filter by year
+                    </button>
+                    <div className="border-t border-gray-300"></div>
+                    {years.map((year, index) => (
+                      <div
+                        key={index}
+                        className="block px-4 py-2 text-xs hover:bg-gray-200 cursor-pointer hover:text-black"
+                        onClick={() => handleJournalFilter(year)}
+                      >
+                        {year}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <button
+                className={`
+                navigationArrow left
+                ${isBgDark ? 'white' : ''}
+              `}
+                onClick={() => {
+                  if (swiperRefJournal.current) {
+                    swiperRefJournal.current.slidePrev();
+                  }
+                }}
+              >
                 <SlArrowLeft />
               </button>
 
@@ -1292,7 +1360,13 @@ const SharedHomeComponent: React.FC = () => {
                 }}
               >
                 <SwiperSlide className="slide">
-                  <Link href={'/journal/first'} className="journal-container">
+                  <Link
+                    href={'/journal/first'}
+                    className="journal-container rainbow-border bg-cover bg-center bg-no-repeat"
+                    style={{
+                      backgroundImage: `url(/banner1.jpg)`,
+                    }}
+                  >
                     <h6>Cognitive Cities</h6>
                     <span>The foresight fournal</span>
                     <span>Edition of October 2024</span>
@@ -1300,28 +1374,56 @@ const SharedHomeComponent: React.FC = () => {
                 </SwiperSlide>
 
                 <SwiperSlide className="slide">
-                  <div className="journal-container">
+                  <Link
+                    href={'/journal/first'}
+                    className="journal-container bg-cover bg-center bg-no-repeat"
+                    style={{
+                      backgroundImage: `url(/banner.jpg)`,
+                    }}
+                  >
                     <h6>Cognitive Cities</h6>
                     <span>The foresight fournal</span>
                     <span>Edition of October 2024</span>
-                  </div>
+                  </Link>
                 </SwiperSlide>
                 <SwiperSlide className="slide">
-                  <div className="journal-container">
+                  <Link
+                    href={'/journal/first'}
+                    className="journal-container bg-cover bg-center bg-no-repeat"
+                    style={{
+                      backgroundImage: `url(/banner.jpg)`,
+                    }}
+                  >
                     <h6>Cognitive Cities</h6>
                     <span>The foresight fournal</span>
                     <span>Edition of October 2024</span>
-                  </div>
+                  </Link>
                 </SwiperSlide>
                 <SwiperSlide className="slide">
-                  <div className="journal-container">
+                  <Link
+                    href={'/journal/first'}
+                    className="journal-container bg-cover bg-center bg-no-repeat"
+                    style={{
+                      backgroundImage: `url(/banner.jpg)`,
+                    }}
+                  >
                     <h6>Cognitive Cities</h6>
                     <span>The foresight fournal</span>
                     <span>Edition of October 2024</span>
-                  </div>
+                  </Link>
                 </SwiperSlide>
               </Swiper>
-              <button className="navigationArrow right" onClick={handleNext}>
+              <button
+                className={`
+                navigationArrow right
+                ${isBgDark ? 'white' : ''}
+              `}
+                onClick={() => {
+                  if (swiperRefJournal.current) {
+                    swiperRefJournal.current.slideNext();
+                  }
+                }}
+              >
                 <SlArrowRight />
               </button>
             </div>
