@@ -1,10 +1,11 @@
-import React, { useState, RefObject } from 'react';
+import React, { useState, RefObject, useEffect } from 'react';
 import style from './Header.module.css';
 import Image from 'next/image';
 import { useAuth } from '../context/AuthProvider';
 import { FaBars, FaArrowRight, FaSearch } from 'react-icons/fa';
 import { GoSearch } from 'react-icons/go';
 import { useApp } from '../context/AppProvider';
+import { useRouter } from 'next/navigation';
 
 interface HeaderProps {
   handleGoBack: () => void;
@@ -22,6 +23,7 @@ interface HeaderProps {
   showToggleButton?: boolean;
   otherPageHeader?: boolean;
   isSidebarOpen?: boolean;
+  isProtected?: boolean;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -38,10 +40,42 @@ const Header: React.FC<HeaderProps> = ({
   showToggleButton,
   otherPageHeader,
   isSidebarOpen,
+  isProtected = false,
 }) => {
   const [showDropdown, setShowDropdown] = useState(false);
-  const { loggedUser } = useAuth();
+  const { loggedUser, loading } = useAuth();
+  const [isLoaded, setIsLoaded] = useState(false);
   const { isBgDark } = useApp();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && loggedUser) {
+      if (loggedUser.role_id === 3) {
+        const payment = loggedUser?.payments[0];
+
+        if (payment.status === 'pending') {
+          // redirect to payment page
+          router.push(`/payment/${loggedUser.uuid}`);
+        } else if (payment.status === 'completed') {
+          console.log('User has an active subscription');
+        }
+      }
+    }
+  }, [loading, loggedUser]);
+
+  useEffect(() => {
+    if (!loading && isProtected && !loggedUser) {
+      router.push('/');
+    }
+  }, [isProtected, loggedUser, loading]);
+
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
+
+  if (!isLoaded) {
+    return null;
+  }
 
   return (
     <div

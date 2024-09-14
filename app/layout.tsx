@@ -20,9 +20,9 @@ export default function RootLayout({
   return (
     <AuthProvider>
       <html lang="en">
-        {/* <head>
+        <head>
           <link rel="icon" href="/favicon.png" type="image/png" />
-        </head> */}
+        </head>
         <body className={inter.className}>
           <AppProvider>{children}</AppProvider>
         </body>

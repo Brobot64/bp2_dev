@@ -1,6 +1,7 @@
 import { PaymentElement } from '@stripe/react-stripe-js';
 import { useState } from 'react';
 import { useStripe, useElements } from '@stripe/react-stripe-js';
+import { FaCircleCheck } from 'react-icons/fa6';
 
 export default function CheckoutForm() {
   const stripe = useStripe();
@@ -26,6 +27,11 @@ export default function CheckoutForm() {
       redirect: 'if_required',
     });
 
+    console.log({
+      error,
+      paymentIntent,
+    });
+
     if (error) {
       if (error.type === 'card_error' || error.type === 'validation_error') {
         setMessage(error.message as string);
@@ -34,6 +40,8 @@ export default function CheckoutForm() {
       }
     } else if (paymentIntent && paymentIntent.status === 'succeeded') {
       setMessage('Payment succeeded!');
+
+      // redirect to completion page
     } else {
       setMessage('An unexpected error occured.');
     }
@@ -43,17 +51,29 @@ export default function CheckoutForm() {
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
-      <PaymentElement id="payment-element" />
-      <button
-        disabled={isProcessing || !stripe || !elements}
-        id="submit"
-        className="text-center w-full mt-5"
-      >
-        <span id="button-text" className="text-base font-bold">
-          [ {isProcessing ? 'processing... ' : 'pay now'} ]
-        </span>
-      </button>
-      {message && <div id="payment-message">{message}</div>}
+      {message === 'Payment succeeded!' ? (
+        <>
+          <div className="text-center mb-4">
+            <FaCircleCheck className="text-4xl text-green-500 mx-auto" />
+          </div>
+
+          <div id="payment-message">{message}</div>
+        </>
+      ) : (
+        <>
+          <PaymentElement id="payment-element" />
+          <button
+            disabled={isProcessing || !stripe || !elements}
+            id="submit"
+            className="text-center w-full mt-5"
+          >
+            <span id="button-text" className="text-base font-bold">
+              [ {isProcessing ? 'processing... ' : 'pay now'} ]
+            </span>
+          </button>
+          {message && <div id="payment-message">{message}</div>}
+        </>
+      )}
     </form>
   );
 }

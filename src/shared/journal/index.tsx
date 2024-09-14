@@ -19,13 +19,43 @@ import '../../../app/test.css';
 import { useApp } from '@/src/context/AppProvider';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/src/context/AuthProvider';
+import SignInPopup from '@/src/auth/popups/SignInPopup';
 
 function JournalSharedPage() {
   const { isBgDark, setIsBgDark } = useApp();
   const swiperRef = useRef<SwiperCore | null>(null);
-  const swiperRefBanner = useRef<SwiperCore | null>(null);
+  const swiperRefForeword = useRef<SwiperCore | null>(null);
   const [bannerBg, setBannerBg] = React.useState('banner.jpg');
+  const [currentIndex, setCurrentIndex] = React.useState(0);
+  const [signInPopupVisible, setSignInPopupVisible] = React.useState(false);
+  const [editProfile, setEditProfile] = React.useState(false);
+  const { loggedUser, loading, logout } = useAuth();
   const router = useRouter();
+
+  const closeSignInPopup = () => {
+    setSignInPopupVisible(false);
+  };
+
+  const handleJournalClick = (link: string) => {
+    if (loggedUser) {
+      router.push(link);
+    } else {
+      setSignInPopupVisible(true);
+    }
+  };
+
+  const handleSignInSuccess = (token: string) => {
+    if (token) {
+      closeSignInPopup();
+    }
+  };
+
+  const handleLogout = async () => {
+    logout();
+    closeSignInPopup();
+    setEditProfile(false);
+  };
 
   useEffect(() => {
     setIsBgDark(true);
@@ -33,6 +63,14 @@ function JournalSharedPage() {
     return () => {
       setIsBgDark(false);
     };
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev === 1 ? 0 : prev + 1));
+    }, 5000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -44,12 +82,23 @@ function JournalSharedPage() {
           router.back();
         }}
         openSearchPopup={() => {}}
-        openSignInPopup={() => {}}
+        openSignInPopup={() => {
+          setSignInPopupVisible(true);
+        }}
         displayGoBack={true}
         swiperRef={swiperRef}
         showHome={false}
         invert={false}
       />
+
+      {signInPopupVisible && (
+        <SignInPopup
+          onLoggedOut={handleLogout}
+          onClose={closeSignInPopup}
+          onSignInSuccess={handleSignInSuccess}
+          onEditProfile={editProfile}
+        />
+      )}
 
       <Swiper
         onInit={(swiper) => {
@@ -74,18 +123,6 @@ function JournalSharedPage() {
           releaseOnEdges: false,
           thresholdDelta: 1,
         }}
-        // onSlideNextTransitionStart={(swiper) =>
-        //   handleSlideChangeTransitionStart(swiper)
-        // }
-        // onSlideNextTransitionEnd={(swiper) =>
-        //   handleSlideChangeTransitionEnd(swiper)
-        // }
-        // onSlidePrevTransitionStart={(swiper) =>
-        //   handleSlideChangeTransitionStart(swiper)
-        // }
-        // onSlidePrevTransitionEnd={(swiper) =>
-        //   handleSlideChangeTransitionEnd(swiper)
-        // }
         onSlideChange={(swiper) => {
           console.log('slide change', swiper.activeIndex);
           if (swiper.activeIndex === 3 || swiper.activeIndex === 0) {
@@ -133,62 +170,93 @@ function JournalSharedPage() {
             <h1 className="blackColor" style={{ animationDelay: '0.01s' }}>
               [ foreword ]
             </h1>
-            <p
-              className="para wide blackColor"
-              style={{ animationDelay: '0.6s' }}
-            >
-              What if the city itself were the first citizen ?
-            </p>
 
-            <p
-              className="para wide blackColor"
-              style={{ animationDelay: '0.3s' }}
+            <Swiper
+              onInit={(swiper) => {
+                swiperRefForeword.current = swiper;
+              }}
+              spaceBetween={0}
+              centeredSlides={true}
+              slidesPerView={1}
+              speed={1350}
+              autoplay={{ delay: 5000 }}
+              effect="fade"
+              freeMode={true}
+              fadeEffect={{
+                crossFade: true,
+              }}
+              modules={[Autoplay, Pagination, EffectFade, Mousewheel, Keyboard]}
+              // className={style.editorialSwiper}
+              mousewheel={{
+                forceToAxis: true,
+                sensitivity: 1,
+                releaseOnEdges: false,
+                invert: false,
+              }}
+              direction={'horizontal'}
+              followFinger={true}
+              autoHeight={false}
+              threshold={15}
+              onMouseEnter={() => {
+                swiperRefForeword.current?.autoplay?.stop();
+              }}
+              onMouseLeave={() => {
+                swiperRefForeword.current?.autoplay?.start();
+              }}
             >
-              BLVCKPIXEL is a new-age company combining human ingenuity with
-              machine intelligence to provide niche expertise on [ foresight ].
-              The firm forms the most unique combination of talents working in
-              concert to reveal what lies beyond the horizon. We aim to bring
-              our unique perspectives to industry leaders, companies, and
-              organizations willing to anticipate, embrace, and make the course
-              of history. In the age of AI and cognitive technologies, we form a
-              reunion of unconventional and seasoned professionals charting new
-              territories, as we explore emerging prospects for new
-              technological applications and their impact on society and
-              business.
-            </p>
-          </div>
-        </SwiperSlide>
+              <SwiperSlide className={``}>
+                <p
+                  className="para wide blackColor"
+                  style={{ animationDelay: '0.6s' }}
+                >
+                  What if the city itself were the first citizen ?
+                </p>
 
-        {/* slide 3 */}
-        <SwiperSlide className="slide">
-          <div className="slide-content">
-            <h1 className="blackColor" style={{ animationDelay: '0.01s' }}>
-              [ foreword ]
-            </h1>
-            <p
-              className="para wide blackColor"
-              style={{ animationDelay: '0.6s' }}
-            >
-              Welcome to the first edition of the BLVCKBOOK, the foresight
-              journal, our magazine dedicated to future possibilities at the
-              intersection of anthropology, the study of human cultures and
-              societies, and technology, the application of scientific knowledge
-              to achieve practical goals. The journal carries our vision,
-              identifying and analyzing the driving forces reshaping our
-              societies through various domains and industries through the lens
-              of technological novelty.
-            </p>
+                <p
+                  className="para wide blackColor"
+                  style={{ animationDelay: '0.3s' }}
+                >
+                  BLVCKPIXEL is a new-age company combining human ingenuity with
+                  machine intelligence to provide niche expertise on [ foresight
+                  ]. The firm forms the most unique combination of talents
+                  working in concert to reveal what lies beyond the horizon. We
+                  aim to bring our unique perspectives to industry leaders,
+                  companies, and organizations willing to anticipate, embrace,
+                  and make the course of history. In the age of AI and cognitive
+                  technologies, we form a reunion of unconventional and seasoned
+                  professionals charting new territories, as we explore emerging
+                  prospects for new technological applications and their impact
+                  on society and business.
+                </p>
+              </SwiperSlide>
 
-            <p
-              className="para wide blackColor"
-              style={{ animationDelay: '0.3s' }}
-            >
-              With this journal, we aim to guide the reader through a journey of
-              innovation and prospective scenarios, while we explore [ what’s
-              after next ]. Our work pioneers anticipation and potential
-              outcomes, at the edge of technological development, defining the
-              new frontiers to come
-            </p>
+              <SwiperSlide className={``}>
+                <p
+                  className="para wide blackColor"
+                  style={{ animationDelay: '0.6s' }}
+                >
+                  Welcome to the first edition of the BLVCKBOOK, the foresight
+                  journal, our magazine dedicated to future possibilities at the
+                  intersection of anthropology, the study of human cultures and
+                  societies, and technology, the application of scientific
+                  knowledge to achieve practical goals. The journal carries our
+                  vision, identifying and analyzing the driving forces reshaping
+                  our societies through various domains and industries through
+                  the lens of technological novelty.
+                </p>
+
+                <p
+                  className="para wide blackColor"
+                  style={{ animationDelay: '0.3s' }}
+                >
+                  With this journal, we aim to guide the reader through a
+                  journey of innovation and prospective scenarios, while we
+                  explore [ what’s after next ]. Our work pioneers anticipation
+                  and potential outcomes, at the edge of technological
+                  development, defining the new frontiers to come
+                </p>
+              </SwiperSlide>
+            </Swiper>
           </div>
         </SwiperSlide>
 
@@ -226,17 +294,21 @@ function JournalSharedPage() {
                   link: '/journal/cognitive-cities/last',
                 },
               ].map((item, index) => (
-                <Link
-                  href="/journal/[slug]/[edition]"
-                  as={item.link}
-                  key={index}
+                <div
+                  // href="/journal/[slug]/[edition]"
+                  // as={item.link}
+                  key={index + item.title + item.link}
+                  onClick={() => {
+                    handleJournalClick(item.link);
+                  }}
+                  className="cursor-pointer"
                 >
                   <div className="border-[3px] md:border-[8px] text-center flex items-center justify-center h-[100px] md:h-[200px] w-[100px] md:w-[300px]">
                     <p className="text-[12px] md:text-[15px] font-bold">
                       {item.title}
                     </p>
                   </div>
-                </Link>
+                </div>
               ))}
             </div>
           </div>

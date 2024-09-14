@@ -14,6 +14,8 @@ interface User {
   email: string;
   role_id: number;
   selected_package?: string;
+  payments: Array<any>;
+  uuid: string;
 }
 
 interface AuthContextType {
