@@ -1130,7 +1130,7 @@ const SharedHomeComponent: React.FC = () => {
         <SwiperSlide className="slide">
           <div className="slide-content">
             <h1 className="blackColor" style={{ animationDelay: '0.01s' }}>
-              ideation
+              consulting
             </h1>
             <p
               className="para wide blackColor"
