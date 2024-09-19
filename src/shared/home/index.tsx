@@ -685,7 +685,30 @@ const SharedHomeComponent: React.FC = () => {
             >
               <div className="banner-slider-content">
                 <h3>Cognitives cities</h3>
-                <p>The foresight journal - Edition of November</p>
+                <h4>The foresight journal - Edition of November</h4>
+                <p>
+                  BLVCKPIXEL is a new-age company combining human ingenuity with
+                  machine intelligence to provide niche expertise on foresight.
+                </p>
+                <button
+                  onClick={() => {
+                    router.push('/journal/first');
+                  }}
+                >
+                  Click [ here ] to read the journal.
+                </button>
+              </div>
+            </SwiperSlide>
+
+            <SwiperSlide
+              className=""
+              style={{
+                height: '100%',
+              }}
+            >
+              <div className="banner-slider-content">
+                <h3>The rise of the AI</h3>
+                <h4>The foresight journal - Edition of October</h4>
                 <p>
                   BLVCKPIXEL is a new-age company combining human ingenuity with
                   machine intelligence to provide niche expertise on foresight.
@@ -708,30 +731,7 @@ const SharedHomeComponent: React.FC = () => {
             >
               <div className="banner-slider-content">
                 <h3>Cognitives cities</h3>
-                <p>The foresight journal - Edition of November</p>
-                <p>
-                  BLVCKPIXEL is a new-age company combining human ingenuity with
-                  machine intelligence to provide niche expertise on foresight.
-                </p>
-                <button
-                  onClick={() => {
-                    router.push('/journal/first');
-                  }}
-                >
-                  Click [ here ] to read the journal.
-                </button>
-              </div>
-            </SwiperSlide>
-
-            <SwiperSlide
-              className=""
-              style={{
-                height: '100%',
-              }}
-            >
-              <div className="banner-slider-content">
-                <h3>Cognitives cities</h3>
-                <p>The foresight journal - Edition of November</p>
+                <h4>The foresight journal - Edition of September</h4>
                 <p>
                   BLVCKPIXEL is a new-age company combining human ingenuity with
                   machine intelligence to provide niche expertise on foresight.
@@ -1257,16 +1257,16 @@ const SharedHomeComponent: React.FC = () => {
           style={{ backgroundColor: '#000', color: 'white' }}
         >
           <div className="slide-content">
-            <h1 className="fade-animation" style={{ animationDelay: '0.01s' }}>
-              THE BLVCKBOOK
+            <h1 className="fade-animation" style={{ animationDelay: '0.01s', display: 'flex', fontWeight: '700' }}>
+              The BLVCKBOOK
             </h1>
             <p
               className="italics fade-animation"
-              style={{ marginBottom: '15px', animationDelay: '0.3s' }}
+              style={{ marginBottom: '15px', animationDelay: '0.3s', fontWeight: '600' }}
             >
               Got foresight ?
             </p>
-            <ul className="para wide " style={{ animationDelay: '0.6s' }}>
+            <ul className="para wide tick" style={{ animationDelay: '0.6s' }}>
               <li className="" style={{ marginBottom: '15px' }}>
                 <span className="">
                   Read our last papers and forecasts to see [ what’s after
@@ -1308,7 +1308,7 @@ const SharedHomeComponent: React.FC = () => {
                   </div>
                 )}
               </div>
-              <button
+              {/* <button
                 className={`
                 navigationArrow left
                 ${isBgDark ? 'white' : ''}
@@ -1359,59 +1359,60 @@ const SharedHomeComponent: React.FC = () => {
                   },
                 }}
               >
-                <SwiperSlide className="slide">
-                  <Link
-                    href={'/journal/first'}
-                    className="journal-container rainbow-border bg-cover bg-center bg-no-repeat"
-                    style={{
-                      backgroundImage: `url(/banner1.jpg)`,
-                    }}
-                  >
-                    <h6>Cognitive Cities</h6>
-                    <span>The foresight fournal</span>
-                    <span>Edition of October 2024</span>
-                  </Link>
-                </SwiperSlide>
-
-                <SwiperSlide className="slide">
-                  <Link
-                    href={'/journal/first'}
-                    className="journal-container bg-cover bg-center bg-no-repeat"
-                    style={{
-                      backgroundImage: `url(/banner.jpg)`,
-                    }}
-                  >
-                    <h6>Cognitive Cities</h6>
-                    <span>The foresight fournal</span>
-                    <span>Edition of October 2024</span>
-                  </Link>
-                </SwiperSlide>
-                <SwiperSlide className="slide">
-                  <Link
-                    href={'/journal/first'}
-                    className="journal-container bg-cover bg-center bg-no-repeat"
-                    style={{
-                      backgroundImage: `url(/banner.jpg)`,
-                    }}
-                  >
-                    <h6>Cognitive Cities</h6>
-                    <span>The foresight fournal</span>
-                    <span>Edition of October 2024</span>
-                  </Link>
-                </SwiperSlide>
-                <SwiperSlide className="slide">
-                  <Link
-                    href={'/journal/first'}
-                    className="journal-container bg-cover bg-center bg-no-repeat"
-                    style={{
-                      backgroundImage: `url(/banner.jpg)`,
-                    }}
-                  >
-                    <h6>Cognitive Cities</h6>
-                    <span>The foresight fournal</span>
-                    <span>Edition of October 2024</span>
-                  </Link>
-                </SwiperSlide>
+                <div className='flex flex-row'>
+                  <SwiperSlide className="slide">
+                    <Link
+                      href={'/journal/first'}
+                      className="journal-container rainbow-border bg-cover bg-center bg-no-repeat"
+                      style={{
+                        backgroundImage: `url(/banner1.jpg)`,
+                      }}
+                    >
+                      <h6>Cognitive Cities</h6>
+                      <span>The foresight fournal</span>
+                      <span>Edition of October 2024</span>
+                    </Link>
+                  </SwiperSlide>
+                  <SwiperSlide className="slide">
+                    <Link
+                      href={'/journal/first'}
+                      className="journal-container bg-cover bg-center bg-no-repeat"
+                      style={{
+                        backgroundImage: `url(/banner.jpg)`,
+                      }}
+                    >
+                      <h6>Cognitive Cities</h6>
+                      <span>The foresight journal</span>
+                      <span>Edition of October 2024</span>
+                    </Link>
+                  </SwiperSlide>
+                  <SwiperSlide className="slide">
+                    <Link
+                      href={'/journal/first'}
+                      className="journal-container bg-cover bg-center bg-no-repeat"
+                      style={{
+                        backgroundImage: `url(/banner.jpg)`,
+                      }}
+                    >
+                      <h6>Cognitive Cities</h6>
+                      <span>The foresight fournal</span>
+                      <span>Edition of October 2024</span>
+                    </Link>
+                  </SwiperSlide>
+                  <SwiperSlide className="slide">
+                    <Link
+                      href={'/journal/first'}
+                      className="journal-container bg-cover bg-center bg-no-repeat"
+                      style={{
+                        backgroundImage: `url(/banner.jpg)`,
+                      }}
+                    >
+                      <h6>Cognitive Cities</h6>
+                      <span>The foresight fournal</span>
+                      <span>Edition of October 2024</span>
+                    </Link>
+                  </SwiperSlide>
+                </div>
               </Swiper>
               <button
                 className={`
@@ -1425,11 +1426,182 @@ const SharedHomeComponent: React.FC = () => {
                 }}
               >
                 <SlArrowRight />
-              </button>
+              </button> */}
+
+              <div className="flex w-fit mx-auto">
+                <button
+                  className={`
+                  ${isBgDark ? 'white' : ''}
+                `}
+                  onClick={() => {
+                    if (swiperRefJournal.current) {
+                      swiperRefJournal.current.slidePrev();
+                    }
+                  }}
+                >
+                  <SlArrowLeft />
+                </button>
+
+                {/* <Swiper
+                onInit={(swiper) => (swiperRefJournal.current = swiper)}
+                slidesPerView={5}
+                navigation={false}
+                autoplay={true}
+                speed={500}
+                loop={true}
+                className="flex gap-[20px]"
+                // className="flex justify-between overflow-y-auto"
+                spaceBetween={0}
+                style={{ width: '100%' }}
+                modules={[
+                  Autoplay,
+                  Pagination,
+                  EffectFade,
+                  Mousewheel,
+                  Keyboard,
+                ]}
+                keyboard={true}
+                breakpoints={{
+                  320: {
+                    slidesPerView: 2,
+                    spaceBetween: 10,
+                  },
+                  768: {
+                    slidesPerView: 3,
+                    spaceBetween: 10,
+                  },
+                  992: {
+                    slidesPerView: 4,
+                    spaceBetween: 15,
+                  },
+                  1200: {
+                    slidesPerView: 5,
+                    spaceBetween: 20,
+                  },
+                }}
+              >
+                <SwiperSlide className="">
+                  <Link
+                    href={'/journal/first'}
+                    className="journal-container bg-cover bg-center bg-no-repeat"
+                    style={{
+                      backgroundImage: `url(/banner1.jpg)`,
+                    }}
+                  >
+                    <h6>Cognitive Cities</h6>
+                    <span>The foresight fournal</span>
+                    <span>Edition of October 2024</span>
+                  </Link>
+                </SwiperSlide>
+
+                <SwiperSlide className="">
+                  <Link
+                    href={'/journal/first'}
+                    className="journal-container bg-cover bg-center bg-no-repeat"
+                    style={{
+                      backgroundImage: `url(/banner1.jpg)`,
+                    }}
+                  >
+                    <h6>Cognitive Cities</h6>
+                    <span>The foresight fournal</span>
+                    <span>Edition of October 2024</span>
+                  </Link>
+                </SwiperSlide>
+
+                <SwiperSlide className="">
+                  <Link
+                    href={'/journal/first'}
+                    className="journal-container bg-cover bg-center bg-no-repeat"
+                    style={{
+                      backgroundImage: `url(/banner1.jpg)`,
+                    }}
+                  >
+                    <h6>Cognitive Cities</h6>
+                    <span>The foresight fournal</span>
+                    <span>Edition of October 2024</span>
+                  </Link>
+                </SwiperSlide>
+              </Swiper> */}
+
+              <div className="sides flex gap-[25px] mx-[10px] max-w-[1010px] overflow-x-auto">
+                <Link
+                    href={'/journal/first'}
+                    className="journal-container bg-cover bg-center bg-no-repeat"
+                    style={{
+                      backgroundImage: `url(/banner1.jpg)`,
+                    }}
+                  >
+                    <h6>Cognitive Cities</h6>
+                    <span>The foresight fournal</span>
+                    <span>Edition of October 2024</span>
+                </Link>
+                
+                <Link
+                    href={'/journal/first'}
+                    className="journal-container bg-cover bg-center bg-no-repeat rainbow-border"
+                    style={{
+                      backgroundImage: `url(/banner1.jpg)`,
+                    }}
+                  >
+                    <h6>Cognitive Cities</h6>
+                    <span>The foresight fournal</span>
+                    <span>Edition of October 2024</span>
+                </Link>
+                
+                <Link
+                    href={'/journal/first'}
+                    className="journal-container bg-cover bg-center bg-no-repeat"
+                    style={{
+                      backgroundImage: `url(/banner1.jpg)`,
+                    }}
+                  >
+                    <h6>Cognitive Cities</h6>
+                    <span>The foresight fournal</span>
+                    <span>Edition of October 2024</span>
+                </Link>
+                
+                <Link
+                    href={'/journal/first'}
+                    className="journal-container bg-cover bg-center bg-no-repeat"
+                    style={{
+                      backgroundImage: `url(/banner1.jpg)`,
+                    }}
+                  >
+                    <h6>Cognitive Cities</h6>
+                    <span>The foresight fournal</span>
+                    <span>Edition of October 2024</span>
+                </Link>
+                
+                <Link
+                    href={'/journal/first'}
+                    className="journal-container bg-cover bg-center bg-no-repeat"
+                    style={{
+                      backgroundImage: `url(/banner1.jpg)`,
+                    }}
+                  >
+                    <h6>Cognitive Cities</h6>
+                    <span>The foresight fournal</span>
+                    <span>Edition of October 2024</span>
+                </Link>
+              </div>
+
+                <button
+                className={`
+                ${isBgDark ? 'white' : ''}
+              `}
+                onClick={() => {
+                  if (swiperRefJournal.current) {
+                    swiperRefJournal.current.slideNext();
+                  }
+                }}
+              >
+                <SlArrowRight />
+              </button> 
+              </div>
             </div>
           </div>
-        </SwiperSlide>
-
+        </SwiperSlide> 
+        
         {/* slide 17 */}
         <SwiperSlide className="slide">
           <div className="slide-content">
