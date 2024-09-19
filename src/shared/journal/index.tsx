@@ -21,6 +21,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/src/context/AuthProvider';
 import SignInPopup from '@/src/auth/popups/SignInPopup';
+import Image from 'next/image';
 
 function JournalSharedPage() {
   const { isBgDark, setIsBgDark } = useApp();
