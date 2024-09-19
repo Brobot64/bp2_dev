@@ -21,6 +21,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/src/context/AuthProvider';
 import SignInPopup from '@/src/auth/popups/SignInPopup';
+import Image from 'next/image';
 
 function JournalSharedPage() {
   const { isBgDark, setIsBgDark } = useApp();
@@ -256,6 +257,15 @@ function JournalSharedPage() {
                   development, defining the new frontiers to come
                 </p>
               </SwiperSlide>
+
+              <div className={``}>
+                <Image
+                  src="/signature.png"
+                  alt="Sign In"
+                  width={250}
+                  height={250}
+                />
+              </div>
             </Swiper>
           </div>
         </SwiperSlide>
