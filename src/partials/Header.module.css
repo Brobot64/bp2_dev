@@ -38,6 +38,15 @@
   background-color: #000000 !important;
 }
 
+.header.inverter {
+  background-color: #00000000 !important;  
+}
+
+.header.inverter a{
+  background-color: #ffffff !important;  
+}
+
+
 .header.invert a {
   color: #ffffff !important;
 }

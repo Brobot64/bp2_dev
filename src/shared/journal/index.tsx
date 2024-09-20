@@ -19,7 +19,7 @@ import '../../../app/test.css';
 import { useApp } from '@/src/context/AppProvider';
 import uiStyle from '@/app/journal/[slug]/page.module.css';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/src/context/AuthProvider';
 import SignInPopup from '@/src/auth/popups/SignInPopup';
 import Image from 'next/image';
@@ -32,6 +32,7 @@ import { getFullMonth } from '@shared/home';
   id: number;
   image_path: string;
 }
+
 
 // interface ContentCardType {
 //   title: string;
@@ -74,6 +75,7 @@ function JournalSharedPage({ slug }: { slug?: string }) {
   const [signInPopupVisible, setSignInPopupVisible] = React.useState(false);
   const [editProfile, setEditProfile] = React.useState(false);
   const { loggedUser, loading, logout } = useAuth();
+  const [hoveredCardIndex, setHoveredCardIndex] = React.useState<number | null>(null);
   const router = useRouter();
 
   const [journalBlackBox, setJournalBlackBox] = React.useState({});
@@ -104,6 +106,25 @@ function JournalSharedPage({ slug }: { slug?: string }) {
 
   // Added by brobot 
 
+  const searchies = useSearchParams();
+
+  const goToPrevSlide = () => {
+    if (swiperRef.current) {
+      swiperRef.current.slidePrev();
+    }
+  };
+
+  const goToNextSlide = () => {
+    if (swiperRef.current) {
+      swiperRef.current.slideNext();
+    }
+  };
+
+  const goToSpecificSlide = (index: number) => {
+    if (swiperRef.current) {
+      swiperRef.current.slideTo(index);
+    }
+  };
   const [contentcards, setContentcards] = React.useState<ContentCardType[]>([]);
   const [editorial, setEditorial] = React.useState<EditorialType | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -180,6 +201,10 @@ function JournalSharedPage({ slug }: { slug?: string }) {
   useEffect(() => {
     const tile: any = sessionStorage.getItem('blackboxBx');
     setJournalBlackBox(JSON.parse(tile));
+    const fint = searchies.get('bnxn');
+    if (fint === "" || fint === null) {
+      goToSpecificSlide(1);
+    }
   }, []);
 
   useEffect(() => {
@@ -282,7 +307,7 @@ function JournalSharedPage({ slug }: { slug?: string }) {
         }}
         onSlideChange={(swiper) => {
           console.log('slide change', swiper.activeIndex);
-          if (swiper.activeIndex === 3 || swiper.activeIndex === 0) {
+          if (swiper.activeIndex <= 10) {
             setIsBgDark(true);
           } else {
             setIsBgDark(false);
@@ -420,8 +445,19 @@ function JournalSharedPage({ slug }: { slug?: string }) {
                   }}
                   className="cursor-pointer"
                 >
-                  <div className="border-[3px] md:border-[8px] text-center flex items-center justify-center h-[100px] md:h-[200px] w-[100px] md:w-[300px]">
-                    <p className="text-[12px] md:text-[15px] font-bold">
+                  <div 
+                    className={`${uiStyle.vinyl} border-[3px] md:border-[8px] text-center flex items-center justify-center h-[100px] md:h-[200px] w-[100px] md:w-[300px] rounded-3xl`} 
+                    style={{ 
+                      backgroundImage:
+                          hoveredCardIndex === index
+                            ? item.background ? `url(${process.env.NEXT_PUBLIC_BASE_URL}/${item.background})` : `url(/pixel2.png)`
+                            : 'none',
+                     backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', transition: 'background-size 0.5s ease, background-image 0.5s ease', 
+                    }}
+                    onMouseEnter={() => setHoveredCardIndex(index)}
+                    onMouseLeave={() => setHoveredCardIndex(null)}
+                  >
+                    <p className="text-[23px] md:text-[15px] font-bold" style={{ fontSize: '25px', fontWeight: 'lighter' }}>
                       {item.title}
                     </p>
                   </div>

@@ -457,6 +457,19 @@
     cursor: grabbing;
   }
 
+
+/* Added By Brobot */
+.vinyl {
+  background: black;
+  transition: background-size 0.5s ease;
+}
+
+.vinyl:hover {
+  background: none;
+  background-size: 120%;
+}
+/* Ended Here */
+
   @media (min-width: 993px) and (max-width: 1200px) {
     .blvckbookDetail{
       padding: 40px 0;

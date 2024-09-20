@@ -130,6 +130,12 @@
   font-size: 22px;
 }
 
+.mySwiper > .swiper-wrapper > .slide-banner .banner-slider-content span.albeit{
+  width: fit-content;
+  color: #ffffff;
+  font-size: 22px;
+}
+
 .bg-overlay {
   z-index: 99;
 }
@@ -794,6 +800,11 @@
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
   z-index: -1;
+  transition: all .3s ease-in-out;
+}
+
+.journal-container:hover::before {
+  background: rgba(0, 0, 0, 0.174);
 }
 
 .journal-container h6 {

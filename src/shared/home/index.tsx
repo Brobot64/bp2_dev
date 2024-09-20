@@ -37,6 +37,11 @@ export const getFullMonth = (dateString: string): string => {
   return date.toLocaleString('default', { month: 'long' });
 }
 
+export const getFullYear = (dateString: string): string => {
+  const date = new Date(dateString);
+  return date.toLocaleString('default', { year: 'numeric' });
+}
+
 export const useSessionStorage = (key: any, initialValue: any) => {
   const [value, setValue] = useState(() => {
     const storedValue = sessionStorage.getItem(key);
@@ -109,7 +114,7 @@ const SharedHomeComponent: React.FC = () => {
 
   const handleTPrev = () => {
     setActiveIndex((prevIndex) => {
-      const newIndex = prevIndex === 0 ? journalData.length - 1 : prevIndex - 1;
+      const newIndex = prevIndex === 0 ? boxesData.length - 1 : prevIndex - 1;
       scrollToActive(newIndex);
       return newIndex;
     });
@@ -117,7 +122,7 @@ const SharedHomeComponent: React.FC = () => {
 
   const handleTNext = () => {
     setActiveIndex((prevIndex) => {
-      const newIndex = prevIndex === journalData.length - 1 ? 0 : prevIndex + 1;
+      const newIndex = prevIndex === boxesData.length - 1 ? 0 : prevIndex + 1;
       scrollToActive(newIndex);
       return newIndex;
     });
@@ -791,14 +796,11 @@ const SharedHomeComponent: React.FC = () => {
                       { box.description ? box.description : 
                       'BLVCKPIXEL is a new-age company combining human ingenuity with machine intelligence to provide niche expertise on foresight.'}
                     </p>
-                    <button
-                      // onClick={() => {
-                      //   router.push(`/journal/${box.slug}`);
-                      // }}
+                    <span className='albeit'>Click <button
                       onClick={() => handleClickDit(box)}
                     >
-                      Click [ here ] to read the journal.
-                    </button>
+                      [ here ] 
+                    </button> to read the journal.</span>
                   </div>
                 </SwiperSlide>
               ))
@@ -1348,125 +1350,6 @@ const SharedHomeComponent: React.FC = () => {
                   </div>
                 )}
               </div>
-              {/* <button
-                className={`
-                navigationArrow left
-                ${isBgDark ? 'white' : ''}
-              `}
-                onClick={() => {
-                  if (swiperRefJournal.current) {
-                    swiperRefJournal.current.slidePrev();
-                  }
-                }}
-              >
-                <SlArrowLeft />
-              </button>
-
-              <Swiper
-                onInit={(swiper) => (swiperRefJournal.current = swiper)}
-                slidesPerView={5}
-                navigation={false}
-                autoplay={true}
-                speed={500}
-                loop={true}
-                className="mySwiper1"
-                spaceBetween={0}
-                style={{ width: '100%' }}
-                modules={[
-                  Autoplay,
-                  Pagination,
-                  EffectFade,
-                  Mousewheel,
-                  Keyboard,
-                ]}
-                keyboard={true}
-                breakpoints={{
-                  320: {
-                    slidesPerView: 2,
-                    spaceBetween: 10,
-                  },
-                  768: {
-                    slidesPerView: 3,
-                    spaceBetween: 10,
-                  },
-                  992: {
-                    slidesPerView: 4,
-                    spaceBetween: 15,
-                  },
-                  1200: {
-                    slidesPerView: 5,
-                    spaceBetween: 20,
-                  },
-                }}
-              >
-                <div className='flex flex-row'>
-                  <SwiperSlide className="slide">
-                    <Link
-                      href={'/journal/first'}
-                      className="journal-container rainbow-border bg-cover bg-center bg-no-repeat"
-                      style={{
-                        backgroundImage: `url(/banner1.jpg)`,
-                      }}
-                    >
-                      <h6>Cognitive Cities</h6>
-                      <span>The foresight fournal</span>
-                      <span>Edition of October 2024</span>
-                    </Link>
-                  </SwiperSlide>
-                  <SwiperSlide className="slide">
-                    <Link
-                      href={'/journal/first'}
-                      className="journal-container bg-cover bg-center bg-no-repeat"
-                      style={{
-                        backgroundImage: `url(/banner.jpg)`,
-                      }}
-                    >
-                      <h6>Cognitive Cities</h6>
-                      <span>The foresight journal</span>
-                      <span>Edition of October 2024</span>
-                    </Link>
-                  </SwiperSlide>
-                  <SwiperSlide className="slide">
-                    <Link
-                      href={'/journal/first'}
-                      className="journal-container bg-cover bg-center bg-no-repeat"
-                      style={{
-                        backgroundImage: `url(/banner.jpg)`,
-                      }}
-                    >
-                      <h6>Cognitive Cities</h6>
-                      <span>The foresight fournal</span>
-                      <span>Edition of October 2024</span>
-                    </Link>
-                  </SwiperSlide>
-                  <SwiperSlide className="slide">
-                    <Link
-                      href={'/journal/first'}
-                      className="journal-container bg-cover bg-center bg-no-repeat"
-                      style={{
-                        backgroundImage: `url(/banner.jpg)`,
-                      }}
-                    >
-                      <h6>Cognitive Cities</h6>
-                      <span>The foresight fournal</span>
-                      <span>Edition of October 2024</span>
-                    </Link>
-                  </SwiperSlide>
-                </div>
-              </Swiper>
-              <button
-                className={`
-                navigationArrow right
-                ${isBgDark ? 'white' : ''}
-              `}
-                onClick={() => {
-                  if (swiperRefJournal.current) {
-                    swiperRefJournal.current.slideNext();
-                  }
-                }}
-              >
-                <SlArrowRight />
-              </button> */}
 
               <div className="flex w-fit mx-auto">
                 <button
@@ -1478,113 +1361,31 @@ const SharedHomeComponent: React.FC = () => {
                   <SlArrowLeft />
                 </button>
 
-                {/* <Swiper
-                onInit={(swiper) => (swiperRefJournal.current = swiper)}
-                slidesPerView={5}
-                navigation={false}
-                autoplay={true}
-                speed={500}
-                loop={true}
-                className="flex gap-[20px]"
-                // className="flex justify-between overflow-y-auto"
-                spaceBetween={0}
-                style={{ width: '100%' }}
-                modules={[
-                  Autoplay,
-                  Pagination,
-                  EffectFade,
-                  Mousewheel,
-                  Keyboard,
-                ]}
-                keyboard={true}
-                breakpoints={{
-                  320: {
-                    slidesPerView: 2,
-                    spaceBetween: 10,
-                  },
-                  768: {
-                    slidesPerView: 3,
-                    spaceBetween: 10,
-                  },
-                  992: {
-                    slidesPerView: 4,
-                    spaceBetween: 15,
-                  },
-                  1200: {
-                    slidesPerView: 5,
-                    spaceBetween: 20,
-                  },
-                }}
-              >
-                <SwiperSlide className="">
-                  <Link
-                    href={'/journal/first'}
-                    className="journal-container bg-cover bg-center bg-no-repeat"
-                    style={{
-                      backgroundImage: `url(/banner1.jpg)`,
-                    }}
-                  >
-                    <h6>Cognitive Cities</h6>
-                    <span>The foresight fournal</span>
-                    <span>Edition of October 2024</span>
-                  </Link>
-                </SwiperSlide>
-
-                <SwiperSlide className="">
-                  <Link
-                    href={'/journal/first'}
-                    className="journal-container bg-cover bg-center bg-no-repeat"
-                    style={{
-                      backgroundImage: `url(/banner1.jpg)`,
-                    }}
-                  >
-                    <h6>Cognitive Cities</h6>
-                    <span>The foresight fournal</span>
-                    <span>Edition of October 2024</span>
-                  </Link>
-                </SwiperSlide>
-
-                <SwiperSlide className="">
-                  <Link
-                    href={'/journal/first'}
-                    className="journal-container bg-cover bg-center bg-no-repeat"
-                    style={{
-                      backgroundImage: `url(/banner1.jpg)`,
-                    }}
-                  >
-                    <h6>Cognitive Cities</h6>
-                    <span>The foresight fournal</span>
-                    <span>Edition of October 2024</span>
-                  </Link>
-                </SwiperSlide>
-              </Swiper> */}
-
+                
               <div className="sides flex gap-[25px] mx-[10px] max-w-[1010px] overflow-x-auto">
-                {/* <Link
-                    href={'/journal/first'}
-                    className="journal-container bg-cover bg-center bg-no-repeat"
-                    style={{
-                      backgroundImage: `url(/banner1.jpg)`,
-                    }}
-                  >
-                    <h6>Cognitive Cities</h6>
-                    <span>The foresight fournal</span>
-                    <span>Edition of October 2024</span>
-                </Link> */}
-                {journalData.map((journal, index) => (
+                {boxesData.map((journal, index) => (
                   <Link
                     key={journal.id}
-                    href={'/journal/first'}
-                    className={`journal-container bg-cover bg-center bg-no-repeat ${activeIndex === index ? 'rainbow-border' : ''}`}
+                    href={`/journal/${journal.slug}/?bnxn=1`}
+                    className={`relative journal-container bg-cover bg-center bg-no-repeat ${activeIndex === index ? 'rainbow-border' : ''} rounded-lg`}
                     style={{
-                      backgroundImage: `url(${journal.url})`,
+                      backgroundImage: `url(${process.env.NEXT_PUBLIC_BASE_URL}/${journal.background})`,
+                    }}
+                    onClick={() => {
+                      sessionStorage.setItem('blackboxBx', JSON.stringify(journal));
                     }}
                     // @ts-ignore
                     ref={(el) => (journalRefs.current[index] = el)}
                   >
                     <h6>{journal.title}</h6>
                     <span>{journal.subtitle}</span>
-                    <span>{journal.edition}</span>
+                    {/* <span>{journal.edition}</span> */}
+
+                    <div className="absolute matbtm capitalize bottom-2 right-2">
+                      { 
+                        `${getFullMonth(journal.date)}, ${getFullYear(journal.date)}`
+                      }
+                    </div>
                   </Link>
                 ))}
               </div>

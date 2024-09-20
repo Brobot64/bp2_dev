@@ -17,6 +17,7 @@ interface HeaderProps {
   }>;
   showHome: boolean;
   invert: boolean;
+  inverter?: boolean;
   fixedNav: boolean;
   displayGoBack: boolean;
   toggleSidebar?: () => void;
@@ -39,6 +40,7 @@ const Header: React.FC<HeaderProps> = ({
   toggleSidebar,
   showToggleButton,
   otherPageHeader,
+  inverter,
   isSidebarOpen,
   isProtected = false,
 }) => {
@@ -81,7 +83,7 @@ const Header: React.FC<HeaderProps> = ({
     <div
       className={`${style.header} ${invert ? style.invert : ''} ${
         fixedNav ? style.fixed : ''
-      }`}
+      } ${inverter ? style.inverter : ''}`}
     >
       <a
         href="#"

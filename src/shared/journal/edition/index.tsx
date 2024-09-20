@@ -259,104 +259,6 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
             />
           )}
           <div className="px-[20px] md:px-[150px] pt-[100px] pb-[50px] bg-black min-h-screen !text-white flex flex-col gap-10">
-            {/* <div className="">
-              <Swiper
-                // onInit={(swiper) => (swiperRefBanner.current = swiper)}
-                slidesPerView={1}
-                navigation={false}
-                pagination={{ clickable: true }}
-                autoplay={false}
-                speed={1000}
-                loop={true}
-                className="mySwiper1 border-[5px] border-white"
-                spaceBetween={0}
-                // style={{
-                //   width: '100%',
-                //   height: '100%',
-                // }}
-                modules={[
-                  Autoplay,
-                  Pagination,
-                  EffectFade,
-                  Mousewheel,
-                  Keyboard,
-                ]}
-                keyboard={true}
-                fadeEffect={{
-                  crossFade: true,
-                }}
-                effect="fade"
-              >
-                <SwiperSlide
-                  className=""
-                  style={{
-                    height: '100%',
-                  }}
-                >
-                  <div
-                    className="h-[50vh] w-full"
-                    style={{
-                      backgroundImage: 'url(/banner.jpg)',
-                      backgroundPosition: 'center',
-                      backgroundSize: 'cover',
-                      backgroundRepeat: 'no-repeat',
-                    }}
-                  ></div>
-                </SwiperSlide>
-
-                <SwiperSlide
-                  className=""
-                  style={{
-                    height: '100%',
-                  }}
-                >
-                  <div
-                    className="h-[50vh] w-full"
-                    style={{
-                      backgroundImage: 'url(/banner1.jpg)',
-                      backgroundPosition: 'center',
-                      backgroundSize: 'cover',
-                      backgroundRepeat: 'no-repeat',
-                    }}
-                  ></div>
-                </SwiperSlide>
-
-                <SwiperSlide
-                  className=""
-                  style={{
-                    height: '100%',
-                  }}
-                >
-                  <div
-                    className="h-[50vh] w-full"
-                    style={{
-                      backgroundImage: 'url(/banner.jpg)',
-                      backgroundPosition: 'center',
-                      backgroundSize: 'cover',
-                      backgroundRepeat: 'no-repeat',
-                    }}
-                  ></div>
-                </SwiperSlide>
-              </Swiper>
-
-              <div className="mt-10 space-y-6">
-                <div className="flex justify-between">
-                  <h1 className="text-base md:text-xl font-bold">
-                    History and Evolution of Urban Planning
-                  </h1>
-
-                  <button
-                    className="text-sm "
-                    onClick={() => setSharePopupVisible(true)}
-                  >
-                    [ share ]
-                  </button>
-                </div>
-
-                <Description text="BLVCKPIXEL is a new-age company combining human ingenuity with machine intelligence to provide niche expertise on foresight. BLVCKPIXEL is a new-age company combining human ingenuity with machine intelligence to provide niche expertise on foresight. BLVCKPIXEL is a new-age company combining human ingenuity with machine intelligence to provide niche expertise on foresight. BLVCKPIXEL is a new-age company combining human ingenuity with machine intelligence to provide niche expertise on foresight." />
-              </div>
-            </div> */}
-
 
             <>
             {data.map((item, inds) => (
@@ -380,6 +282,14 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
                   keyboard={true}
                   fadeEffect={{
                     crossFade: true,
+                  }}
+                  onSlideChange={(swiper) => {
+                    console.log('slide change', swiper.activeIndex);
+                    if (swiper.activeIndex <= 10) {
+                      setIsBgDark(true);
+                    } else {
+                      setIsBgDark(false);
+                    }
                   }}
                   effect="fade"
                 >
@@ -419,103 +329,6 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
               </div>
             ))}
             </>
-
-            {/* <div className="mt-6">
-              <Swiper
-                // onInit={(swiper) => (swiperRefBanner.current = swiper)}
-                slidesPerView={1}
-                navigation={false}
-                pagination={{ clickable: true }}
-                autoplay={false}
-                speed={1000}
-                loop={true}
-                className="mySwiper1 border-[5px] border-white"
-                spaceBetween={0}
-                // style={{
-                //   width: '100%',
-                //   height: '100%',
-                // }}
-                modules={[
-                  Autoplay,
-                  Pagination,
-                  EffectFade,
-                  Mousewheel,
-                  Keyboard,
-                ]}
-                keyboard={true}
-                fadeEffect={{
-                  crossFade: true,
-                }}
-                effect="fade"
-              >
-                <SwiperSlide
-                  className=""
-                  style={{
-                    // paddingLeft: '70px',
-                    // paddingRight: '70px',
-                    height: '100%',
-                  }}
-                >
-                  <div
-                    className="h-[50vh] w-full"
-                    style={{
-                      backgroundImage: 'url(/banner.jpg)',
-                      backgroundPosition: 'center',
-                      backgroundSize: 'cover',
-                      backgroundRepeat: 'no-repeat',
-                    }}
-                  ></div>
-                </SwiperSlide>
-
-                <SwiperSlide
-                  className=""
-                  style={{
-                    height: '100%',
-                  }}
-                >
-                  <div
-                    className="h-[50vh] w-full"
-                    style={{
-                      backgroundImage: 'url(/banner1.jpg)',
-                      backgroundPosition: 'center',
-                      backgroundSize: 'cover',
-                      backgroundRepeat: 'no-repeat',
-                    }}
-                  ></div>
-                </SwiperSlide>
-
-                <SwiperSlide
-                  className=""
-                  style={{
-                    height: '100%',
-                  }}
-                >
-                  <div
-                    className="h-[50vh] w-full"
-                    style={{
-                      backgroundImage: 'url(/banner.jpg)',
-                      backgroundPosition: 'center',
-                      backgroundSize: 'cover',
-                      backgroundRepeat: 'no-repeat',
-                    }}
-                  ></div>
-                </SwiperSlide>
-              </Swiper>
-
-              <div className="mt-10 space-y-6">
-                <div className="flex justify-between">
-                  <h1 className="text-base md:text-xl font-bold">
-                    History and Evolution of Urban Planning
-                  </h1>
-
-                  <button onClick={() => setSharePopupVisible(true)}>
-                    [ share ]
-                  </button>
-                </div>
-
-                <Description text="BLVCKPIXEL is a new-age company combining human ingenuity with machine intelligence to provide niche expertise on foresight. BLVCKPIXEL is a new-age company combining human ingenuity with machine intelligence to provide niche expertise on foresight. BLVCKPIXEL is a new-age company combining human ingenuity with machine intelligence to provide niche expertise on foresight. BLVCKPIXEL is a new-age company combining human ingenuity with machine intelligence to provide niche expertise on foresight." />
-              </div>
-            </div> */}
 
             {/* <SwiperSlide className="slide"> */}
             {path === 'last' && (

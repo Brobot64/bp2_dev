@@ -45,6 +45,102 @@
     max-width: 100%;
   }
 
+  /* newest */
+
+
+  /* button */
+.rainbad {
+  /* margin: 100px;
+  padding: 15px 40px; */
+  border: none;
+  outline: none;
+  color: #FFF;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 12px;
+}
+.rainbad::after {
+  content: "";
+  z-index: -1;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #333;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
+/* glow */
+.rainbad::before {
+  content: "";
+  background: linear-gradient(
+    45deg,
+    #FF0000, #FF7300, #FFFB00, #48FF00,
+    #00FFD5, #002BFF, #FF00C8, #FF0000
+  );
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 600%;
+  z-index: -1;
+  width: calc(100% + 4px);
+  height:  calc(100% + 4px);
+  filter: blur(8px);
+  animation: glowing 20s linear infinite;
+  transition: opacity .3s ease-in-out;
+  border-radius: 10px;
+  opacity: 0;
+}
+
+@keyframes glowing {
+  0% {background-position: 0 0;}
+  50% {background-position: 400% 0;}
+  100% {background-position: 0 0;}
+}
+
+/* hover */
+.rainbad:hover::before {
+  opacity: 1;
+}
+
+/* .rainbad:active:after {
+  background: transparent;
+} */
+
+/* .rainbad:active {
+  color: #000;
+  font-weight: bold;
+} */
+
+
+  /* Ended new */
+
+  .rainbow-shadow {
+    position: relative;
+    padding: 16px;
+    background-color: #fff; /* Background color for content inside */
+    border-radius: 10px; /* Optional for rounded corners */
+    z-index: 1; /* Ensure the content stays above the shadow */
+  }
+  
+  .rainbow-shadow::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    z-index: -1;
+    border-radius: 12px; /* Match border-radius with slight extra */
+    background: linear-gradient(
+      45deg, 
+      red, orange, yellow, green, blue, indigo, violet
+    );
+    filter: blur(15px); /* Blur to create the shadow effect */
+    opacity: 0.75; /* Adjust opacity for a softer look */
+  }
+  
   .rainbow-border {
     transition: all .3s ease-in;
     border-image: linear-gradient(
@@ -59,9 +155,101 @@
       )
       1;
     border-width: 7px;
+    border-radius: 10px;
     border-style: solid;
     padding: 8px;
   }
+
+  /* .rainbow-border {
+    transition: all 0.3s ease-in;
+    padding: 8px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .rainbow-border::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    border-radius: 10px; 
+    background: linear-gradient(
+      to right,
+      red 0%,
+      orange 16.66%,
+      yellow 33.33%,
+      green 50%,
+      blue 66.66%,
+      indigo 83.33%,
+      violet 100%
+    );
+    filter: blur(10px); 
+    transition: all 0.3s ease-in;
+  }
+  
+  .rainbow-border:hover::before {
+    filter: blur(15px);
+  } */
+
+  
+  .rainshine-border {
+    position: relative;
+    padding: 20px; /* Add padding to prevent content from being overlapped */
+    background: linear-gradient(0deg, #000, #262626);
+    z-index: 1; /* Make sure the main content stays above the border */
+  }
+  
+  .rainshine-border::before, .rainshine-border::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    background: linear-gradient(
+      45deg, 
+      #fb0094, 
+      #0000ff, 
+      #00ff00, 
+      #ffff00, 
+      #ff0000, 
+      #fb0094, 
+      #0000ff, 
+      #00ff00, 
+      #ffff00, 
+      #ff0000
+    );
+    background-size: 400%;
+    z-index: -1; /* Move behind the main content */
+    animation: shadow 20s linear infinite;
+  }
+  
+  .rainshine-border::after {
+    top: -8px;
+    left: -8px;
+    width: calc(100% + 16px);
+    height: calc(100% + 16px);
+    filter: blur(24px);
+    opacity: 0.9;
+    z-index: -2; /* Ensure the blurred shadow stays behind everything */
+  }
+  
+  @keyframes shadow {
+    0% {
+      background-position: 0 0;
+    }
+    50.01% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: 0 0;
+    }
+  }
+  
+    
 
   /* .expand {
     -webkit-line-clamp: unset;
