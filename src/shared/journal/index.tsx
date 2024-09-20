@@ -17,13 +17,55 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import '../../../app/test.css';
 import { useApp } from '@/src/context/AppProvider';
+import uiStyle from '@/app/journal/[slug]/page.module.css';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/src/context/AuthProvider';
 import SignInPopup from '@/src/auth/popups/SignInPopup';
 import Image from 'next/image';
+import axios from 'axios';
+import { getFullMonth } from '@shared/home';
 
-function JournalSharedPage() {
+
+ // Added by brobot 
+ interface ImageType {
+  id: number;
+  image_path: string;
+}
+
+// interface ContentCardType {
+//   title: string;
+//   background: string;
+//   slug: string;
+//   desc: string;
+//   date: string;
+//   images: ImageType[];
+// }
+
+interface ContentCardType {
+  id: any,
+  title: string,
+  slug: string,
+  background: string,
+  description: string,
+  blvckbox_id: any,
+  created_at: string,
+  updated_at: string
+}
+
+interface EditorialType {
+  section: string;
+  background_image: string;
+}
+
+interface ApiResponse {
+  contentcards: ContentCardType[];
+  editorial: EditorialType | null;
+}
+
+// Ended here
+
+function JournalSharedPage({ slug }: { slug?: string }) {
   const { isBgDark, setIsBgDark } = useApp();
   const swiperRef = useRef<SwiperCore | null>(null);
   const swiperRefForeword = useRef<SwiperCore | null>(null);
@@ -33,6 +75,8 @@ function JournalSharedPage() {
   const [editProfile, setEditProfile] = React.useState(false);
   const { loggedUser, loading, logout } = useAuth();
   const router = useRouter();
+
+  const [journalBlackBox, setJournalBlackBox] = React.useState({});
 
   const closeSignInPopup = () => {
     setSignInPopupVisible(false);
@@ -57,6 +101,118 @@ function JournalSharedPage() {
     closeSignInPopup();
     setEditProfile(false);
   };
+
+  // Added by brobot 
+
+  const [contentcards, setContentcards] = React.useState<ContentCardType[]>([]);
+  const [editorial, setEditorial] = React.useState<EditorialType | null>(null);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  const [error, setError] = React.useState<string | null>(null);
+
+  const splitContentIntoSlides = (
+    content: string,
+    minLength: number
+  ): string[] => {
+    const slides = [];
+    let start = 0;
+
+    while (start < content.length) {
+      let end = start + minLength;
+
+      if (end >= content.length) {
+        end = content.length;
+      } else {
+        while (
+          end < content.length &&
+          !['.', '!', '?', '\n', '\r'].includes(content[end])
+        ) {
+          end++;
+        }
+
+        if (
+          end >= content.length ||
+          !['.', '!', '?', '\n', '\r'].includes(content[end])
+        ) {
+          end = Math.min(start + minLength, content.length);
+          while (
+            end < content.length &&
+            !['.', '!', '?', '\n', '\r'].includes(content[end])
+          ) {
+            end++;
+          }
+        }
+
+        if (
+          end < content.length &&
+          ['.', '!', '?', '\n', '\r'].includes(content[end])
+        ) {
+          end++;
+        }
+      }
+
+      slides.push(content.substring(start, end).trim());
+      start = end;
+    }
+
+    return slides;
+  };
+
+  const editorialSlides = editorial
+    ? splitContentIntoSlides(editorial.section, 600)
+    : [];
+
+  const handleMouseEnter = () => {
+    swiperRef.current?.autoplay.stop();
+  };
+
+  const handleMouseLeave = () => {
+    swiperRef.current?.autoplay.start();
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    const tile: any = sessionStorage.getItem('blackboxBx');
+    setJournalBlackBox(JSON.parse(tile));
+  }, []);
+
+  useEffect(() => {
+    const fetchContentcards = async () => {
+      setIsLoading(true);
+      setError(null);
+
+      const token = localStorage.getItem('token');
+      try {
+        const response = await axios.get<ApiResponse>(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/contentcards/${slug}`,
+          {
+            headers: {
+              Authorization: `${token}`,
+            },
+          }
+        );
+        setContentcards(response.data.contentcards);
+        setEditorial(response.data.editorial);
+      } catch (error) {
+        console.error('Error fetching contentcards:', error);
+        setError('Failed to fetch data.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (slug) {
+      fetchContentcards();
+    }
+  }, [slug]);
+
+  // Ended here
 
   useEffect(() => {
     setIsBgDark(true);
@@ -140,7 +296,8 @@ function JournalSharedPage() {
         <SwiperSlide
           className="slide-banner banner-slider bg-overlay"
           style={{
-            backgroundImage: `url(/${bannerBg})`,
+            // @ts-ignore
+            backgroundImage: journalBlackBox?.background ? `url(${process.env.NEXT_PUBLIC_BASE_URL}/${journalBlackBox?.background})` : `url(/${bannerBg})`,
             backgroundPosition: 'center',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
@@ -151,130 +308,100 @@ function JournalSharedPage() {
               <span className="wheel"></span>
             </div>
             <p>[ scroll to read ]</p>
-            {/* <div className="icon">
-            <img src="/animation.gif" alt="scroll animation" />
-          </div> */}
           </div>
           <div className="banner-slider-content relative app_container" >
-            <h3>Cognitives cities</h3>
-            <p>The foresight journal - Edition of November</p>
+            {/* @ts-ignore */}
+            <h3>{journalBlackBox ? journalBlackBox?.title : 'Cognitives cities'}</h3>
+            {/* @ts-ignore */}
+            <p>The foresight journal - Edition of {journalBlackBox ? getFullMonth(journalBlackBox?.date) : 'November'}</p>
             <p>
-              BLVCKPIXEL is a new-age company combining human ingenuity with
-              machine intelligence to provide niche expertise on foresight.
+            {/* @ts-ignore */}
+            {journalBlackBox?.description ? journalBlackBox?.description : 
+              'BLVCKPIXEL is a new-age company combining human ingenuity with   machine intelligence to provide niche expertise on foresight.'}
             </p>
           </div>
         </SwiperSlide>
 
-        {/* slide 2 */}
-        <SwiperSlide className='mindes'>
-          <div className="foreword flex flex-col justify-center bg-overlay text-justify" style={{ backgroundImage: `url(/${bannerBg})`  }} >
-            <div className='z-10 mt-4'>
-              <h1 className="text-[70px] md:text-[50px] sm:text-[30px] mt-10 mb-4" style={{ animationDelay: '0.01s', zIndex: 30 }}>
-                [ foreword ]
-              </h1>
-              <div className="fore-text">
-                {/* <pre style={{ zIndex: 100 }}>
-                What if the city itself were the first citizen ?
-
-                BLVCKPIXEL is a new-age company combining human ingenuity with machine
-                    intelligence to provide niche expertise on [foresight]. The firm forms the
-                    most unique combination of talents working in concert to reveal what lies
-                    beyond the horizon. We aim to bring our unique perspectives to industry
-                    leaders, companies, and organizations willing to anticipate, embrace, and
-                    make the course of history. In the age of AI and cognitive technologies,
-                    we form a reunion of unconventional and seasoned professionals charting
-                    new territories, as we explore emerging prospects for new technological
-                    applications and their impact on society and business.
-
-                    Welcome to the first edition of the BLVCKBOOK, the foresight journal, our
-                    magazine dedicated to future possibilities at the intersection of
-                    anthropology, the study of human cultures and societies, and technology,
-                    the application of scientific knowledge to achieve practical goals. The
-                    journal carries our vision, identifying and analyzing the driving forces
-                    reshaping our societies through various domains and industries through the
-                    lens of technological novelty.
-
-
-                With this journal, we aim to guide the reader through a journey of
-                    innovation and prospective scenarios, while we explore [what’s after
-                    next]. Our work pioneers anticipation and potential outcomes, at the edge
-                    of technological development, defining the new frontiers to come.
-
-                </pre> */}
-              <Swiper
-                onInit={(swiper) => {
-                  swiperRefForeword.current = swiper;
-                }}
-                spaceBetween={0}
-                centeredSlides={true}
-                slidesPerView={1}
-                speed={1350}
-                autoplay={{ delay: 5000, disableOnInteraction: false }} // Autoplay on, but won't stop immediately on interaction
-                effect="fade"
-                freeMode={false} // Disable free mode for controlled scroll
-                fadeEffect={{
-                  crossFade: true,
-                }}
-                modules={[Autoplay, Pagination, EffectFade, Mousewheel, Keyboard]}
-                mousewheel={{
-                  forceToAxis: true, // Horizontal scroll only
-                  sensitivity: 1.2,  // Increase sensitivity
-                  releaseOnEdges: true, // Allows scrolling past edges, if needed
-                }}
-                direction={'horizontal'} // Ensure horizontal scrolling
-                followFinger={true} // Scroll follows the finger/touch event
-                autoHeight={false}
-                threshold={10} // Increase threshold for stronger scroll resistance
-                onMouseEnter={() => {
-                  swiperRefForeword.current?.autoplay?.stop(); // Stop autoplay on mouse enter
-                }}
-                onMouseLeave={() => {
-                  swiperRefForeword.current?.autoplay?.start(); // Restart autoplay on mouse leave
-                }}
-              >
-                <SwiperSlide className={``}>
-                  <p className="para wide tick" style={{ animationDelay: '0.6s' }}>
-                    What if the city itself were the first citizen ?
-                  </p>
-                  <p className="para wide tick" style={{ animationDelay: '0.3s' }}>
-                    BLVCKPIXEL is a new-age company combining human ingenuity with machine
-                    intelligence to provide niche expertise on [foresight]. The firm forms the
-                    most unique combination of talents working in concert to reveal what lies
-                    beyond the horizon. We aim to bring our unique perspectives to industry
-                    leaders, companies, and organizations willing to anticipate, embrace, and
-                    make the course of history. In the age of AI and cognitive technologies,
-                    we form a reunion of unconventional and seasoned professionals charting
-                    new territories, as we explore emerging prospects for new technological
-                    applications and their impact on society and business.
-                  </p>
-                </SwiperSlide>
-                <SwiperSlide className={``}>
-                  <p className="para wide" style={{ animationDelay: '0.6s' }}>
-                    Welcome to the first edition of the BLVCKBOOK, the foresight journal, our
-                    magazine dedicated to future possibilities at the intersection of
-                    anthropology, the study of human cultures and societies, and technology,
-                    the application of scientific knowledge to achieve practical goals. The
-                    journal carries our vision, identifying and analyzing the driving forces
-                    reshaping our societies through various domains and industries through the
-                    lens of technological novelty.
-                  </p>
-                  <p className="para wide" style={{ animationDelay: '0.3s' }}>
-                    With this journal, we aim to guide the reader through a journey of
-                    innovation and prospective scenarios, while we explore [what’s after
-                    next]. Our work pioneers anticipation and potential outcomes, at the edge
-                    of technological development, defining the new frontiers to come.
-                  </p>
-                </SwiperSlide>
-              </Swiper>
+        {/* Editorials */}
+        <SwiperSlide className='minders'>
+        <section
+          className={uiStyle.editorialSection}
+          style={{
+            backgroundImage: editorial
+              ? `url(${process.env.NEXT_PUBLIC_BASE_URL}/storage/${editorial.background_image})`
+              : `url('/default-bg.png')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            minHeight: '100vh',
+          }}
+        >
+          <div className={uiStyle.pageContainerWide} id="blvckbook">
+            <div className={uiStyle.wrapper}>
+              <div className={uiStyle.col}>
+                <h1>[ foreword ]</h1>
+                <Swiper
+                  onInit={(swiper) => {
+                    swiperRef.current = swiper;
+                  }}
+                  spaceBetween={0}
+                  centeredSlides={true}
+                  slidesPerView={1}
+                  speed={1350}
+                  autoplay={{ delay: 5000 }}
+                  effect="fade"
+                  freeMode={true}
+                  fadeEffect={{
+                    crossFade: true,
+                  }}
+                  modules={[
+                    Autoplay,
+                    Pagination,
+                    EffectFade,
+                    Mousewheel,
+                    Keyboard,
+                  ]}
+                  className={uiStyle.editorialSwiper}
+                  mousewheel={{
+                    forceToAxis: true,
+                    sensitivity: 1,
+                    releaseOnEdges: false,
+                    invert: false,
+                  }}
+                  direction={'horizontal'}
+                  followFinger={true}
+                  autoHeight={false}
+                  threshold={15}
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  {editorialSlides.length > 0 ? (
+                    editorialSlides.map((slideContent, index) => (
+                      <SwiperSlide key={index} className={uiStyle.swiperslide}>
+                        <p>{slideContent}</p>
+                      </SwiperSlide>
+                    ))
+                  ) : (
+                    <SwiperSlide>
+                      <p>Loading editorial content...</p>
+                    </SwiperSlide>
+                  )}
+                </Swiper>
+              </div>
+              <div className={uiStyle.signature}>
+                <Image
+                  src="/signature.png"
+                  alt="Signature Author"
+                  width={250}
+                  height={250}
+                />
+                <h3>Teddy Pahagbia</h3>
               </div>
             </div>
-
-            <div className="fore-sign mx-auto text-center z-10">
-              <img width={250} height={87} src="/signature.png" alt="Author Signature" />
-              <h1 className='text-[26px]'>Teddy Pahagbia</h1>
-            </div>
           </div>
+        </section>
         </SwiperSlide>
+
+        
 
         {/* slide 4 */}
         <SwiperSlide className="slide bg-black text-white">
@@ -284,38 +411,12 @@ function JournalSharedPage() {
             </h1>
 
             <div className="grid grid-cols-2 md:grid-cols-3 gap-[50px]">
-              {[
-                {
-                  title: 'Introduction',
-                  link: '/journal/cognitive-cities/introduction',
-                },
-                {
-                  title: 'What’s now',
-                  link: '/journal/cognitive-cities/whats-now',
-                },
-                {
-                  title: 'Culture / Values / Lifestyle',
-                  link: '/journal/cognitive-cities/culture-values-lifestyle',
-                },
-                {
-                  title: 'What’s next',
-                  link: '/journal/cognitive-cities/what-next',
-                },
-                {
-                  title: 'the bridge',
-                  link: '/journal/cognitive-cities/the-bridge',
-                },
-                {
-                  title: 'What’s after next',
-                  link: '/journal/cognitive-cities/last',
-                },
-              ].map((item, index) => (
-                <div
-                  // href="/journal/[slug]/[edition]"
-                  // as={item.link}
-                  key={index + item.title + item.link}
+              {
+                contentcards.length > 0 && contentcards.map((item, index) => (
+                  <div
+                  key={index + item.blvckbox_id}
                   onClick={() => {
-                    handleJournalClick(item.link);
+                    handleJournalClick(`/journal/${slug}/${item.slug}`);
                   }}
                   className="cursor-pointer"
                 >
@@ -325,7 +426,8 @@ function JournalSharedPage() {
                     </p>
                   </div>
                 </div>
-              ))}
+                ))
+              }
             </div>
           </div>
         </SwiperSlide>

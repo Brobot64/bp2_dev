@@ -1,0 +1,420 @@
+<SwiperSlide className='mindes'>
+          <div className="foreword flex flex-col justify-center bg-overlay text-justify" style={{ backgroundImage: `url(/${bannerBg})`  }} >
+            <div className='z-10 mt-4'>
+              <h1 className="text-[70px] md:text-[50px] sm:text-[30px] mt-10 mb-4" style={{ animationDelay: '0.01s', zIndex: 30 }}>
+                [ foreword ]
+              </h1>
+              <div className="fore-text">
+                {/* <pre style={{ zIndex: 100 }}>
+                What if the city itself were the first citizen ?
+
+                BLVCKPIXEL is a new-age company combining human ingenuity with machine
+                    intelligence to provide niche expertise on [foresight]. The firm forms the
+                    most unique combination of talents working in concert to reveal what lies
+                    beyond the horizon. We aim to bring our unique perspectives to industry
+                    leaders, companies, and organizations willing to anticipate, embrace, and
+                    make the course of history. In the age of AI and cognitive technologies,
+                    we form a reunion of unconventional and seasoned professionals charting
+                    new territories, as we explore emerging prospects for new technological
+                    applications and their impact on society and business.
+
+                    Welcome to the first edition of the BLVCKBOOK, the foresight journal, our
+                    magazine dedicated to future possibilities at the intersection of
+                    anthropology, the study of human cultures and societies, and technology,
+                    the application of scientific knowledge to achieve practical goals. The
+                    journal carries our vision, identifying and analyzing the driving forces
+                    reshaping our societies through various domains and industries through the
+                    lens of technological novelty.
+
+
+                With this journal, we aim to guide the reader through a journey of
+                    innovation and prospective scenarios, while we explore [what’s after
+                    next]. Our work pioneers anticipation and potential outcomes, at the edge
+                    of technological development, defining the new frontiers to come.
+
+                </pre> */}
+              <Swiper
+                onInit={(swiper) => {
+                  swiperRefForeword.current = swiper;
+                }}
+                spaceBetween={0}
+                centeredSlides={true}
+                slidesPerView={1}
+                speed={1350}
+                autoplay={{ delay: 5000, disableOnInteraction: false }} // Autoplay on, but won't stop immediately on interaction
+                effect="fade"
+                freeMode={false} // Disable free mode for controlled scroll
+                fadeEffect={{
+                  crossFade: true,
+                }}
+                modules={[Autoplay, Pagination, EffectFade, Mousewheel, Keyboard]}
+                mousewheel={{
+                  forceToAxis: true, // Horizontal scroll only
+                  sensitivity: 1.2,  // Increase sensitivity
+                  releaseOnEdges: true, // Allows scrolling past edges, if needed
+                }}
+                direction={'horizontal'} // Ensure horizontal scrolling
+                followFinger={true} // Scroll follows the finger/touch event
+                autoHeight={false}
+                threshold={10} // Increase threshold for stronger scroll resistance
+                onMouseEnter={() => {
+                  swiperRefForeword.current?.autoplay?.stop(); // Stop autoplay on mouse enter
+                }}
+                onMouseLeave={() => {
+                  swiperRefForeword.current?.autoplay?.start(); // Restart autoplay on mouse leave
+                }}
+              >
+                <SwiperSlide className={``}>
+                  <p className="para wide tick" style={{ animationDelay: '0.6s' }}>
+                    What if the city itself were the first citizen ?
+                  </p>
+                  <p className="para wide tick" style={{ animationDelay: '0.3s' }}>
+                    BLVCKPIXEL is a new-age company combining human ingenuity with machine
+                    intelligence to provide niche expertise on [foresight]. The firm forms the
+                    most unique combination of talents working in concert to reveal what lies
+                    beyond the horizon. We aim to bring our unique perspectives to industry
+                    leaders, companies, and organizations willing to anticipate, embrace, and
+                    make the course of history. In the age of AI and cognitive technologies,
+                    we form a reunion of unconventional and seasoned professionals charting
+                    new territories, as we explore emerging prospects for new technological
+                    applications and their impact on society and business.
+                  </p>
+                </SwiperSlide>
+                <SwiperSlide className={``}>
+                  <p className="para wide" style={{ animationDelay: '0.6s' }}>
+                    Welcome to the first edition of the BLVCKBOOK, the foresight journal, our
+                    magazine dedicated to future possibilities at the intersection of
+                    anthropology, the study of human cultures and societies, and technology,
+                    the application of scientific knowledge to achieve practical goals. The
+                    journal carries our vision, identifying and analyzing the driving forces
+                    reshaping our societies through various domains and industries through the
+                    lens of technological novelty.
+                  </p>
+                  <p className="para wide" style={{ animationDelay: '0.3s' }}>
+                    With this journal, we aim to guide the reader through a journey of
+                    innovation and prospective scenarios, while we explore [what’s after
+                    next]. Our work pioneers anticipation and potential outcomes, at the edge
+                    of technological development, defining the new frontiers to come.
+                  </p>
+                </SwiperSlide>
+              </Swiper>
+              </div>
+            </div>
+
+            <div className="fore-sign mx-auto text-center z-10">
+              <img width={250} height={87} src="/signature.png" alt="Author Signature" />
+              <h1 className='text-[26px]'>Teddy Pahagbia</h1>
+            </div>
+          </div>
+        </SwiperSlide>
+
+         {/* <SwiperSlide
+              className=""
+              style={{
+                // paddingLeft: '70px',
+                // paddingRight: '70px',
+                height: '100%',
+              }}
+            >
+              <div className="banner-slider-content">
+                <h3>Cognitives cities</h3>
+                <h4>The foresight journal - Edition of November</h4>
+                <p>
+                  BLVCKPIXEL is a new-age company combining human ingenuity with
+                  machine intelligence to provide niche expertise on foresight.
+                </p>
+                <button
+                  onClick={() => {
+                    router.push('/journal/first');
+                  }}
+                >
+                  Click [ here ] to read the journal.
+                </button>
+              </div>
+            </SwiperSlide> */}
+
+            {/* <SwiperSlide
+              className=""
+              style={{
+                height: '100%',
+              }}
+            >
+              <div className="banner-slider-content">
+                <h3>The rise of the AI</h3>
+                <h4>The foresight journal - Edition of October</h4>
+                <p>
+                  BLVCKPIXEL is a new-age company combining human ingenuity with
+                  machine intelligence to provide niche expertise on foresight.
+                </p>
+                <button
+                  onClick={() => {
+                    router.push('/journal/first');
+                  }}
+                >
+                  Click [ here ] to read the journal.
+                </button>
+              </div>
+            </SwiperSlide> */}
+
+            {/* <SwiperSlide
+              className=""
+              style={{
+                height: '100%',
+              }}
+            >
+              <div className="banner-slider-content">
+                <h3>Cognitives cities</h3>
+                <h4>The foresight journal - Edition of September</h4>
+                <p>
+                  BLVCKPIXEL is a new-age company combining human ingenuity with
+                  machine intelligence to provide niche expertise on foresight.
+                </p>
+                <button
+                  onClick={() => {
+                    router.push('/journal/first');
+                  }}
+                >
+                  Click [ here ] to read the journal.
+                </button>
+              </div>
+            </SwiperSlide> */}
+
+
+
+            Content cards:
+
+            {[
+                {
+                  title: 'Introduction',
+                  link: '/journal/cognitive-cities/introduction',
+                },
+                {
+                  title: 'What’s now',
+                  link: '/journal/cognitive-cities/whats-now',
+                },
+                {
+                  title: 'Culture / Values / Lifestyle',
+                  link: '/journal/cognitive-cities/culture-values-lifestyle',
+                },
+                {
+                  title: 'What’s next',
+                  link: '/journal/cognitive-cities/what-next',
+                },
+                {
+                  title: 'the bridge',
+                  link: '/journal/cognitive-cities/the-bridge',
+                },
+                {
+                  title: 'What’s after next',
+                  link: '/journal/cognitive-cities/last',
+                },
+              ].map((item, index) => (
+                <div
+                  // href="/journal/[slug]/[edition]"
+                  // as={item.link}
+                  key={index + item.title + item.link}
+                  onClick={() => {
+                    handleJournalClick(item.link);
+                  }}
+                  className="cursor-pointer"
+                >
+                  <div className="border-[3px] md:border-[8px] text-center flex items-center justify-center h-[100px] md:h-[200px] w-[100px] md:w-[300px]">
+                    <p className="text-[12px] md:text-[15px] font-bold">
+                      {item.title}
+                    </p>
+                  </div>
+                </div>
+              ))}
+
+
+
+
+{
+    "current_page": 1,
+    "data": [
+        {
+            "id": 3,
+            "title": "Test Title",
+            "slug": "test-title",
+            "description": "some main description",
+            "teaser_description": "Some teasaer description",
+            "date": "2024-08-26",
+            "blvckbox_id": 1,
+            "contentcard_id": 5,
+            "user_id": null,
+            "created_at": "2024-08-26T16:41:21.000000Z",
+            "updated_at": "2024-08-26T16:41:21.000000Z",
+            "meta_keywords": "test1,test2",
+            "images": [
+                {
+                    "id": 7,
+                    "blvckcard_id": 3,
+                    "image_path": "storage\/blvckcards\/images\/66ccb0313f18f_variousmetals.png",
+                    "created_at": "2024-08-26T16:41:21.000000Z",
+                    "updated_at": "2024-08-26T16:41:21.000000Z",
+                    "type": "image"
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "title": "History and Evolution of Urban Planning",
+            "slug": "history-and-evolution-of-urban-planning",
+            "description": "As urban landscapes evolve, the progression from smart to cognitive cities emerges as a testament to our collective ambition to harmonize technology with the human spirit. This journey is not merely about integrating digital infrastructures into the city's veins but about re-imagining urban spaces as living, breathing entities that resonate with our deepest needs for connection and understanding.\r\n\r\nIn the early stages of urban development, the focus was on order and efficiency, structuring the chaos of natural landscapes into organized grids and predictable patterns. The smart city represented the apex of this effort, embodying an ideal where technology served as the backbone of urban efficiency, safety, and connectivity. Yet, this vision, for all its merits, remained grounded in the mechanical, viewing the city as a complex but ultimately lifeless machine.\r\n\r\nThe leap to cognitive cities introduces a crucial shift, viewing urban environments as mirrors to the human consciousness itself. This shift is deeply entwined with the anthropology of urban planning, a discipline that examines how cities reflect and influence the cultural, social, and behavioral patterns of their inhabitants. Anthropology in urban planning serves as a bridge, connecting the structural design of cities with the intricate tapestry of human life that fills them. It seeks to understand the symbiotic relationship between urban spaces and their communities, ensuring that cities not only serve practical needs but also nurture the well-being and cultural identity of their residents.",
+            "teaser_description": "We\u2019re leaping from Smart to Cognitive Cities, where urban landscapes transform into vibrant, empathetic entities. These spaces aren\u2019t merely efficient\u2014they're reflections of our deepest needs for connection and understanding. The world of Cognitive Cities is a vision for the future where every corner of the city feels like home, evolving with us and celebrating our unique human stories.",
+            "date": "2024-08-29",
+            "blvckbox_id": 1,
+            "contentcard_id": 5,
+            "user_id": 1,
+            "created_at": "2024-08-29T08:21:08.000000Z",
+            "updated_at": "2024-08-29T08:21:08.000000Z",
+            "meta_keywords": "history-and-evolution-of-urban-planning",
+            "images": [
+                {
+                    "id": 31,
+                    "blvckcard_id": 8,
+                    "image_path": "\/storage\/blvckcards\/9vIDg9vYgO5qdOccT23wFXBIJ7JvtZBgQQt09faX.jpg",
+                    "created_at": "2024-09-03T11:05:18.000000Z",
+                    "updated_at": "2024-09-03T11:05:18.000000Z",
+                    "type": "image"
+                },
+                {
+                    "id": 32,
+                    "blvckcard_id": 8,
+                    "image_path": "\/storage\/blvckcards\/6pzVqTczZH0vM5qRK4VagtD5CYRzcZ8mluYi4vST.jpg",
+                    "created_at": "2024-09-03T11:05:18.000000Z",
+                    "updated_at": "2024-09-03T11:05:18.000000Z",
+                    "type": "image"
+                }
+            ]
+        },
+        {
+            "id": 11,
+            "title": "Technology is reshaping the City and the Human Experience",
+            "slug": "technology-is-reshaping-the-city-and-the-human-experience",
+            "description": "By integrating the insights of anthropology, cognitive cities are envisioned not just as habitats but as dynamic participants in our daily lives, capable of learning, adapting, and most importantly, empathizing with the diverse stories of human experience.\r\n\r\nThis approach champions cities that are designed with an awareness of the human element, reflecting a commitment to create spaces that are inclusive, responsive, and resonant with the emotional and cultural dimensions of community life. This approach acknowledges that our relationship with our cities is reciprocal, as we shape them, they in turn shape us, influencing our moods, behaviors, and even our sense of identity.\r\n\r\nThis evolution reflects a broader shift in our approach to technology and architecture, one that places human experience at its core. It challenges us to envision urban spaces as canvases for innovation, not only in the technological sense but in how they contribute to the tapestry of human experience. In doing so, it calls on us to re-imagine the essence of urban planning as a discipline that merges analytical precision with the fluidity of artistic expression, crafting cities that are not only smart but profoundly cognitive. Through the lens of anthropology, urban planning transcends its traditional boundaries, becoming a discipline that not only shapes the physical landscape but also cultivates the social and cultural fabric of urban living.",
+            "teaser_description": "Envision cities as empathetic spaces, shaping and reflecting the rich tapestry of human experience.",
+            "date": "2024-09-03",
+            "blvckbox_id": 1,
+            "contentcard_id": 5,
+            "user_id": 1,
+            "created_at": "2024-09-03T09:51:40.000000Z",
+            "updated_at": "2024-09-03T09:51:40.000000Z",
+            "meta_keywords": "cognitive cities, anthropology, urban planning, human experience, inclusive design, smart cities, cultural fabric, technology",
+            "images": [
+                {
+                    "id": 29,
+                    "blvckcard_id": 11,
+                    "image_path": "\/storage\/blvckcards\/Gb4huudJdrjLqrUXvPCJf2jXCHaHbY0Cv5eEWULC.png",
+                    "created_at": "2024-09-03T11:04:40.000000Z",
+                    "updated_at": "2024-09-03T11:04:40.000000Z",
+                    "type": "image"
+                },
+                {
+                    "id": 30,
+                    "blvckcard_id": 11,
+                    "image_path": "\/storage\/blvckcards\/g9gjp7Bn7978uuZPiI2PhwkGMmiGPqK4PupJgiLr.png",
+                    "created_at": "2024-09-03T11:04:40.000000Z",
+                    "updated_at": "2024-09-03T11:04:40.000000Z",
+                    "type": "image"
+                }
+            ]
+        },
+        {
+            "id": 12,
+            "title": "Designing the City as a Living System",
+            "slug": "designing-the-city-as-a-living-system",
+            "description": "Just as consciousness emerges from the depth of thought and reflection, so too does the conception of cognitive cities arise from a profound understanding of human needs and environmental harmony. This initial phase transcends traditional urban planning by embedding intelligence and empathy into the very foundation of city design. It's an acknowledgment that cities, much like individuals, possess the capacity to learn, adapt, and evolve. Planners and architects, in this light, become akin to psychologists, reading the underlying needs of the urban populace and translating them into spaces that reflect and foster human flourishing.\r\n\r\nThe choice of materials in constructing cognitive cities is a deliberate act of sustainability and innovation. Imagine materials not just as static elements but as living components of the city's ecosystem, self-healing concrete that mends its own fractures, photosynthetic facades that cleanse the air, and transparent solar panels that cloak buildings in a mantle of energy independence. These materials speak to a future where cities not only stand against the test of time and climate but also contribute positively to the environment, mirroring the symbiotic relationship between form and function.\r\n\r\nDesigning the city as a living system involves organically integrating all urban elements into a cohesive whole. Just as the systems of a living organism work in harmony to sustain life, so must the components of a cognitive city operate in concert. This holistic approach transforms urban environments into thriving ecosystems, ensuring the city can adapt and flourish in the face of future challenges.",
+            "teaser_description": "It's alive! The City as a Conscious Ecosystem\r\nCognitive Cities are not just about technology; they\u2019re dynamic systems that learn, adapt, and grow with its residents. Self-repairing concrete and energy-harvesting facades turn cities into resilient, responsive ecosystems. Welcome to the future of urban living where every element is part of a harmonious whole.",
+            "date": "2024-09-03",
+            "blvckbox_id": 1,
+            "contentcard_id": 5,
+            "user_id": 1,
+            "created_at": "2024-09-03T11:03:48.000000Z",
+            "updated_at": "2024-09-03T11:03:48.000000Z",
+            "meta_keywords": "living,system",
+            "images": [
+                {
+                    "id": 27,
+                    "blvckcard_id": 12,
+                    "image_path": "\/storage\/blvckcards\/aQZTcA3ROH6NCCKP9aekEZOgPYRuNFAvm165AXAL.jpg",
+                    "created_at": "2024-09-03T11:03:48.000000Z",
+                    "updated_at": "2024-09-03T11:03:48.000000Z",
+                    "type": "image"
+                },
+                {
+                    "id": 28,
+                    "blvckcard_id": 12,
+                    "image_path": "\/storage\/blvckcards\/bdn4KzHrqmk6ixRm8tJit5RiQSI80GFDe4Eb6ilf.jpg",
+                    "created_at": "2024-09-03T11:03:48.000000Z",
+                    "updated_at": "2024-09-03T11:03:48.000000Z",
+                    "type": "image"
+                }
+            ]
+        },
+        {
+            "id": 13,
+            "title": "Humans, Nature, and Technology Converge to Create a New Reality",
+            "slug": "humans-nature-and-technology-converge-to-create-a-new-reality",
+            "description": "Construction techniques in the cognitive city narrative are a fusion of artistry and efficiency. Modular building and 3D printing emerge not merely as methods but as mediums of expression, allowing for the rapid realization of visionary ideas, more cost-effective, and less labor-intensive building processes. These techniques embody the ethos of adaptability and resilience, enabling urban spaces to morph in response to future demands (or These methods allow for greater flexibility in design and can be easily adapted or upgraded as the needs of the city evolve).\r\n\r\nThe integration of smart technologies (sensors and IoT devices) during the construction phase weaves a neural network through the city's infrastructure, laying the groundwork for an urban environment that is responsive, truly interactive, intuitive, and seamlessly integrated, capable of communicating with city services, residents, and each other to optimize energy use, traffic flow, and public safety.\r\n\r\nUltimately, the convergence of humans, nature, and technology in cognitive cities drives a new paradigm of urban living. It is a vision where innovation is harmoniously aligned with ecological principles, and where the built environment evolves dynamically with the needs of its inhabitants through technology. This holistic synthesis ensures that cities are not only sustainable but also vibrant, adaptive, and resilient, fostering a future where both people and the planet thrive in unison.",
+            "teaser_description": "The Great Convergence of Everything\r\n\r\nIn Cognitive Cities, building techniques transcend traditional methods, merging art with innovation through modular and 3D printing. Integrated smart tech weaves a responsive neural network, optimizing everything from energy use to public safety. This is the Great Convergence\u2014humans, nature, and technology creating sustainable, vibrant, and resilient ecosystem in-sync with Gaia.",
+            "date": "2024-09-03",
+            "blvckbox_id": 1,
+            "contentcard_id": 5,
+            "user_id": 1,
+            "created_at": "2024-09-03T11:42:27.000000Z",
+            "updated_at": "2024-09-03T11:42:27.000000Z",
+            "meta_keywords": "humans-nature-and-technology-converge-to-create-a-new-reality",
+            "images": [
+                {
+                    "id": 33,
+                    "blvckcard_id": 13,
+                    "image_path": "\/storage\/blvckcards\/cvbxmAF4kJeTYzo761pFIWdfNqCGoLDfjKdb9b8U.png",
+                    "created_at": "2024-09-03T11:42:27.000000Z",
+                    "updated_at": "2024-09-03T11:42:27.000000Z",
+                    "type": "image"
+                },
+                {
+                    "id": 34,
+                    "blvckcard_id": 13,
+                    "image_path": "\/storage\/blvckcards\/hfGz3xIZp6pkVL6tPeDvyAZpNKBJJjkoFQCTmvr0.png",
+                    "created_at": "2024-09-03T11:42:27.000000Z",
+                    "updated_at": "2024-09-03T11:42:27.000000Z",
+                    "type": "image"
+                }
+            ]
+        }
+    ],
+    "first_page_url": "https:\/\/api.blvckpixel.com\/api\/blvckcards\/introduction?page=1",
+    "from": 1,
+    "last_page": 2,
+    "last_page_url": "https:\/\/api.blvckpixel.com\/api\/blvckcards\/introduction?page=2",
+    "links": [
+        {
+            "url": null,
+            "label": "&laquo; Previous",
+            "active": false
+        },
+        {
+            "url": "https:\/\/api.blvckpixel.com\/api\/blvckcards\/introduction?page=1",
+            "label": "1",
+            "active": true
+        },
+        {
+            "url": "https:\/\/api.blvckpixel.com\/api\/blvckcards\/introduction?page=2",
+            "label": "2",
+            "active": false
+        },
+        {
+            "url": "https:\/\/api.blvckpixel.com\/api\/blvckcards\/introduction?page=2",
+            "label": "Next &raquo;",
+            "active": false
+        }
+    ],
+    "next_page_url": "https:\/\/api.blvckpixel.com\/api\/blvckcards\/introduction?page=2",
+    "path": "https:\/\/api.blvckpixel.com\/api\/blvckcards\/introduction",
+    "per_page": 5,
+    "prev_page_url": null,
+    "to": 5,
+    "total": 6
+}

@@ -46,6 +46,7 @@
   }
 
   .rainbow-border {
+    transition: all .3s ease-in;
     border-image: linear-gradient(
         to right,
         red 0%,

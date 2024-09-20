@@ -1,5 +1,5 @@
 'use client';
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
 import {
@@ -30,6 +30,25 @@ import MobileMenuPopup from '@/src/partials/MobileMenu';
 import Link from 'next/link';
 import { useApp } from '@/src/context/AppProvider';
 import { BiSortAlt2 } from 'react-icons/bi';
+import axios from 'axios';
+
+export const getFullMonth = (dateString: string): string => {
+  const date = new Date(dateString);
+  return date.toLocaleString('default', { month: 'long' });
+}
+
+export const useSessionStorage = (key: any, initialValue: any) => {
+  const [value, setValue] = useState(() => {
+    const storedValue = sessionStorage.getItem(key);
+    return storedValue || initialValue;
+  });
+
+  useEffect(() => {
+    sessionStorage.setItem(key, value);
+  }, [key, value]);
+
+  return [value, setValue];
+}
 
 const SharedHomeComponent: React.FC = () => {
   const [isMenuPopupVisible, setMenuPopupVisible] = useState(false);
@@ -74,6 +93,49 @@ const SharedHomeComponent: React.FC = () => {
     'journal',
     'contact | jobs',
   ];
+
+  // added by Brobot
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [bannerImg, setBannerImg] = useState('banner.jpg');
+  const journalData = [
+    { id: 1, url: '/banner1.jpg', title: 'Cognitive Cities', subtitle: 'The foresight journal', edition: 'Edition of October 2024' },
+    { id: 2, url: '/banner1.jpg', title: 'Cognitive Cities', subtitle: 'The foresight journal', edition: 'Edition of October 2024' },
+    { id: 3, url: '/banner1.jpg', title: 'Cognitive Cities', subtitle: 'The foresight journal', edition: 'Edition of October 2024' },
+    { id: 4, url: '/banner1.jpg', title: 'Cognitive Cities', subtitle: 'The foresight journal', edition: 'Edition of October 2024' },
+    { id: 5, url: '/banner1.jpg', title: 'Cognitive Cities', subtitle: 'The foresight journal', edition: 'Edition of October 2024' },
+  ];
+
+  const journalRefs = useRef([]);
+
+  const handleTPrev = () => {
+    setActiveIndex((prevIndex) => {
+      const newIndex = prevIndex === 0 ? journalData.length - 1 : prevIndex - 1;
+      scrollToActive(newIndex);
+      return newIndex;
+    });
+  };
+
+  const handleTNext = () => {
+    setActiveIndex((prevIndex) => {
+      const newIndex = prevIndex === journalData.length - 1 ? 0 : prevIndex + 1;
+      scrollToActive(newIndex);
+      return newIndex;
+    });
+  };
+
+  const scrollToActive = (index: any) => {
+    if (journalRefs.current[index]) {
+      // @ts-ignore
+      journalRefs.current[index].scrollIntoView({ behavior: 'smooth', inline: 'center' });
+    }
+  };
+
+  const handleClickDit = (data: any) => {
+    sessionStorage.setItem('blackboxBx', JSON.stringify(data));
+    router.push(`/journal/${data.slug}`);
+  }
+
+  // Ended here
 
   useEffect(() => {
     setIsOverflowYHidden(true);
@@ -492,6 +554,47 @@ const SharedHomeComponent: React.FC = () => {
     }
   }, []);
 
+
+  // useEffect
+
+  // Added By Brobot
+  interface BoxProps {
+    id: string;
+    slug: string;
+    title: string;
+    subtitle: string;
+    description: string;
+    date: string;
+    background: string;
+  }
+
+  
+  const [boxesData, setBoxesData] = useState<BoxProps[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchBoxesData = useCallback(async () => {
+    try {
+      const response = await axios.get<BoxProps[]>(`${process.env.NEXT_PUBLIC_API_BASE_URL}/blvckboxes`);
+
+      const fetchedBoxesData: BoxProps[] = Array.isArray(response.data)
+        ? response.data
+        : [];
+      setBoxesData(fetchedBoxesData);
+      setBannerBg(`${process.env.NEXT_PUBLIC_BASE_URL}/${fetchedBoxesData[0].background}`)
+    } catch (error: any) {
+      setError('Failed to fetch data');
+      console.error('Failed to fetch boxesData: ', error);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchBoxesData();
+  }, [fetchBoxesData]);
+  // Ended Here
+
   return (
     <>
       <div className="rotate-icon">
@@ -632,15 +735,12 @@ const SharedHomeComponent: React.FC = () => {
             <span className="wheel"></span>
           </div>
           <p>[ scroll to navigate ]</p>
-          {/* <div className="icon">
-            <img src="/animation.gif" alt="scroll animation" />
-          </div> */}
         </div>
 
         <SwiperSlide
           className="slide-banner"
           style={{
-            backgroundImage: `url(/${bannerBg})`,
+            backgroundImage: boxesData ? `url(${bannerBg})` : `url(/${bannerBg})`,
             backgroundPosition: 'center',
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
@@ -664,10 +764,9 @@ const SharedHomeComponent: React.FC = () => {
             modules={[Autoplay, Pagination, EffectFade, Mousewheel, Keyboard]}
             keyboard={true}
             onSlideChangeTransitionStart={(swiper) => {
-              if (swiper.realIndex === 0) {
-                setBannerBg('banner.jpg');
-              } else if (swiper.realIndex === 1) {
-                setBannerBg('banner1.jpg');
+              const currentIndex = swiper.realIndex;
+              if (boxesData && boxesData[currentIndex]) {
+                setBannerBg(`${process.env.NEXT_PUBLIC_BASE_URL}/${boxesData[currentIndex].background}`);
               }
             }}
             fadeEffect={{
@@ -675,97 +774,38 @@ const SharedHomeComponent: React.FC = () => {
             }}
             effect="fade"
           >
-            <SwiperSlide
-              className=""
-              style={{
-                // paddingLeft: '70px',
-                // paddingRight: '70px',
-                height: '100%',
-              }}
-            >
-              <div className="banner-slider-content">
-                <h3>Cognitives cities</h3>
-                <h4>The foresight journal - Edition of November</h4>
-                <p>
-                  BLVCKPIXEL is a new-age company combining human ingenuity with
-                  machine intelligence to provide niche expertise on foresight.
-                </p>
-                <button
-                  onClick={() => {
-                    router.push('/journal/first');
+            {
+              boxesData ? boxesData.map((box, index) => (
+                <SwiperSlide
+                  className=""
+                  style={{
+                    height: '100%',
                   }}
+                  key={index}
+                  onMouseEnter={() => setBannerImg(`${process.env.NEXT_PUBLIC_BASE_URL}/${box.background}`)}
                 >
-                  Click [ here ] to read the journal.
-                </button>
-              </div>
-            </SwiperSlide>
-
-            <SwiperSlide
-              className=""
-              style={{
-                height: '100%',
-              }}
-            >
-              <div className="banner-slider-content">
-                <h3>The rise of the AI</h3>
-                <h4>The foresight journal - Edition of October</h4>
-                <p>
-                  BLVCKPIXEL is a new-age company combining human ingenuity with
-                  machine intelligence to provide niche expertise on foresight.
-                </p>
-                <button
-                  onClick={() => {
-                    router.push('/journal/first');
-                  }}
-                >
-                  Click [ here ] to read the journal.
-                </button>
-              </div>
-            </SwiperSlide>
-
-            <SwiperSlide
-              className=""
-              style={{
-                height: '100%',
-              }}
-            >
-              <div className="banner-slider-content">
-                <h3>Cognitives cities</h3>
-                <h4>The foresight journal - Edition of September</h4>
-                <p>
-                  BLVCKPIXEL is a new-age company combining human ingenuity with
-                  machine intelligence to provide niche expertise on foresight.
-                </p>
-                <button
-                  onClick={() => {
-                    router.push('/journal/first');
-                  }}
-                >
-                  Click [ here ] to read the journal.
-                </button>
-              </div>
-            </SwiperSlide>
+                  <div className="banner-slider-content">
+                    <h3>{box.title}</h3>
+                    <h4>The foresight journal - Edition of {getFullMonth(box.date)}</h4>
+                    <p>
+                      { box.description ? box.description : 
+                      'BLVCKPIXEL is a new-age company combining human ingenuity with machine intelligence to provide niche expertise on foresight.'}
+                    </p>
+                    <button
+                      // onClick={() => {
+                      //   router.push(`/journal/${box.slug}`);
+                      // }}
+                      onClick={() => handleClickDit(box)}
+                    >
+                      Click [ here ] to read the journal.
+                    </button>
+                  </div>
+                </SwiperSlide>
+              ))
+               : <>Loading....</>
+            }
           </Swiper>
         </SwiperSlide>
-
-        {/* slide 1 */}
-        {/* <SwiperSlide className="slide">
-          <div className="slide-content no-brackets">
-            <h1 className="blackColor logo" style={{ animationDelay: '0.0s' }}>
-              <img
-                src="/logo-cube-transparent-bck.png"
-                alt="Image 2"
-                className="no-fade"
-              />
-              <span className={isActive ? 'active' : ''}>
-                BLVCK<span className="italics">PIXEL</span>
-              </span>
-              <span className={isActive ? '' : 'active'}>
-                the foresight company.
-              </span>
-            </h1>
-          </div>
-        </SwiperSlide> */}
 
         {/* slide 2 */}
         <SwiperSlide className="slide">
@@ -1433,11 +1473,7 @@ const SharedHomeComponent: React.FC = () => {
                   className={`
                   ${isBgDark ? 'white' : ''}
                 `}
-                  onClick={() => {
-                    if (swiperRefJournal.current) {
-                      swiperRefJournal.current.slidePrev();
-                    }
-                  }}
+                  onClick={handleTPrev}
                 >
                   <SlArrowLeft />
                 </button>
@@ -1524,7 +1560,7 @@ const SharedHomeComponent: React.FC = () => {
               </Swiper> */}
 
               <div className="sides flex gap-[25px] mx-[10px] max-w-[1010px] overflow-x-auto">
-                <Link
+                {/* <Link
                     href={'/journal/first'}
                     className="journal-container bg-cover bg-center bg-no-repeat"
                     style={{
@@ -1534,66 +1570,30 @@ const SharedHomeComponent: React.FC = () => {
                     <h6>Cognitive Cities</h6>
                     <span>The foresight fournal</span>
                     <span>Edition of October 2024</span>
-                </Link>
-                
-                <Link
+                </Link> */}
+                {journalData.map((journal, index) => (
+                  <Link
+                    key={journal.id}
                     href={'/journal/first'}
-                    className="journal-container bg-cover bg-center bg-no-repeat rainbow-border"
+                    className={`journal-container bg-cover bg-center bg-no-repeat ${activeIndex === index ? 'rainbow-border' : ''}`}
                     style={{
-                      backgroundImage: `url(/banner1.jpg)`,
+                      backgroundImage: `url(${journal.url})`,
                     }}
+                    // @ts-ignore
+                    ref={(el) => (journalRefs.current[index] = el)}
                   >
-                    <h6>Cognitive Cities</h6>
-                    <span>The foresight fournal</span>
-                    <span>Edition of October 2024</span>
-                </Link>
-                
-                <Link
-                    href={'/journal/first'}
-                    className="journal-container bg-cover bg-center bg-no-repeat"
-                    style={{
-                      backgroundImage: `url(/banner1.jpg)`,
-                    }}
-                  >
-                    <h6>Cognitive Cities</h6>
-                    <span>The foresight fournal</span>
-                    <span>Edition of October 2024</span>
-                </Link>
-                
-                <Link
-                    href={'/journal/first'}
-                    className="journal-container bg-cover bg-center bg-no-repeat"
-                    style={{
-                      backgroundImage: `url(/banner1.jpg)`,
-                    }}
-                  >
-                    <h6>Cognitive Cities</h6>
-                    <span>The foresight fournal</span>
-                    <span>Edition of October 2024</span>
-                </Link>
-                
-                <Link
-                    href={'/journal/first'}
-                    className="journal-container bg-cover bg-center bg-no-repeat"
-                    style={{
-                      backgroundImage: `url(/banner1.jpg)`,
-                    }}
-                  >
-                    <h6>Cognitive Cities</h6>
-                    <span>The foresight fournal</span>
-                    <span>Edition of October 2024</span>
-                </Link>
+                    <h6>{journal.title}</h6>
+                    <span>{journal.subtitle}</span>
+                    <span>{journal.edition}</span>
+                  </Link>
+                ))}
               </div>
 
                 <button
                 className={`
                 ${isBgDark ? 'white' : ''}
               `}
-                onClick={() => {
-                  if (swiperRefJournal.current) {
-                    swiperRefJournal.current.slideNext();
-                  }
-                }}
+                onClick={handleTNext}
               >
                 <SlArrowRight />
               </button> 
