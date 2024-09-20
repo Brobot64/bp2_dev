@@ -384,7 +384,7 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
                   effect="fade"
                 >
                   {item.images && item.images.map((image, id) => (
-                    <SwiperSlide>
+                    <SwiperSlide key={id + image.blvckcard_id}>
                       <div
                         className="h-[50vh] w-full"
                         style={{
