@@ -1,0 +1,80 @@
+type Package = {
+    id: number;
+    name: string;
+    price: number;
+    features: { [key: string]: boolean };
+  };
+  
+  const EditPackageModal = ({ editPackage, isEditingPackage, setIsEditingPackage }: any) => {
+    const [localPackage, setLocalPackage] = React.useState<Package | null>(editPackage);
+  
+    // Handle feature checkbox toggle
+    const handleFeatureChange = (featureKey: string) => {
+      if (localPackage) {
+        setLocalPackage({
+          ...localPackage,
+          features: {
+            ...localPackage.features,
+            [featureKey]: !localPackage.features[featureKey], // Toggle the feature's boolean value
+          },
+        });
+      }
+    };
+  
+    return (
+      <Modal isOpen={isEditingPackage} onClose={() => setIsEditingPackage(false)}>
+        <h1 className="text-[25px] mb-3">[ Edit Packages ]</h1>
+        <div className="editModal flex justify-between">
+          <div className="formy flex flex-col">
+            <label htmlFor="">[ name ]</label>
+            <input
+              type="text"
+              value={localPackage ? localPackage.name : ''}
+              onChange={(e) =>
+                setLocalPackage(localPackage ? { ...localPackage, name: e.target.value } : null)
+              }
+              className="border-b-2 ml-2 mb-2 outline-none"
+            />
+          </div>
+  
+          <div className="formy flex flex-col">
+            <label htmlFor="">[ price ]</label>
+            <input
+              type="number"
+              value={localPackage ? localPackage.price : ''}
+              onChange={(e) =>
+                setLocalPackage(localPackage ? { ...localPackage, price: +e.target.value } : null)
+              }
+              className="border-b-2 ml-2 mb-2 outline-none"
+            />
+          </div>
+        </div>
+  
+        <h3 className="text-orange-900 my-2">[ Features ]</h3>
+        <div className="features capitalize w-full flex flex-wrap gap-7 gap-y-1">
+          {localPackage &&
+            Object.entries(localPackage.features).map(([featureKey, isChecked]) => (
+              <div key={featureKey} className="indFt flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={isChecked}
+                  onChange={() => handleFeatureChange(featureKey)} // Toggle feature on change
+                />
+                <span>{featureKey}</span>
+              </div>
+            ))}
+        </div>
+  
+        <button
+          className="bg-slate-500 hover:bg-slate-300 cursor-pointer rounded px-5 py-1 capitalize text-white hover:text-black mt-4"
+          onClick={() => {
+            // Save the changes (update the parent state or make an API call)
+            console.log('Saving package:', localPackage);
+          }}
+        >
+          save
+        </button>
+      </Modal>
+    );
+  };
+  

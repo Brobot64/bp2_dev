@@ -3,6 +3,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import style from '../../all.module.css';
 import { FaEdit, FaTrash, FaEllipsisH, FaPlus } from 'react-icons/fa';
 import Modal from './modal';
+import MessagePopup from '../popups/MessagePopup';
 
 type Package = {
   id: number;
@@ -16,6 +17,8 @@ const predefinedFeatures = [
   'Feature 2',
   'Feature 3',
   'Feature 4',
+  'Feature 5',
+  'Feature 6'
 ];
 
 const Subscriptions: React.FC = () => {
@@ -32,10 +35,78 @@ const Subscriptions: React.FC = () => {
   const [isAddingPackage, setIsAddingPackage] = useState(false);
 
   const menuRef = useRef<HTMLDivElement>(null);
+  const [successMessage, setSuccessMessage] = useState<string>('');
+
+  // Added By Brobot
+  const [editPackage, setEditPackages] = useState<Package>();
+  const [isEditingPackage, setIsEditingPackage] = useState(false);
+  const [selectedFeatures, setSelectedFeatures] = useState<{ [key: string]: boolean }>({});
+  const handleEditingPackage = (pkg: any) => {
+    setEditPackages(pkg);
+    const initialSelected = predefinedFeatures.reduce((acc, feature) => {
+      acc[feature] = pkg.features.includes(feature); // Check if the feature is in the API data
+      return acc;
+    }, {} as { [key: string]: boolean });
+
+    setSelectedFeatures(initialSelected);
+    console.log("pkg: ", pkg);
+    setIsEditingPackage(true); 
+  };
+
+   // Handle checkbox change for features
+   const handleCheckboxChange = (feature: string) => {
+    setSelectedFeatures((prev) => ({
+      ...prev,
+      [feature]: !prev[feature], // Toggle feature selection
+    }));
+  };
+
+  const handleEditFeatureChange = (featureKey: string) => {
+    if (editPackage) {
+      setEditPackages({
+        ...editPackage,
+        features: {
+          ...editPackage.features,
+          [featureKey]: !editPackage.features[featureKey], 
+        },
+      });
+      console.log("bush: ", editPackage);
+    }
+  };
+
+  const closeSuccessMessage = () => setSuccessMessage('');
+
+  // Close error message
+  const closeErrorMessage = () => setError('');
+
+
+  const handleSave = async (id: any) => {
+    const token = localStorage.getItem('token');
+    const selectedFeatureList = Object.keys(selectedFeatures).filter(
+      (feature) => selectedFeatures[feature]
+    );
+    const updatedPackage = {
+      ...editPackage,
+      features: selectedFeatureList,
+    };
+    try {
+      const response = await axios.put(`${process.env.NEXT_PUBLIC_API_BASE_URL}/dashboard/packages/${id}`, updatedPackage, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      })
+      setSuccessMessage("Package Updated Successfully")
+    } catch (error: any) {
+      console.error(error);
+      setError('Failed to load packages.');
+    }
+  }
+
+  // Ended Here
 
   useEffect(() => {
     const fetchPackages = async () => {
-      setLoading(true);
+      // setLoading(true);
       setError('');
 
       const token = localStorage.getItem('token');
@@ -67,30 +138,59 @@ const Subscriptions: React.FC = () => {
     setFilteredPackages(filtered);
   }, [searchQuery, packages]);
 
-  const handleDelete = async () => {
-    if (window.confirm('Are you sure you want to delete the selected packages?')) {
+  // const handleDelete = async (id: any) => {
+
+  //   if (window.confirm('Are you sure you want to delete the selected packages?')) {
+  //     setLoading(true);
+  //     const token = localStorage.getItem('token');
+  //     try {
+  //       await Promise.all(selectedPackages.map(async (packageId = id) => {
+  //         await axios.delete(
+  //           `${process.env.NEXT_PUBLIC_API_BASE_URL}/dashboard/packages/${packageId}`,
+  //           {
+  //             headers: {
+  //               Authorization: `${token}`,
+  //             }
+  //           }
+  //         );
+  //       }));
+  //       setPackages(packages.filter(pkg => !selectedPackages.includes(pkg.id)));
+  //       setSelectedPackages([]);
+  //     } catch (error: any) {
+  //       setError('Failed to delete packages.');
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
+  // };
+
+  const handleDelete = async (id: any) => {
+    if (window.confirm('Are you sure you want to delete this package?')) {
       setLoading(true);
       const token = localStorage.getItem('token');
+  
       try {
-        await Promise.all(selectedPackages.map(async (packageId) => {
-          await axios.delete(
-            `${process.env.NEXT_PUBLIC_API_BASE_URL}/dashboard/packages/${packageId}`,
-            {
-              headers: {
-                Authorization: `${token}`,
-              }
+        // Delete the package by its ID
+        await axios.delete(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/dashboard/packages/${id}`,
+          {
+            headers: {
+              Authorization: `${token}`,
             }
-          );
-        }));
-        setPackages(packages.filter(pkg => !selectedPackages.includes(pkg.id)));
-        setSelectedPackages([]);
+          }
+        );
+  
+        // Update package list in state after deletion
+        setPackages(packages.filter(pkg => pkg.id !== id));
       } catch (error: any) {
-        setError('Failed to delete packages.');
+        console.error('Failed to delete package:', error);
+        setError('Failed to delete package. Please try again later.');
       } finally {
         setLoading(false);
       }
     }
   };
+  
 
   const toggleMenu = (packageId: number) => {
     setOpenMenuId(openMenuId === packageId ? null : packageId);
@@ -120,13 +220,13 @@ const Subscriptions: React.FC = () => {
 
   const indexOfLastPackage = currentPage * packagesPerPage;
   const indexOfFirstPackage = indexOfLastPackage - packagesPerPage;
-  const currentPackages = filteredPackages.slice(indexOfFirstPackage, indexOfLastPackage); // Use filteredPackages instead of packages
-  const totalPages = Math.ceil(filteredPackages.length / packagesPerPage); // Use filteredPackages.length instead of packages.length
+  const currentPackages = filteredPackages.slice(indexOfFirstPackage, indexOfLastPackage);
+  const totalPages = Math.ceil(filteredPackages.length / packagesPerPage);
 
   const handlePageChange = (pageNumber: number) => setCurrentPage(pageNumber);
 
   const handleAddPackage = () => {
-    setIsAddingPackage(true);
+    setIsAddingPackage(true); 
   };
 
   const handleFeatureChange = (feature: string, isChecked: boolean) => {
@@ -140,7 +240,27 @@ const Subscriptions: React.FC = () => {
   };
 
   const handlePackageSubmit = async () => {
-    console.log('New Package:', newPackage);
+    setError('');
+    const selectedFeatureList = Object.keys(newPackage.features).filter(
+      (feature) => newPackage.features[feature]
+    );
+    const updatedPackage = {
+      ...newPackage,
+      features: selectedFeatureList,
+    };
+    const token = localStorage.getItem('token');
+    try {
+      const data = updatedPackage;
+      console.log(data);
+      await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/dashboard/packages`, data, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
+    } catch (error: any) {
+      console.log(error);
+      setError(error);
+    }
 
     setIsAddingPackage(false);
     setNewPackage({ id: 0, name: '', price: 0, features: {} });
@@ -182,32 +302,111 @@ const Subscriptions: React.FC = () => {
               placeholder="Package Name"
               value={newPackage.name}
               onChange={(e) => setNewPackage({ ...newPackage, name: e.target.value })}
-              className={style.inputField}
+              className={`${style.inputField} border-b-2 mr-2 mb-2`}
             />
             <input
               type="number"
               placeholder="Price"
               value={newPackage.price}
               onChange={(e) => setNewPackage({ ...newPackage, price: parseFloat(e.target.value) })}
-              className={style.inputField}
+              className={`${style.inputField} border-b-2 ml-2 mb-2`}
             />
-            <div className={style.featuresContainer}>
-              <h4>Select Features</h4>
+            {/* {style.featuresContainer} */}
+            <div className="flex flex-col gap-2">
+              <h4 className='font-[600]'>Select Features</h4>
               {predefinedFeatures.map((feature) => (
                 <label key={feature} className={style.featureLabel}>
                   <input
                     type="checkbox"
                     checked={newPackage.features[feature] || false}
                     onChange={(e) => handleFeatureChange(feature, e.target.checked)}
-                    className={style.featureCheckbox}
+                    className={`${style.featureCheckbox} mx-2`}
                   />
                   {feature}
                 </label>
               ))}
             </div>
-            <button className={style.submitButton} onClick={handlePackageSubmit}>Submit</button>
-            <button className={style.cancelButton} onClick={() => setIsAddingPackage(false)}>Cancel</button>
+            <button className={`${style.submitButton} p-1 px-2 mx-2 bg-slate-300 rounded mt-2`} onClick={handlePackageSubmit}>Submit</button>
+            <button className={`${style.cancelButton}  p-1 px-2 mx-2 bg-slate-300 rounded mt-2`} onClick={() => setIsAddingPackage(false)}>Cancel</button>
           </div>
+          { error && <MessagePopup message={error} onClose={closeErrorMessage}/> }
+          { successMessage && <MessagePopup message={successMessage} onClose={closeSuccessMessage}/> }
+          { isEditingPackage && loading && <>[ loading..... ]</> }
+        </Modal>
+
+        <Modal isOpen={isEditingPackage} onClose={() => setIsEditingPackage(false)}>
+          <h1 className='text-[25px] mb-3'>[ Edit Packages ]</h1>
+          <div className="editModal flex justify-between">
+            <div className="formy flex flex-col">
+              <label htmlFor="">[ name ]</label>
+              <input type="text" value={editPackage ? editPackage.name : ''} className={`${style.inputField} border-b-2 ml-2 mb-2 outline-none`}
+              onChange={(e) => setEditPackages(
+                // @ts-ignore
+                editPackage ? { ...editPackage, name: e.target.value } : null
+                )}/>
+            </div>
+
+            <div className="formy flex flex-col">
+              <label htmlFor="">[ price ]</label>
+              <input type="number" value={editPackage ? editPackage.price : ''} className={`${style.inputField} border-b-2 ml-2 mb-2 outline-none`}
+              onChange={(e) => setEditPackages(
+                // @ts-ignore
+                editPackage ? { ...editPackage, price: e.target.value } : null
+                )} />
+            </div>
+          </div>
+          
+          <h3 className='text-orange-900 my-2'>[ Features ]</h3>
+          <div className="features capitalize w-full flex flex-wrap gap-7 gap-y-1">
+            
+            {/* {
+              editPackage && Object.entries(editPackage.features).map(([featureKey, isChecked]) => (
+                <div key={featureKey} className="indFt flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={isChecked}
+                  onChange={() => handleEditFeatureChange(featureKey)} 
+                />
+                @ts-ignore
+                <span>{predefinedFeatures[featureKey]}</span>
+              </div>
+              ))
+            } */}
+
+            {predefinedFeatures.map((feature) => (
+              <div key={feature} className="indFt flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={selectedFeatures[feature] || false}
+                  onChange={() => handleCheckboxChange(feature)}
+                />
+                <span>{feature}</span>
+              </div>
+            ))}
+            {/* <div className="indFt flex items-center gap-2">
+              <input type="checkbox" className='' name="" id="" />
+              <span>Features 1</span>
+            </div>
+
+            <div className="indFt flex items-center gap-2">
+              <input type="checkbox" name="" id="" />
+              <span>Features 2</span>
+            </div>
+
+            <div className="indFt flex items-center gap-2">
+              <input type="checkbox" name="" id="" />
+              <span>Features 3</span>
+            </div>
+
+            <div className="indFt flex items-center gap-2">
+              <input type="checkbox" name="" id="" />
+              <span>Features 4</span>
+            </div> */}
+          </div>
+
+          <button className='bg-slate-500 hover:bg-slate-300 cursor-pointer rounded px-5 py-1 capitalize text-white hover:text-black mt-4' onClick={() => handleSave(editPackage?.id)}>
+            save
+          </button>
         </Modal>
 
         {/* Rest of your component */}
@@ -266,10 +465,10 @@ const Subscriptions: React.FC = () => {
                         </button>
                         {openMenuId === pkg.id && (
             <div ref={menuRef} className={style.menu}>
-                            <button className={style.dropdownMenuItem}>
+                            <button className={style.dropdownMenuItem} onClick={() => handleEditingPackage(pkg)}>
                               <FaEdit /> Edit
                             </button>
-                            <button className={style.dropdownMenuItem}>
+                            <button className={style.dropdownMenuItem} onClick={() => handleDelete(pkg.id)}>
                               <FaTrash /> Delete
                             </button>
                           </div>

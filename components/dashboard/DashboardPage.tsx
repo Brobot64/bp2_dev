@@ -75,8 +75,23 @@ const DashboardPage: React.FC = () => {
             },
           }
         );
-        setRevenue24Hours(revenueResponse.data.revenue24Hours);
-        setRevenueData(revenueResponse.data.revenue360Days);
+        
+        setRevenue24Hours(revenueResponse.data.revenue24Hours.map ((item: any) => ({
+          item,
+          total_revenue: parseFloat(item.total_revenue), 
+        })));
+        // setRevenue24Hours(revenueResponse.data.revenue24Hours);
+        // setRevenueData(revenueResponse.data.revenue360Days.map ((item: any) => ({
+        //   item,
+        //   total_revenue: parseFloat(item.total_revenue), 
+        // })));
+
+        setRevenueData(revenueResponse.data.revenue360Days.map ((item: any) => ({
+          ...item,
+          total_revenue: parseFloat(item.total_revenue), 
+        })));
+
+        // setRevenueData(revenueResponse.data.revenue360Days);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -125,7 +140,7 @@ const DashboardPage: React.FC = () => {
               <h3 style={{ marginTop: '40px' }}>
                 Revenue Statistics (Last 24 Hours to 360 Days)
               </h3>
-              <ResponsiveContainer width="100%" height={400}>
+              {/* <ResponsiveContainer width="100%" height={400}>
                 <LineChart data={revenueData}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis
@@ -149,6 +164,69 @@ const DashboardPage: React.FC = () => {
                     dataKey="total_revenue"
                     stroke="#82ca9d"
                     activeDot={{ r: 8 }}
+                  />
+                </LineChart>
+              </ResponsiveContainer> */}
+
+
+              {/* <ResponsiveContainer width="100%" height={400}>
+                <LineChart data={revenue24Hours}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis
+                    dataKey="date"
+                    tickFormatter={(date) =>
+                      new Date(date).toLocaleDateString()
+                    }
+                  />
+                  <YAxis />
+                  <Tooltip
+                    formatter={(value: number | string) => {
+                      if (typeof value === 'number') {
+                        return `$${value.toFixed(2)}`;
+                      }
+                      return `$${parseFloat(value).toFixed(2)}`;
+                    }}
+                    labelFormatter={(label) => `Date: ${new Date(label).toLocaleDateString()}`}
+                  />
+                  <Legend />
+                  <Line
+                    type="monotone"
+                    dataKey="total_revenue"
+                    stroke="#82ca9d"
+                    activeDot={{ r: 8 }}
+                    name="Last 24 Hours"
+                    data={revenueData}
+                  />
+                </LineChart>
+              </ResponsiveContainer> */}
+
+              <ResponsiveContainer width="100%" height={400}>
+                <LineChart data={revenueData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis
+                    dataKey="date"
+                    tickFormatter={(date) =>
+                      new Date(date).toLocaleDateString()
+                    }
+                  />
+                  <YAxis />
+                  <Tooltip
+                    formatter={(value: number | string) => {
+                      if (typeof value === 'number') {
+                        return `$${value.toFixed(2)}`;
+                      }
+                      return `$${parseFloat(value).toFixed(2)}`;
+                    }}
+                    labelFormatter={(label) => `Date: ${new Date(label).toLocaleDateString()}`}
+                  />
+                  <Legend />
+                  <Line
+                    type="monotone"
+                    dataKey="total_revenue"
+                    stroke="#8884d8"
+                    activeDot={{ r: 8 }}
+                    name="Last 360 Days"
+                    data={revenueData}
                   />
                 </LineChart>
               </ResponsiveContainer>
