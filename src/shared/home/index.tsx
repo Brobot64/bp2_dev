@@ -789,19 +789,21 @@ const SharedHomeComponent: React.FC = () => {
                   key={index}
                   onMouseEnter={() => setBannerImg(`${process.env.NEXT_PUBLIC_BASE_URL}/${box.background}`)}
                 >
-                  <div className="banner-slider-content">
+                  <div className="relative banner-slider-content">
                     <h3>{box.title}</h3>
                     <h4>The foresight journal - Edition of {getFullMonth(box.date)}</h4>
                     <p>
-                      { box.description ? box.description : 
-                      'BLVCKPIXEL is a new-age company combining human ingenuity with machine intelligence to provide niche expertise on foresight.'}
+                      { box.subtitle ? box.subtitle : 
+                      'Creating and accelerating critical advantages through cutting-edge strategy and operations'}
                     </p>
                     <span className='albeit'>Click <button
                       onClick={() => handleClickDit(box)}
                     >
                       [ here ] 
                     </button> to read the journal.</span>
-                  </div>
+
+                    <p className='text-white absolute bottom-3 left-5'> BLVCK<span className='italic'>BOOK</span>  &nbsp; | &nbsp; the foresight journal. </p>
+                    </div>
                 </SwiperSlide>
               ))
                : <>Loading....</>
@@ -1351,7 +1353,7 @@ const SharedHomeComponent: React.FC = () => {
                 )}
               </div>
 
-              <div className="flex w-fit mx-auto">
+              <div className="stew flex w-fit mx-auto md:w-full md:max-w-full sm:w-full sm:max-w-full">
                 <button
                   className={`
                   ${isBgDark ? 'white' : ''}
@@ -1362,7 +1364,7 @@ const SharedHomeComponent: React.FC = () => {
                 </button>
 
                 
-              <div className="sides flex gap-[25px] mx-[10px] max-w-[1010px] overflow-x-auto">
+              <div className="sides flex gap-[25px] mx-[10px] max-w-[1010px] overflow-x-auto md:mx-0">
                 {boxesData.map((journal, index) => (
                   <Link
                     key={journal.id}

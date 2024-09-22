@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import MessagePopup from '../popups/MessagePopup';
+import EmailComposer from './EmailComposer';
 
 const Emails: React.FC = () => {
   const [to, setTo] = useState('');
@@ -60,6 +61,8 @@ const closeErrorMessage = () => {
           value={body}
           onChange={(e) => setBody(e.target.value)}
         ></textarea>
+
+        {/* <EmailComposer/> */}
 
         <input
           type="submit"

@@ -75,6 +75,16 @@
   overflow-y: scroll;
 }
 
+
+
+@media (max-width: 768px) {
+  .editorialSection .wrapper {
+    padding: 0;
+  }
+  .editorialSection .wrapper .col {
+    width: 100%;
+  }
+}
 .pageContainerWide {
   width: 100%;
   margin-right: auto;
@@ -83,6 +93,7 @@
   padding-left: 15px;
   }
  
+
  .header{
     position: fixed;
     top: 0;
@@ -467,6 +478,13 @@
 .vinyl:hover {
   background: none;
   background-size: 120%;
+}
+
+@media (max-width: 768px) {
+  .pageContainerWide {
+    padding: 15px !important;
+    margin: 0px;
+  }
 }
 /* Ended Here */
 
