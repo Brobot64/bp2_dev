@@ -214,6 +214,16 @@ const Sidebar: React.FC = () => {
           </button>
           {menuOpen5 && (
             <div className={style.items}>
+              <Link href="/dashboard/email" legacyBehavior>
+                <a
+                  className={`${
+                    pathname === '/dashboard/email' ? style.active : ''
+                  } w-full`}
+                >
+                  Emails
+                </a>
+              </Link>
+
               <Link href="/dashboard/settings" legacyBehavior>
                 <a
                   className={`${

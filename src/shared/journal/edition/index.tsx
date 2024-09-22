@@ -216,6 +216,22 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
   //   })),
   // }));
 
+  // const handleGOBack = () => {
+  //   const previousUrl = document.referrer;
+  //   const newUrl = new URL(previousUrl);
+  //   newUrl.searchParams.set('cntnt', '1');
+  //   router.push(newUrl.toString());
+  // }
+
+  const handleGOBack = () => {
+    const currentUrl = window.location.href;
+    const url = new URL(currentUrl);
+    const paths = url.pathname.split('/');
+    paths.pop();
+    url.pathname = paths.join('/');
+    url.searchParams.set('cntnt', '1');
+    router.push(url.toString());
+  };
 
   const handleNext = () => {
     const nextIndex = (currentIndex + 1) % data.length;
@@ -231,9 +247,10 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
           openSignInPopup();
           setEditProfile(true);
         }}
-        handleGoBack={() => {
-          router.back();
-        }}
+        // () => {
+        //   router.back();
+        // }
+        handleGoBack={handleGOBack}
         openSearchPopup={() => {}}
         openSignInPopup={openSignInPopup}
         displayGoBack={true}

@@ -198,14 +198,21 @@ function JournalSharedPage({ slug }: { slug?: string }) {
     }
   }, []);
 
+
   useEffect(() => {
     const tile: any = sessionStorage.getItem('blackboxBx');
     setJournalBlackBox(JSON.parse(tile));
-    const fint = searchies.get('bnxn');
-    if (fint === "" || fint === null) {
+    
+    const fint = searchies.has('bnxn');
+    if (!fint) {
       goToSpecificSlide(1);
+      if(searchies.has('cntnt')) {
+        goToNextSlide();
+      }
+      return;
     }
   }, []);
+  
 
   useEffect(() => {
     const fetchContentcards = async () => {

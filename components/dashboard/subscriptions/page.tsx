@@ -49,7 +49,6 @@ const Subscriptions: React.FC = () => {
     }, {} as { [key: string]: boolean });
 
     setSelectedFeatures(initialSelected);
-    console.log("pkg: ", pkg);
     setIsEditingPackage(true); 
   };
 
@@ -99,6 +98,8 @@ const Subscriptions: React.FC = () => {
     } catch (error: any) {
       console.error(error);
       setError('Failed to load packages.');
+    } finally {
+      setIsEditingPackage(false);
     }
   }
 
@@ -138,32 +139,7 @@ const Subscriptions: React.FC = () => {
     setFilteredPackages(filtered);
   }, [searchQuery, packages]);
 
-  // const handleDelete = async (id: any) => {
-
-  //   if (window.confirm('Are you sure you want to delete the selected packages?')) {
-  //     setLoading(true);
-  //     const token = localStorage.getItem('token');
-  //     try {
-  //       await Promise.all(selectedPackages.map(async (packageId = id) => {
-  //         await axios.delete(
-  //           `${process.env.NEXT_PUBLIC_API_BASE_URL}/dashboard/packages/${packageId}`,
-  //           {
-  //             headers: {
-  //               Authorization: `${token}`,
-  //             }
-  //           }
-  //         );
-  //       }));
-  //       setPackages(packages.filter(pkg => !selectedPackages.includes(pkg.id)));
-  //       setSelectedPackages([]);
-  //     } catch (error: any) {
-  //       setError('Failed to delete packages.');
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   }
-  // };
-
+  
   const handleDelete = async (id: any) => {
     if (window.confirm('Are you sure you want to delete this package?')) {
       setLoading(true);
@@ -180,7 +156,6 @@ const Subscriptions: React.FC = () => {
           }
         );
   
-        // Update package list in state after deletion
         setPackages(packages.filter(pkg => pkg.id !== id));
       } catch (error: any) {
         console.error('Failed to delete package:', error);
@@ -359,19 +334,7 @@ const Subscriptions: React.FC = () => {
           <h3 className='text-orange-900 my-2'>[ Features ]</h3>
           <div className="features capitalize w-full flex flex-wrap gap-7 gap-y-1">
             
-            {/* {
-              editPackage && Object.entries(editPackage.features).map(([featureKey, isChecked]) => (
-                <div key={featureKey} className="indFt flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={isChecked}
-                  onChange={() => handleEditFeatureChange(featureKey)} 
-                />
-                @ts-ignore
-                <span>{predefinedFeatures[featureKey]}</span>
-              </div>
-              ))
-            } */}
+            
 
             {predefinedFeatures.map((feature) => (
               <div key={feature} className="indFt flex items-center gap-2">
@@ -383,25 +346,6 @@ const Subscriptions: React.FC = () => {
                 <span>{feature}</span>
               </div>
             ))}
-            {/* <div className="indFt flex items-center gap-2">
-              <input type="checkbox" className='' name="" id="" />
-              <span>Features 1</span>
-            </div>
-
-            <div className="indFt flex items-center gap-2">
-              <input type="checkbox" name="" id="" />
-              <span>Features 2</span>
-            </div>
-
-            <div className="indFt flex items-center gap-2">
-              <input type="checkbox" name="" id="" />
-              <span>Features 3</span>
-            </div>
-
-            <div className="indFt flex items-center gap-2">
-              <input type="checkbox" name="" id="" />
-              <span>Features 4</span>
-            </div> */}
           </div>
 
           <button className='bg-slate-500 hover:bg-slate-300 cursor-pointer rounded px-5 py-1 capitalize text-white hover:text-black mt-4' onClick={() => handleSave(editPackage?.id)}>
