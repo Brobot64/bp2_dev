@@ -146,7 +146,7 @@ const closeErrorMessage = () => {
           <ul className=''>
             {
               users.map((user) => (
-                <li onClick={() => toggleSelectUser(user.id)}>
+                <li onClick={() => toggleSelectUser(user.id)} key={user.id}>
                   <input 
                     type="checkbox"
                     // onChange={() => toggleSelectUser(user.id)}
