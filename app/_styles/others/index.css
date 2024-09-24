@@ -125,5 +125,10 @@ body {
   transform: translateX(-3px);
 }
 
+.description p {
+  font-size: 20px !important;
+  margin-bottom: 10px;
+  letter-spacing: .5px;
+}
 
   

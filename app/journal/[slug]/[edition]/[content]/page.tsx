@@ -33,6 +33,7 @@ import Description from '@components/common/description';
 import { FaShareNodes } from 'react-icons/fa6';
 import { useApp } from '@/src/context/AppProvider';
 import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
+import { Helmet } from 'react-helmet';
 
 interface MediaProps {
   id: number;
@@ -185,6 +186,15 @@ const BlvckCardDetail: React.FC = () => {
 
   return (
     <Fragment>
+      <Helmet>
+        <meta property="og:title" content={blvckCard.title} />
+        <meta property="og:description" content={blvckCard.description} />
+        <meta property="og:image" content={`${process.env.NEXT_PUBLIC_BASE_URL}/${blvckCard.images[0].image_path})`} />
+        <meta property="og:url" content={`${process.env.NEXT_WEBSITE_URL}/journal/${slug}/${edition}/${blvckCard.slug}`} />
+        <meta property="twitter:title" content={blvckCard.title} />
+        <meta property="twitter:description" content={blvckCard.description} />
+        <meta property="twitter:image" content={`${process.env.NEXT_PUBLIC_BASE_URL}/${blvckCard.images[0].image_path})`} />
+      </Helmet>
       <Header
         fixedNav={true}
         openEditProfile={() => {

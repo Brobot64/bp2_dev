@@ -11,6 +11,8 @@ import {
   FacebookIcon,
   LinkedinIcon,
   XIcon,
+  WhatsappShareButton,
+  WhatsappIcon,
 } from 'react-share';
 import './Popup.css';
 
@@ -27,14 +29,14 @@ interface SharePopupProps {
 
 function Sharepopup({ onClose, post }: SharePopupProps) {
 
-  // const baseUrl = 'https://yourwebsite.com';
-  const shareUrl = `${process.env.NEXT_WEBSITE_URL}${post.slug}`;
+  const baseUrl = `${process.env.NEXT_WEBSITE_URL}` || 'https://bp2-dev.vercel.app/'
+  const shareUrl = `${baseUrl}${post.slug}`;
   const hashtags = post.meta_keywords.split(',').map((tag) => tag.trim());
   const previewImage = post.images.length > 0 ? post.images[0].image_path : '';
 
-  // useEffect(() => {
-  //   console.log('shareurl: ', shareUrl)
-  // }, [])
+  useEffect(() => {
+    console.log('shareurl: ', shareUrl)
+  }, [])
   
 
 
@@ -55,16 +57,23 @@ function Sharepopup({ onClose, post }: SharePopupProps) {
 
             {/* LinkedIn */}
             <li>
-              <LinkedinShareButton url={shareUrl} title={post.title}>
+              <LinkedinShareButton url={shareUrl} title={post.title} summary={post.description}>
                 <LinkedinIcon size={32} round={true} />
               </LinkedinShareButton>
             </li>
 
             {/* Twitter */}
             <li>
-              <TwitterShareButton url={shareUrl} title={post.title} hashtags={hashtags}>
+              <TwitterShareButton url={shareUrl} title={post.title}>
+              {/* hashtags={hashtags} */}
                 <XIcon size={32} round={true} />
               </TwitterShareButton>
+            </li>
+
+            <li>
+              <WhatsappShareButton url={shareUrl} title={post.title} htmlTitle={post.title}>
+                <WhatsappIcon size={32} round={true}/>
+              </WhatsappShareButton>
             </li>
 
             {/* Instagram (Note: Instagram does not support direct share via web) */}
