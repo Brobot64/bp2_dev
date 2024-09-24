@@ -1,6 +1,6 @@
 'use client';
 import Header from '@/src/partials/Header';
-import React, {useEffect, Fragment, useRef, useCallback } from 'react';
+import React, {useEffect, Fragment, useRef, useCallback, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore from 'swiper';
 import {
@@ -27,6 +27,8 @@ import { useAuth } from '@/src/context/AuthProvider';
 import SignInPopup from '@/src/auth/popups/SignInPopup';
 import Loader from '@/src/component/loader';
 import axios from 'axios';
+import { FaShareNodes } from 'react-icons/fa6';
+import { title } from 'process';
 
 
 // Added By Brobot
@@ -49,6 +51,7 @@ interface DataType {
   teaser_description: string;
   created_at: string;
   updated_at: string;
+  meta_keywords?: any,
   images: ImageType[];
 }
 
@@ -149,6 +152,27 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
         fetchData(currentPage + 1);
       }
     }, [inView, fetchData, currentPage, hasMore]);
+
+    // Share DAta
+  const [currentShareData, setCurrentShareData] = useState<{
+    title: string;
+    slug: string;
+    description: string;
+    meta_keywords: string;
+    images: Array<{ id: number; image_path: string; type: string }>
+  }| null>(null);
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+
+    // const openShareModal = (e: React.MouseEvent<HTMLButtonElement>, url: string, title: string, desc: string) => {
+    //   e.preventDefault()
+    //   setCurrentShareData({ url, title, desc });
+    //   setModalOpen(true);
+    // };
+
+  const openShareModal = (data: any) => {
+    setCurrentShareData(data);
+    setSharePopupVisible(true);
+  }
   
   // Ended Here
   const [editProfile, setEditProfile] = React.useState(false);
@@ -264,8 +288,11 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
       ) : (
         <Fragment>
           {' '}
-          {sharePopupVisible && (
-            <Sharepopup onClose={() => setSharePopupVisible(false)} />
+          {sharePopupVisible && currentShareData && (
+            <Sharepopup 
+              onClose={() => setSharePopupVisible(false)} 
+              post={currentShareData} 
+            />
           )}
           {signInPopupVisible && (
             <SignInPopup
@@ -279,7 +306,7 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
 
             <>
             {data.map((item, inds) => (
-              <div key={inds}>
+              <div key={inds} className='container'>
                 <Swiper
                   slidesPerView={1}
                   navigation={false}
@@ -313,7 +340,7 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
                   {item.images && item.images.map((image, id) => (
                     <SwiperSlide key={id + image.blvckcard_id}>
                       <div
-                        className="h-[50vh] w-full"
+                        className="h-[50vh] w-full md:h-[65vh]"
                         style={{
                           backgroundImage: image.image_path ? `url(${process.env.NEXT_PUBLIC_BASE_URL}/${image.image_path})` :'url(/banner.jpg)',
                           backgroundPosition: 'center',
@@ -333,10 +360,16 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
                         {item.title}
                       </h1>
                       <button
-                        className="text-sm "
-                        onClick={() => setSharePopupVisible(true)}
+                        className="text-sm flex items-center gap-2"
+                        onClick={() => openShareModal({
+                            title: item.title,
+                            slug: `/journal/${slug}/${edition}/${item.slug}`,
+                            description: item.description,
+                            meta_keywords: item?.meta_keywords,
+                            images: item.images
+                        })}
                       >
-                        [ share ]
+                        <FaShareNodes/> [ share ]
                       </button>
                     </div>
 

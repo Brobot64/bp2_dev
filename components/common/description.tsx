@@ -16,8 +16,8 @@ function Description({ text }: { text: string }) {
         >
           {isExpanded ? text : text.slice(0, 450) + '...'}
         </p>
-        <button onClick={toggleReadMore} className="inline text-sm font-normal">
-          [ {isExpanded ? 'read less' : 'read more'} ]
+        <button onClick={toggleReadMore} className="inline text-sm font-normal text-gray-400 italic">
+          &nbsp;[ &nbsp;{isExpanded ? 'read less' : 'read more'} &nbsp;]
         </button>
       </div>
     </>

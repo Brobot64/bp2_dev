@@ -1,42 +1,80 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   RiInstagramLine,
   RiLinkedinLine,
   RiTwitterXLine,
 } from 'react-icons/ri';
+import {
+  FacebookShareButton,
+  LinkedinShareButton,
+  TwitterShareButton,
+  FacebookIcon,
+  LinkedinIcon,
+  XIcon,
+} from 'react-share';
 import './Popup.css';
 
-function Sharepopup({ onClose }: { onClose: () => void }) {
+interface SharePopupProps {
+  onClose: () => void;
+  post: {
+    title: string;
+    slug: string;
+    description: string;
+    meta_keywords: string;
+    images: Array<{ id: number; image_path: string; type: string }>;
+  };
+}
+
+function Sharepopup({ onClose, post }: SharePopupProps) {
+
+  // const baseUrl = 'https://yourwebsite.com';
+  const shareUrl = `${process.env.NEXT_WEBSITE_URL}${post.slug}`;
+  const hashtags = post.meta_keywords.split(',').map((tag) => tag.trim());
+  const previewImage = post.images.length > 0 ? post.images[0].image_path : '';
+
+  // useEffect(() => {
+  //   console.log('shareurl: ', shareUrl)
+  // }, [])
+  
+
+
   return (
     <div className="popup-container black">
       <div className="popup default !h-fit">
         <div className="desc">
-          <h4 className="text-2xl">Interesting discovery ?</h4>
-          <p>Select where you want to share ...</p>
-          {/* <div dangerouslySetInnerHTML={{ __html: desc }} /> */}
-          <ul>
+          <h4 className="text-2xl">Interesting discovery?</h4>
+          <p>Select where you want to share...</p>
+
+          <ul className="share-list">
+            {/* Facebook */}
             <li>
-              <a
-                href="https://www.linkedin.com/company/blvckpixel/"
-                target="_blank"
-              >
-                <RiLinkedinLine />
-              </a>
+              <FacebookShareButton url={shareUrl} hashtag={`#${hashtags[0]}`}>
+                <FacebookIcon size={32} round={true} />
+              </FacebookShareButton>
             </li>
+
+            {/* LinkedIn */}
             <li>
-              <a
-                href="https://x.com/blvck_pixel?s=21&t=36xMYPaBwcR-VBWxhM3eqw"
-                target="_blank"
-              >
-                <RiTwitterXLine />
-              </a>
+              <LinkedinShareButton url={shareUrl} title={post.title}>
+                <LinkedinIcon size={32} round={true} />
+              </LinkedinShareButton>
             </li>
+
+            {/* Twitter */}
+            <li>
+              <TwitterShareButton url={shareUrl} title={post.title} hashtags={hashtags}>
+                <XIcon size={32} round={true} />
+              </TwitterShareButton>
+            </li>
+
+            {/* Instagram (Note: Instagram does not support direct share via web) */}
             <li>
               <a
-                href="https://www.instagram.com/_blvckpixel_?igsh=MzhjNno0ZGhtZDZo"
+                href="https://www.instagram.com/_blvckpixel_"
                 target="_blank"
+                rel="noopener noreferrer"
               >
-                <RiInstagramLine />
+                <RiInstagramLine size={32} />
               </a>
             </li>
           </ul>

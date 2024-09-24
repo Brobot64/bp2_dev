@@ -1,32 +1,5 @@
 @import './popup.css';
 
-
-
-/* p.p-slide {
-    scrollbar-width: none;
-    color: red;
-  }
-  
-  p.p-slide::-webkit-scrollbar {
-  display: none;
-  }
-  
-  p.p-slide {
-  -webkit-overflow-scrolling: touch;
-  overflow: scroll;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  } */
-
-
-
-/* Firefox (uncomment to work in Firefox, although other properties will not work!)  */
-/** {
-  scrollbar-width: thin;
-  scrollbar-color: #397524 #F2FDFF;
-}*/
-
-/* Chrome, Edge and Safari */
 p.p-slide::-webkit-scrollbar {
     height: 10px;
     width: 10px;
@@ -120,6 +93,36 @@ body {
 .email-select ul li input{
     height: 16px;
     width: 16px;
+}
+
+.blog-nav {
+
+}
+
+.blog-nav button {
+  padding: 10px 23px;
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 10px;
+  align-items: center;
+  font-size: 12px;
+  transition: transform 0.4s ease-in-out, color 0.4s ease-in-out;
+}
+
+.blog-nav button:hover {
+  border-radius: 10px;
+  color: #903296;
+  transform: translateX(3px);
+  background-color: #68696c53;
+}
+
+
+.blog-nav button.left {
+  flex-direction: row;
+}
+
+.blog-nav button.left:hover {
+  transform: translateX(-3px);
 }
 
 
