@@ -10,6 +10,9 @@ import {
 } from 'react-icons/fa';
 import { format, formatDistanceToNow } from 'date-fns';
 import { useAuth } from '../../../src/context/AuthProvider';
+import { FaDownload } from 'react-icons/fa6';
+import Modal from '../subscriptions/modal';
+import ExportCsv from '@/src/popups/ExportCsv';
 
 type User = {
   id: number;
@@ -28,6 +31,7 @@ type User = {
 const ManageUsers: React.FC = () => {
   const { loggedUser } = useAuth();
   const [users, setUsers] = useState<User[]>([]);
+  const [selUsers, setSelUsers] = useState<User[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -36,6 +40,7 @@ const ManageUsers: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [usersPerPage] = useState(10);
   const [openMenuId, setOpenMenuId] = useState<number | null>(null);
+  const [isExport, setisExport] = useState(false);
 
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -105,6 +110,12 @@ const ManageUsers: React.FC = () => {
     }
   };
 
+  const handleExport = () => {
+    // setSelUsers(users.filter((user) => !selectedUsers.includes(user.id)));
+    setisExport(true);
+  }
+  
+
   const toggleMenu = (userId: number) => {
     setOpenMenuId(openMenuId === userId ? null : userId);
   };
@@ -149,12 +160,21 @@ const ManageUsers: React.FC = () => {
           </div>
           <div className={style.options}>
             {selectedUsers.length > 0 && (
-              <button
+              <div className='w-fit flex gap-5 items-center'>
+                <button
+                  className={`btn ${style.massDeleteButton}`}
+                  onClick={handleDelete}
+                >
+                  <FaTrash /> Delete All
+                </button>
+
+                <button
                 className={`btn ${style.massDeleteButton}`}
-                onClick={handleDelete}
+                onClick={handleExport}
               >
-                <FaTrash /> Delete All
+                <FaDownload /> Export
               </button>
+              </div>
             )}
             <input
               type="text"
@@ -281,6 +301,10 @@ const ManageUsers: React.FC = () => {
                 </button>
               ))}
             </div>
+
+            <Modal isOpen={isExport} onClose={() => setisExport(false)}>
+              <ExportCsv data={users} selectedUsers={selectedUsers}/>
+            </Modal>
           </div>
         </div>
       </div>

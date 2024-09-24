@@ -1,1 +1,126 @@
 @import './popup.css';
+
+
+
+/* p.p-slide {
+    scrollbar-width: none;
+    color: red;
+  }
+  
+  p.p-slide::-webkit-scrollbar {
+  display: none;
+  }
+  
+  p.p-slide {
+  -webkit-overflow-scrolling: touch;
+  overflow: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  } */
+
+
+
+/* Firefox (uncomment to work in Firefox, although other properties will not work!)  */
+/** {
+  scrollbar-width: thin;
+  scrollbar-color: #397524 #F2FDFF;
+}*/
+
+/* Chrome, Edge and Safari */
+p.p-slide::-webkit-scrollbar {
+    height: 10px;
+    width: 10px;
+  }
+  p.p-slide::-webkit-scrollbar-track {
+    border-radius: 5px;
+    background-color: #f2fdff00;
+    border: 2px solid #ffffff00;
+  }
+  
+  p.p-slide::-webkit-scrollbar-track:hover {
+    background-color: #b8c0c217;
+  }
+  
+  p.p-slide::-webkit-scrollbar-track:active {
+    background-color: #b8c0c224;
+  }
+  
+  p.p-slide::-webkit-scrollbar-thumb {
+    border-radius: 20px;
+    background-color: #323631c8;
+    border: 3px solid #ffffff20;
+  }
+  
+  p.p-slide::-webkit-scrollbar-thumb:hover {
+    background-color: #383c37e8;
+  }
+  
+  p.p-slide::-webkit-scrollbar-thumb:active {
+    background-color: #383c37e8;
+  }
+
+.email-select {
+    padding: 10px 20px;
+    overflow-y: auto;
+    font-size: 16px;
+}
+
+
+body {
+    --sb-track-color: #BFDEEC;
+    --sb-thumb-color: #0d0e0e;
+    --sb-size: 4px;
+  }
+  
+  .email-select::-webkit-scrollbar {
+    width: var(--sb-size)
+  }
+  
+  .email-select::-webkit-scrollbar-track {
+    background: var(--sb-track-color);
+    border-radius: 3px;
+  }
+  
+  .email-select::-webkit-scrollbar-thumb {
+    background: var(--sb-thumb-color);
+    border-radius: 3px;
+    
+  }
+  
+  @supports not selector(::-webkit-scrollbar) {
+    .email-select {
+      scrollbar-color: var(--sb-thumb-color)
+                       var(--sb-track-color);
+    }
+  }
+
+.email-select ul{
+    list-style: none;
+}
+
+.email-select ul li{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 7px;
+    cursor: pointer;
+    border-radius: 7px;
+    margin-bottom: 3px;
+    transition: background-color .3s ease-in;
+}
+
+.email-select ul li:hover{
+    background-color: #94a3b8;
+}
+
+.email-select ul li span {
+    font-size: 16px !important;
+}
+
+.email-select ul li input{
+    height: 16px;
+    width: 16px;
+}
+
+
+  

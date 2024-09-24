@@ -128,6 +128,11 @@ const SharedHomeComponent: React.FC = () => {
     });
   };
 
+  const handleHover = (index: any) => {
+    setActiveIndex(index);
+    scrollToActive(index);
+  };
+
   const scrollToActive = (index: any) => {
     if (journalRefs.current[index]) {
       // @ts-ignore
@@ -782,7 +787,7 @@ const SharedHomeComponent: React.FC = () => {
             {
               boxesData ? boxesData.map((box, index) => (
                 <SwiperSlide
-                  className=""
+                  className="relative"
                   style={{
                     height: '100%',
                   }}
@@ -791,7 +796,7 @@ const SharedHomeComponent: React.FC = () => {
                 >
                   <div className="relative banner-slider-content">
                     <h3>{box.title}</h3>
-                    <h4>The foresight journal - Edition of {getFullMonth(box.date)}</h4>
+                    {/* <h4>The foresight journal - Edition of {getFullMonth(box.date)}</h4> */}
                     <p>
                       { box.subtitle ? box.subtitle : 
                       'Creating and accelerating critical advantages through cutting-edge strategy and operations'}
@@ -802,8 +807,9 @@ const SharedHomeComponent: React.FC = () => {
                       [ here ] 
                     </button> to read the journal.</span>
 
-                    <p className='text-white absolute bottom-3 left-5'> BLVCK<span className='italic'>BOOK</span>  &nbsp; | &nbsp; the foresight journal. </p>
-                    </div>
+                  </div>
+
+                  <p className='text-white absolute bottom-3 right-5'> BLVCK<span className='italic'>BOOK</span>  &nbsp; | &nbsp; the foresight journal. </p>
                 </SwiperSlide>
               ))
                : <>Loading....</>
@@ -1301,8 +1307,8 @@ const SharedHomeComponent: React.FC = () => {
           style={{ backgroundColor: '#000', color: 'white' }}
         >
           <div className="slide-content">
-            <h1 className="fade-animation" style={{ animationDelay: '0.01s', display: 'flex', fontWeight: '700' }}>
-              The BLVCKBOOK
+            <h1 className="fade-animation w-fit" style={{ animationDelay: '0.01s', display: 'flex', fontWeight: '700' }}>
+              &nbsp;&nbsp;the BLVCK<span className='italic'>BOOK</span>&nbsp;&nbsp;
             </h1>
             <p
               className="italics fade-animation"
@@ -1353,7 +1359,7 @@ const SharedHomeComponent: React.FC = () => {
                 )}
               </div>
 
-              <div className="stew flex w-fit mx-auto md:w-full md:max-w-full sm:w-full sm:max-w-full">
+              <div className="stew flex w-fit mx-auto ">
                 <button
                   className={`
                   ${isBgDark ? 'white' : ''}
@@ -1370,6 +1376,7 @@ const SharedHomeComponent: React.FC = () => {
                     key={journal.id}
                     href={`/journal/${journal.slug}/?bnxn=1`}
                     className={`relative journal-container bg-cover bg-center bg-no-repeat ${activeIndex === index ? 'rainbow-border' : ''} rounded-lg`}
+                    onMouseEnter={() => handleHover(index)} 
                     style={{
                       backgroundImage: `url(${process.env.NEXT_PUBLIC_BASE_URL}/${journal.background})`,
                     }}

@@ -376,17 +376,15 @@ function JournalSharedPage({ slug }: { slug?: string }) {
                     swiperRef.current = swiper;
                   }}
                   spaceBetween={0}
-                  centeredSlides={true}
-                  slidesPerView={1}
+                  centeredSlides={false}  // Not centering to allow free scrolling
+                  slidesPerView={'auto'}  // Allows scrolling through the entire content
                   speed={1350}
-                  autoplay={{ delay: 5000 }}
+                  freeMode={true}  // Keep free mode for smooth scroll experience
                   effect="fade"
-                  freeMode={true}
                   fadeEffect={{
                     crossFade: true,
                   }}
                   modules={[
-                    Autoplay,
                     Pagination,
                     EffectFade,
                     Mousewheel,
@@ -399,25 +397,35 @@ function JournalSharedPage({ slug }: { slug?: string }) {
                     releaseOnEdges: false,
                     invert: false,
                   }}
-                  direction={'horizontal'}
+                  direction={'horizontal'}  // Retain horizontal scroll
                   followFinger={true}
                   autoHeight={false}
                   threshold={15}
                   onMouseEnter={handleMouseEnter}
                   onMouseLeave={handleMouseLeave}
                 >
-                  {editorialSlides.length > 0 ? (
-                    editorialSlides.map((slideContent, index) => (
-                      <SwiperSlide key={index} className={uiStyle.swiperslide}>
-                        <p>{slideContent}</p>
-                      </SwiperSlide>
-                    ))
-                  ) : (
+                  {editorialSlides.length > 0 ? 
+                  // (
+                  //   editorialSlides.map((slideContent, index) => (
+                  //     <SwiperSlide key={index} className={uiStyle.swiperslide}>
+                  //       <p>{slideContent}</p>
+                  //     </SwiperSlide>
+                  //   ))
+                  // )
+                  (
+                    <SwiperSlide className={uiStyle.swiperslide}>
+                      <p className='h-full max-h-[320px] overflow-y-auto p-slide py-[20px]'>
+                        {editorial?.section}
+                      </p>
+                    </SwiperSlide>
+                  )
+                   : (
                     <SwiperSlide>
                       <p>Loading editorial content...</p>
                     </SwiperSlide>
                   )}
                 </Swiper>
+
               </div>
               <div className={uiStyle.signature}>
                 <Image
