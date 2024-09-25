@@ -314,7 +314,7 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
                   autoplay={false}
                   speed={1000}
                   loop={true}
-                  className="mySwiper1 border-[5px] border-white"
+                  className="mySwiper1 border-[5px] rounded-[15px] overflow-hidden border-white"
                   spaceBetween={0}
                   modules={[
                     Autoplay,

@@ -85,7 +85,7 @@ const SharedHomeComponent: React.FC = () => {
   const [isActive, setIsActive] = useState(true);
   const [showSecondImage, setShowSecondImage] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [bannerBg, setBannerBg] = useState('banner.jpg');
+  const [bannerBg, setBannerBg] = useState('');
   const [years, setYears] = useState<number[]>([2024, 2023, 2022, 2021, 2020]);
   const [selectedYear, setSelectedYear] = useState<number>(2024);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -101,7 +101,7 @@ const SharedHomeComponent: React.FC = () => {
 
   // added by Brobot
   const [activeIndex, setActiveIndex] = useState(0);
-  const [bannerImg, setBannerImg] = useState('banner.jpg');
+  const [bannerImg, setBannerImg] = useState('');
   const journalData = [
     { id: 1, url: '/banner1.jpg', title: 'Cognitive Cities', subtitle: 'The foresight journal', edition: 'Edition of October 2024' },
     { id: 2, url: '/banner1.jpg', title: 'Cognitive Cities', subtitle: 'The foresight journal', edition: 'Edition of October 2024' },
@@ -809,7 +809,7 @@ const SharedHomeComponent: React.FC = () => {
 
                   </div>
 
-                  <p className='text-white absolute bottom-3 right-5'> BLVCK<span className='italic'>BOOK</span>  &nbsp; | &nbsp; the foresight journal. </p>
+                  <p className='text-white absolute bottom-3 right-5 text-[16px]'> BLVCK<span className='italic'>BOOK</span>  &nbsp; | &nbsp; the foresight journal. </p>
                 </SwiperSlide>
               ))
                : <>Loading....</>
@@ -1359,10 +1359,10 @@ const SharedHomeComponent: React.FC = () => {
                 )}
               </div>
 
-              <div className="stew flex w-fit mx-auto ">
+              <div className="swiper-container stew flex w-fit mx-auto ">
                 <button
                   className={`
-                  ${isBgDark ? 'white' : ''}
+                  ${isBgDark ? 'white' : ''} navigationArrow left
                 `}
                   onClick={handleTPrev}
                 >
@@ -1375,7 +1375,7 @@ const SharedHomeComponent: React.FC = () => {
                   <Link
                     key={journal.id}
                     href={`/journal/${journal.slug}/?bnxn=1`}
-                    className={`relative journal-container bg-cover bg-center bg-no-repeat ${activeIndex === index ? 'rainbow-border' : ''} rounded-lg`}
+                    className={`relative journal-container bg-cover bg-center bg-no-repeat ${activeIndex === index ? 'rainbow-border' : ''} rounded-lg `}
                     onMouseEnter={() => handleHover(index)} 
                     style={{
                       backgroundImage: `url(${process.env.NEXT_PUBLIC_BASE_URL}/${journal.background})`,
@@ -1387,7 +1387,8 @@ const SharedHomeComponent: React.FC = () => {
                     ref={(el) => (journalRefs.current[index] = el)}
                   >
                     <h6>{journal.title}</h6>
-                    <span>{journal.subtitle}</span>
+                    <span>BLVCK<span className='italic'>BOOK</span>  |  the foresight journal. 
+                    </span>
                     {/* <span>{journal.edition}</span> */}
 
                     <div className="absolute matbtm capitalize bottom-2 right-2">
@@ -1401,7 +1402,7 @@ const SharedHomeComponent: React.FC = () => {
 
                 <button
                 className={`
-                ${isBgDark ? 'white' : ''}
+                ${isBgDark ? 'white' : ''} navigationArrow right
               `}
                 onClick={handleTNext}
               >

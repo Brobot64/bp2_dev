@@ -480,6 +480,16 @@ function JournalSharedPage({ slug }: { slug?: string }) {
                 ))
               }
             </div>
+
+            <div className={`${uiStyle.signature}`}>
+              <Image
+                src="/signature.png"
+                alt="Signature Author"
+                width={250}
+                height={250}
+              />
+              <h3>Teddy Pahagbia</h3>
+            </div>
           </div>
         </SwiperSlide>
       </Swiper>

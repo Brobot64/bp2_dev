@@ -134,7 +134,11 @@
 .mySwiper > .swiper-wrapper > .slide-banner .banner-slider-content span.albeit{
   width: fit-content;
   color: #ffffff;
-  font-size: 22px;
+  font-size: 16px;
+}
+
+.mySwiper > .swiper-wrapper > .slide-banner .banner-slider-content span.albeit button {
+  font-size: 16px;
 }
 
 .mySwiper > .swiper-wrapper > .slide-banner .banner-slider-content button:hover {
@@ -800,9 +804,9 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  height: 220px;
-  width: 320px;
-  min-width: 320px;
+  height: 190px;
+  width: 300px;
+  min-width: 300px;
   padding: 10px;
   z-index: 1;
 }
