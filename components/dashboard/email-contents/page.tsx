@@ -3,6 +3,7 @@ import MessagePopup from '../popups/MessagePopup';
 import EmailComposer from './EmailComposer';
 import axios from 'axios';
 import { useAuth } from '@/src/context/AuthProvider';
+import QuillEditor from './QuillEditor';
 
 
 type User = {
@@ -24,6 +25,10 @@ const Emails: React.FC = () => {
   const [to, setTo] = useState('');
   const [subject, setSubject] = useState('');
   const [body, setBody] = useState('');
+  const [message, setMessage] = useState<string>('');
+  const handleBodyChange = (content: string) => {
+    setMessage(content); 
+  };
   const [loading, setLoading] = useState(true);
   const [isEmailSelect, setIsEmailSelect] = useState(false);
   const [error, setError] = useState<string>('');
@@ -149,7 +154,6 @@ const closeErrorMessage = () => {
                 <li onClick={() => toggleSelectUser(user.id)} key={user.id}>
                   <input 
                     type="checkbox"
-                    // onChange={() => toggleSelectUser(user.id)}
                     checked={selectedUsers.includes(user.id)}
                   />
                   <span>{user.email}</span>
@@ -166,12 +170,16 @@ const closeErrorMessage = () => {
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
         />
-        <textarea
+        {/* <textarea
           className='p-1 flex-grow border-[2px] outline-none rounded'
           placeholder='Email body'
           value={body}
           onChange={(e) => setBody(e.target.value)}
-        ></textarea>
+        ></textarea> */}
+
+        <div className='p-1 flex-grow border-[2px] outline-none rounded overflow-hidden'>
+          <QuillEditor value={message} onChange={handleBodyChange} />
+        </div>
 
         {/* <EmailComposer/> */}
 

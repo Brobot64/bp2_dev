@@ -8,6 +8,7 @@ import { FaTrash, FaUpload } from 'react-icons/fa';
 import slugify from 'slugify';
 import { useAuth } from '../../../../src/context/AuthProvider';
 import { useDropzone } from 'react-dropzone';
+import QuillEditor from '@components/dashboard/email-contents/QuillEditor';
 
 type Blvckbox = {
   id: number;
@@ -46,6 +47,9 @@ const BlvckcardForm: React.FC = () => {
   >([]);
   const imageInputRef = useRef<HTMLInputElement | null>(null);
   const { loggedUser, token } = useAuth();
+  const handleBodyChange = (content: string) => {
+    setDescription(content); 
+  };
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: (acceptedFiles) => {
@@ -301,7 +305,7 @@ const BlvckcardForm: React.FC = () => {
 
             <div className={style.formGroup}>
               <label htmlFor="description">Description</label>
-              <textarea
+              {/* <textarea
                 id="description"
                 value={description}
                 placeholder="Enter Description"
@@ -309,7 +313,9 @@ const BlvckcardForm: React.FC = () => {
                 style={{ resize: 'none' }}
                 onChange={(e) => setDescription(e.target.value)}
                 required
-              ></textarea>
+              ></textarea> */}
+
+              <QuillEditor value={description} onChange={handleBodyChange}/>
               <small className={style.helpText}>
                 Provide a detailed description of your Blvckcard. Maximum length
                 allowed is 2000 characters.

@@ -414,9 +414,14 @@ function JournalSharedPage({ slug }: { slug?: string }) {
                   // )
                   (
                     <SwiperSlide className={uiStyle.swiperslide}>
-                      <p className='h-full max-h-[320px] overflow-y-auto p-slide py-[20px]'>
-                        {editorial?.section}
-                      </p>
+                      
+                      <div 
+                        className='fashk h-full max-h-[320px] overflow-y-auto p-slide py-[20px]'
+                        dangerouslySetInnerHTML={{
+                          __html: `${editorial?.section}`, // Passing the variable
+                        }}
+                      >
+                      </div>
                     </SwiperSlide>
                   )
                    : (

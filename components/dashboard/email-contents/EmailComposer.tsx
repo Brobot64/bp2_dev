@@ -18,7 +18,7 @@ const EmailComposer = () => {
     <div>
       <h2>Compose Email</h2>
       <EmailEditor content={emailContent} onContentChange={handleContentChange} />
-      <button onClick={handleSubmit}>Send Email</button>
+      {/* <button onClick={handleSubmit}>Send Email</button> */}
     </div>
   );
 };

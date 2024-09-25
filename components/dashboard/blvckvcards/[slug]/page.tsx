@@ -6,6 +6,7 @@ import style from '../../../all.module.css';
 import MessagePopup from '../../popups/MessagePopup';
 import { FaTrash, FaUpload } from 'react-icons/fa';
 import { useDropzone } from 'react-dropzone';
+import QuillEditor from '@components/dashboard/email-contents/QuillEditor';
 
 type Blvckbox = {
   id: number;
@@ -33,6 +34,9 @@ const EditBlvckcardForm: React.FC<EditBlvckcardFormProps> = ({ slug }) => {
   const [title, setTitle] = useState('');
   const [slugState, setSlugState] = useState('');
   const [description, setDescription] = useState('');
+  const handleBodyChange = (content: string) => {
+    setDescription(content); 
+  };
   const [metakeywords, setMetaKeywords] = useState('');
   const [teaserdescription, setTeaserCardDescription] = useState('');
   const [date, setDate] = useState('');
@@ -345,14 +349,16 @@ const updateKeywords = () => {
 </div>
             <div className={style.formGroup}>
               <label htmlFor="description">Description</label>
-              <textarea
+              {/* <textarea
                 id="description"
                 value={description}
                 placeholder='Enter Description'
                 onChange={(e) => setDescription(e.target.value)}
                 required
                 rows={12}
-              />
+              /> */}
+
+              <QuillEditor value={description} onChange={handleBodyChange}/>
               <small className={style.helpText}>Provide a detailed description of your Blvckcard (maximum 1000 characters).</small>
             </div>
             <div className={style.formGroup}>

@@ -7,12 +7,13 @@ import MessagePopup from '../../popups/MessagePopup';
 import { FaTrash, FaUpload } from 'react-icons/fa';
 import slugify from 'slugify'; 
 import { useDropzone, Accept } from 'react-dropzone';
+import QuillEditor from '@components/dashboard/email-contents/QuillEditor';
 
 const BlvckboxForm: React.FC = () => {
     const [title, setTitle] = useState('');
     const [slug, setSlug] = useState('');
     const [subtitle, setSubtitle] = useState('');
-    const [description, setDescription] = useState('');
+    const [description, setDescription] = useState('Description...');
     const [date, setDate] = useState('');
     const [background, setBackground] = useState<File | null>(null);
     const [backgroundPreview, setBackgroundPreview] = useState<string | null>(null);
@@ -121,6 +122,11 @@ const BlvckboxForm: React.FC = () => {
         }
     };
 
+    const handleBodyChange = (content: string) => {
+        setDescription(content); 
+      };
+    
+
     const closeSuccessMessage = () => {
         setSuccessMessage('');
     };
@@ -170,16 +176,20 @@ const BlvckboxForm: React.FC = () => {
                                 required
                             />
                         </div>
-                        {/* <div className={style.formGroup}>
+
+                        <div className={style.formGroup}>
                             <label htmlFor="description">Description</label>
-                            <textarea
+                            {/* <textarea
                                 id="description"
                                 value={description}
                                 placeholder='Enter Description'
                                 onChange={(e) => setDescription(e.target.value)}
                                 required
-                            ></textarea>
-                        </div> */}
+                            ></textarea> */}
+
+                            <QuillEditor value={description} onChange={handleBodyChange}/>
+                        </div>
+
                         <div className={style.formGroup}>
                             <label htmlFor="date">Date</label>
                             <input
