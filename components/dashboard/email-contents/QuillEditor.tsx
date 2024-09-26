@@ -1,5 +1,11 @@
+import dynamic from 'next/dynamic';
 import React, { useState } from 'react';
-import ReactQuill from 'react-quill';
+// import ReactQuill from 'react-quill';
+
+const ReactQuill = dynamic(() => import('react-quill'), { 
+  ssr: false,
+  loading: () => <p>Loading ...</p>
+});
 import 'react-quill/dist/quill.snow.css';
 
 interface QuillEditorProps {
