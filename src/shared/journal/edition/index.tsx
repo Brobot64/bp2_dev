@@ -94,6 +94,55 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
       triggerOnce: false,
     });
   
+    // const fetchData = useCallback(
+    //   async (page: number) => {
+    //     if (!hasMore) return;
+  
+    //     try {
+    //       const response = await axios.get(
+    //         `${process.env.NEXT_PUBLIC_API_BASE_URL}/blvckcards/${edition}?page=${page}`
+    //       );
+    //       const responseData = response.data;
+  
+    //       const newData: DataType[] = responseData.data.map((item: any) => ({
+    //         id: item.id,
+    //         title: item.title,
+    //         slug: item.slug,
+    //         description: item.description,
+    //         teaser_description: item.teaser_description,
+    //         date: item.date,
+    //         blvckbox_id: item.blvckbox_id,
+    //         contentcard_id: item.contentcard_id,
+    //         user_id: item.user_id,
+    //         created_at: item.created_at,
+    //         updated_at: item.updated_at,
+    //         meta_keywords: item.meta_keywords,
+    //         images: item.images.map((img: any) => ({
+    //           id: img.id,
+    //           blvckcard_id: img.blvckcard_id,
+    //           image_path: img.image_path,
+    //           created_at: img.created_at,
+    //           updated_at: img.updated_at,
+    //         })),
+    //       }));
+  
+    //       if (newData.length > 0) {
+    //         // setData((prevData) => [...prevData, ...newData]);
+    //         setData(newData);
+    //         setCurrentPage(page);
+    //       } else {
+    //         setHasMore(false);
+    //       }
+    //       setIsLoading(false);
+    //     } catch (error) {
+    //       console.error('Error fetching data:', error);
+    //       setError('Failed to fetch data');
+    //       setIsLoading(false);
+    //     }
+    //   },
+    //   [newSlug]
+    // );
+  
     const fetchData = useCallback(
       async (page: number) => {
         if (!hasMore) return;
@@ -127,8 +176,7 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
           }));
   
           if (newData.length > 0) {
-            // setData((prevData) => [...prevData, ...newData]);
-            setData(newData);
+            setData((prevData) => [...prevData, ...newData]);
             setCurrentPage(page);
           } else {
             setHasMore(false);
@@ -140,9 +188,9 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
           setIsLoading(false);
         }
       },
-      [newSlug]
+      [newSlug, hasMore]
     );
-  
+
     useEffect(() => {
       fetchData(1);
     }, [fetchData]);
@@ -152,6 +200,7 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
         fetchData(currentPage + 1);
       }
     }, [inView, fetchData, currentPage, hasMore]);
+
 
     // Share DAta
   const [currentShareData, setCurrentShareData] = useState<{
@@ -302,7 +351,7 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
               onEditProfile={editProfile}
             />
           )}
-          <div className="px-[20px] md:px-[150px] pt-[100px] pb-[50px] bg-black min-h-screen !text-white flex flex-col gap-10">
+          <div className="px-[20px] md:px-[150px] pt-[100px] pb-[50px] bg-black min-h-screen !text-white flex flex-col gap-[90px]">
 
             <>
             {data.map((item, inds) => (
@@ -378,6 +427,9 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
                 </div>
               </div>
             ))}
+
+            {hasMore && <div ref={ref} className="text-center mt-4">Loading more...</div>}
+
             </>
 
             {/* <SwiperSlide className="slide"> */}

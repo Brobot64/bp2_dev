@@ -18,3 +18,6 @@ const Page: React.FC = () => {
 };
 
 export default withAuth(Page, [1]);
+
+
+

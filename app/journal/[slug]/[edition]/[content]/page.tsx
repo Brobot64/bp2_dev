@@ -240,7 +240,7 @@ const BlvckCardDetail: React.FC = () => {
               />
             )}
 
-            <div className="px-[20px] md:px-[150px] pt-[100px] pb-[50px] bg-black min-h-screen !text-white flex flex-col gap-10">
+            <div className="px-[20px] md:px-[150px] pt-[100px] pb-[50px] bg-black min-h-screen !text-white flex flex-col gap-[90px]">
               <div className='container'>
                 <Swiper
                   slidesPerView={1}
