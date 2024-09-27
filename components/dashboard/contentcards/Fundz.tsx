@@ -21,7 +21,8 @@ import 'swiper/css/scrollbar';
 import '../../../app/test.css'
 // import '../../../../../app/test.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import style from './page.module.css';
+// import style from './page.module.css';
+import style from '@/app/journal/[slug]/[edition]/[content]/page.module.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import SignInPopup from '@/src/auth/popups/SignInPopup';
