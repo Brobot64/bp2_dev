@@ -34,6 +34,7 @@ import { FaShareNodes } from 'react-icons/fa6';
 import { useApp } from '@/src/context/AppProvider';
 import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
 import { Helmet } from 'react-helmet';
+import { Metadata } from 'next';
 
 interface MediaProps {
   id: number;
@@ -58,6 +59,36 @@ interface BlvckCard {
   meta_keywords: string | null;
   images: MediaProps[];
 }
+
+export async function generateMetadata(): Promise<Metadata> {
+  const params = useParams<{
+    slug: string;
+    edition: string;
+    content: string;
+  }>();
+  const edition = params?.edition || '';
+
+  // Fetch the card details based on slug
+  const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/blvckcards/${edition}`);
+  const blvckCard = response.data.data as BlvckCard;
+
+  // Set up the dynamic metadata using the fetched data
+  return {
+    title: blvckCard.title,
+    description: blvckCard.teaser_description || blvckCard.description,
+    keywords: blvckCard.meta_keywords || '',
+    openGraph: {
+      title: blvckCard.title,
+      description: blvckCard.teaser_description || blvckCard.description,
+      images: blvckCard.images.map(image => ({
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/${image.image_path}`,
+        width: 800,
+        height: 600,
+      })),
+    },
+  };
+}
+
 
 const BlvckCardDetail: React.FC = () => {
   const { isBgDark, setIsBgDark } = useApp();
