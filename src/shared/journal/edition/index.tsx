@@ -192,7 +192,7 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
     );
 
     useEffect(() => {
-      fetchData(1);
+      fetchData(currentPage);
     }, [fetchData]);
   
     useEffect(() => {
@@ -409,7 +409,7 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
                         {item.title}
                       </h1>
                       <button
-                        className="text-sm flex items-center gap-2"
+                        className="text-sm flex items-center gap-2 text-nowrap"
                         onClick={() => openShareModal({
                             title: item.title,
                             slug: `/journal/${slug}/${edition}/${item.slug}`,

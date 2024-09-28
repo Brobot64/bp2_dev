@@ -80,6 +80,31 @@ function JournalSharedPage({ slug }: { slug?: string }) {
 
   const [journalBlackBox, setJournalBlackBox] = React.useState({});
 
+  const scrollRef = useRef(null);
+
+  // Function to scroll up
+  const scrollUp = () => {
+    if (scrollRef.current) {
+      // @ts-ignore
+      scrollRef.current.scrollBy({
+        top: -100, // Adjust this value for scroll distance
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  // Function to scroll down
+  const scrollDown = () => {
+    if (scrollRef.current) {
+      // @ts-ignore
+      scrollRef.current.scrollBy({
+        top: 100, // Adjust this value for scroll distance
+        behavior: 'smooth',
+      });
+    }
+  };
+
+
   const closeSignInPopup = () => {
     setSignInPopupVisible(false);
   };
@@ -268,7 +293,7 @@ function JournalSharedPage({ slug }: { slug?: string }) {
         fixedNav={true}
         openEditProfile={() => {}}
         handleGoBack={() => {
-          router.back();
+          router.push('/');
         }}
         openSearchPopup={() => {}}
         openSignInPopup={() => {
@@ -414,13 +439,30 @@ function JournalSharedPage({ slug }: { slug?: string }) {
                   // )
                   (
                     <SwiperSlide className={uiStyle.swiperslide}>
-                      
+                      <button
+                          onClick={scrollUp} // bg-gray-200
+                          className="absolute md:hidden w-full left-0 z-50 top-0 bg-transparent text-gray-200 hover:bg-gray-200 hover:text-gray-700 px-4 py-2 rounded"
+                        >
+                          ↑
+                        </button> 
+                        
+                        <button
+                          onClick={scrollDown}
+                          className="absolute md:hidden w-full left-0 z-50 bottom-0 bg-transparent text-gray-200 hover:bg-gray-200 hover:text-gray-700 px-4 py-2 rounded"
+                        >
+                          ↓
+                        </button>
+
                       <div 
-                        className='fashk h-full max-h-[320px] overflow-y-auto p-slide py-[20px]'
+                        ref={scrollRef}
+                        className='fashk relative h-full max-h-[320px] overflow-y-auto p-slide py-[20px]'
                         dangerouslySetInnerHTML={{
                           __html: `${editorial?.section}`, // Passing the variable
                         }}
                       >
+                       
+
+                        
                       </div>
                     </SwiperSlide>
                   )
