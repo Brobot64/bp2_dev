@@ -391,7 +391,7 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
                       <div
                         className="h-[50vh] w-full md:h-[65vh]"
                         style={{
-                          backgroundImage: image.image_path ? `url(${process.env.NEXT_PUBLIC_BASE_URL}/${image.image_path})` :'url(/banner.jpg)',
+                          backgroundImage: image.image_path ? `url(${process.env.NEXT_PUBLIC_BASE_URL}/${image.image_path})` :'url(/defalut-ui.jpg)',
                           backgroundPosition: 'center',
                           backgroundSize: 'cover',
                           backgroundRepeat: 'no-repeat',

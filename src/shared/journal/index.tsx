@@ -70,7 +70,7 @@ function JournalSharedPage({ slug }: { slug?: string }) {
   const { isBgDark, setIsBgDark } = useApp();
   const swiperRef = useRef<SwiperCore | null>(null);
   const swiperRefForeword = useRef<SwiperCore | null>(null);
-  const [bannerBg, setBannerBg] = React.useState('banner.jpg');
+  const [bannerBg, setBannerBg] = React.useState('defalut.jpg');
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const [signInPopupVisible, setSignInPopupVisible] = React.useState(false);
   const [editProfile, setEditProfile] = React.useState(false);
@@ -81,6 +81,7 @@ function JournalSharedPage({ slug }: { slug?: string }) {
   const [journalBlackBox, setJournalBlackBox] = React.useState({});
 
   const scrollRef = useRef(null);
+  const contentScroll = useRef(null)
 
   // Function to scroll up
   const scrollUp = () => {
@@ -98,6 +99,28 @@ function JournalSharedPage({ slug }: { slug?: string }) {
     if (scrollRef.current) {
       // @ts-ignore
       scrollRef.current.scrollBy({
+        top: 100, // Adjust this value for scroll distance
+        behavior: 'smooth',
+      });
+    }
+  };
+
+   // Function to scroll up
+   const contentScrollUp = () => {
+    if (contentScroll.current) {
+      // @ts-ignore
+      contentScroll.current.scrollBy({
+        top: -100, // Adjust this value for scroll distance
+        behavior: 'smooth',
+      });
+    }
+  };
+
+  // Function to scroll down
+  const contentScrollDown = () => {
+    if (contentScroll.current) {
+      // @ts-ignore
+      contentScroll.current.scrollBy({
         top: 100, // Adjust this value for scroll distance
         behavior: 'smooth',
       });
@@ -246,7 +269,8 @@ function JournalSharedPage({ slug }: { slug?: string }) {
 
       const token = localStorage.getItem('token');
       try {
-        const response = await axios.get<ApiResponse>(
+        //ApiResponse
+        const response = await axios.get<any>(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/contentcards/${slug}`,
           {
             headers: {
@@ -497,7 +521,20 @@ function JournalSharedPage({ slug }: { slug?: string }) {
               [ contents ]
             </h1>
 
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-[50px]">
+            <div className="trush grid grid-cols-1 md:grid-cols-3 gap-[20px] max-h-[60vh] overflow-y-auto md:gap-[50px]" ref={contentScroll}>
+            <button
+              onClick={contentScrollUp} // bg-gray-200
+              className="absolute md:hidden right-0 z-50 top-[15vh] bg-transparent text-gray-200 hover:bg-gray-200 hover:text-gray-700 px-4 py-2 rounded"
+            >
+              ↑
+            </button> 
+            
+            <button
+              onClick={contentScrollDown}
+              className="absolute md:hidden right-0 z-50 bottom-[20vh] bg-transparent text-gray-200 hover:bg-gray-200 hover:text-gray-700 px-4 py-2 rounded"
+            >
+              ↓
+            </button>
               {
                 contentcards.length > 0 && contentcards.map((item, index) => (
                   <div
