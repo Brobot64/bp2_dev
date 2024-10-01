@@ -2,8 +2,10 @@ import { PaymentElement } from '@stripe/react-stripe-js';
 import { useState } from 'react';
 import { useStripe, useElements } from '@stripe/react-stripe-js';
 import { FaCircleCheck } from 'react-icons/fa6';
+import { useRouter } from 'next/navigation';
 
 export default function CheckoutForm() {
+  const router = useRouter();
   const stripe = useStripe();
   const elements = useElements();
 
@@ -42,6 +44,9 @@ export default function CheckoutForm() {
       setMessage('Payment succeeded!');
 
       // redirect to completion page
+      setTimeout(() => {
+        router.push('/');
+      }, 3000);
     } else {
       setMessage('An unexpected error occured.');
     }
