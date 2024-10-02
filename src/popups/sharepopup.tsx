@@ -29,7 +29,8 @@ interface SharePopupProps {
 
 function Sharepopup({ onClose, post }: SharePopupProps) {
 
-  const baseUrl =  'https://bp2-dev.vercel.app/' || `${process.env.NEXT_WEBSITE_URL}`
+  // const baseUrl =  'https://bp2-dev.vercel.app/' || `${process.env.NEXT_WEBSITE_URL}`;
+  const baseUrl = process.env.NEXT_PUBLIC_WEBSITE_URL || 'https://bp2-dev.vercel.app/';
   const shareUrl = `${baseUrl}${post.slug}`; //'https://www.instagram.com/p/DAWQRrhMB6s/?utm_source=ig_web_copy_link'
   const hashtags = post.meta_keywords.split(',').map((tag) => tag.trim());
   const previewImage = post.images.length > 0 ? post.images[0].image_path : '';
@@ -95,5 +96,7 @@ function Sharepopup({ onClose, post }: SharePopupProps) {
     </div>
   );
 }
+
+
 
 export default Sharepopup;

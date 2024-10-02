@@ -37,7 +37,8 @@
     justify-content: center;
     padding: 15px !important;
     height: 100% !important;
-    max-height: 100vh !important;
+    /* max-height: 100vh !important; */
+    max-height: 100dvh !important;
     background: #ffffff;
     justify-content: flex-start;
   }
