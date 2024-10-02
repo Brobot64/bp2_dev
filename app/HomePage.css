@@ -6,7 +6,7 @@
   width: 100%;
   max-width: none;
   overflow-y: scroll;
-  height: 100vh;
+  height: 100dvh;
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
 
@@ -24,7 +24,8 @@
 }
 
 .parent {
-  height: 100vh;
+  height: 100dvh;
+  /* height: 100vh; */
   scroll-snap-align: start;
   transition: opacity 0s ease;
   position: relative;

@@ -78,7 +78,8 @@
   .popup {
     padding: 15px !important;
     height: 100% !important;
-    max-height: 100vh !important;
+    /* max-height: 100vh !important; */
+    max-height: 100dvh !important;
   }
 
   .popup.black .search-input input {
@@ -200,7 +201,8 @@
 
 @media (max-width: 992px) {
   .mySwiper {
-    min-height: 100vh;
+    /* min-height: 100vh; */
+    min-height: 100dvh;
     min-height: -webkit-fill-available;
     /* height: calc(100vh - 90px) !important; */
   }
