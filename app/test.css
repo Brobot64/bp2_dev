@@ -7,7 +7,7 @@
 }
 
 .mySwiper {
-  height: calc(100vh);
+  height: calc(100dvh);
   align-items: flex-end;
   justify-content: flex-end;
   display: flex;
@@ -915,5 +915,16 @@
   background-color: #383c37e8;
 }
 
+@media (max-width: 991px) {
+  .mySwiper {
+    height: 100dvh !important;  
+  }
+}
+
+@media (max-width: 768px) {
+  .mySwiper {
+    height: 100dvh !important;  
+  }
+}
 
 
