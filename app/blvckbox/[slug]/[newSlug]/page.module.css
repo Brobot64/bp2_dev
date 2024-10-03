@@ -30,7 +30,8 @@
   scroll-snap-align: start;
   display: flex;
   justify-content: center;
-  flex: 1 0 100vh;
+  /* flex: 1 0 100vh; */
+  flex: 1 0 100dvh;
   scroll-snap-align: start;
   position: relative;
 }

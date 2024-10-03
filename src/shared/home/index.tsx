@@ -93,7 +93,7 @@ const SharedHomeComponent: React.FC = () => {
     'who we are',
     'why we exist',
     'what we do',
-    'whom we work for',
+    'for whom we work',
     'how we work',
     'journal',
     'contact | jobs',
@@ -243,10 +243,10 @@ const SharedHomeComponent: React.FC = () => {
       if (index === 0) swiperRef.current.slideTo(1);
       else if (index === 1) swiperRef.current.slideTo(4);
       else if (index === 2) swiperRef.current.slideTo(6);
-      else if (index === 3) swiperRef.current.slideTo(10);
-      else if (index === 4) swiperRef.current.slideTo(12);
-      else if (index === 5) swiperRef.current.slideTo(15);
-      else if (index === 6) swiperRef.current.slideTo(16);
+      else if (index === 3) swiperRef.current.slideTo(11);
+      else if (index === 4) swiperRef.current.slideTo(13);
+      else if (index === 5) swiperRef.current.slideTo(16);
+      else if (index === 6) swiperRef.current.slideTo(17);
       setActiveMenu(index);
     }
   };
@@ -310,7 +310,7 @@ const SharedHomeComponent: React.FC = () => {
       swiperRef.current &&
       swiperRef.current.activeIndex
     ) {
-      const slideMapping = [1, 4, 6, 10, 12, 15, 16];
+      const slideMapping = [1, 4, 6, 11, 13, 16, 17];
       setTimeout(() => {
         swiperRef.current?.slideTo(slideMapping[activeMenu]);
       }, 10);
@@ -506,27 +506,27 @@ const SharedHomeComponent: React.FC = () => {
           setActiveMenu(1);
           setAfterActiveMenu(2);
           scrollToActiveMenuItem(1);
-        } else if (activeSlideIndex >= 6 && activeSlideIndex < 10) {
+        } else if (activeSlideIndex >= 6 && activeSlideIndex < 11) {
           setBeforeActiveMenu(1);
           setActiveMenu(2);
           setAfterActiveMenu(3);
           scrollToActiveMenuItem(2);
-        } else if (activeSlideIndex >= 10 && activeSlideIndex < 12) {
+        } else if (activeSlideIndex >= 11 && activeSlideIndex < 13) {
           setBeforeActiveMenu(2);
           setActiveMenu(3);
           setAfterActiveMenu(4);
           scrollToActiveMenuItem(3);
-        } else if (activeSlideIndex >= 12 && activeSlideIndex < 15) {
+        } else if (activeSlideIndex >= 13 && activeSlideIndex < 16) {
           setBeforeActiveMenu(3);
           setActiveMenu(4);
           setAfterActiveMenu(5);
           scrollToActiveMenuItem(4);
-        } else if (activeSlideIndex === 15) {
+        } else if (activeSlideIndex === 16) {
           setBeforeActiveMenu(4);
           setActiveMenu(5);
           setAfterActiveMenu(6);
           scrollToActiveMenuItem(5);
-        } else if (activeSlideIndex >= 16) {
+        } else if (activeSlideIndex >= 17) {
           setBeforeActiveMenu(5);
           setActiveMenu(6);
           scrollToActiveMenuItem(6);
@@ -554,7 +554,8 @@ const SharedHomeComponent: React.FC = () => {
           swiperRef.current?.activeIndex === 14 ||
           swiperRef.current?.activeIndex === 15 ||
           swiperRef.current?.activeIndex === 16 ||
-          swiperRef.current?.activeIndex === 17
+          swiperRef.current?.activeIndex === 17 ||
+          swiperRef.current?.activeIndex === 18
         ) {
           setTimeout(() => {
             swiperRef.current?.mousewheel.enable();
@@ -729,7 +730,7 @@ const SharedHomeComponent: React.FC = () => {
             setIsBgDark(false);
           }
 
-          if (swiper.activeIndex === 15) {
+          if (swiper.activeIndex === 16) {
             setIsBgDark(true);
           } else {
             setIsBgDark(false);
@@ -747,6 +748,7 @@ const SharedHomeComponent: React.FC = () => {
           <p>[ scroll to navigate ]</p>
         </div>
 
+        {/* slide 1 */}
         <SwiperSlide
           className="slide-banner"
           style={{
@@ -866,15 +868,13 @@ const SharedHomeComponent: React.FC = () => {
               className="para wide blackColor"
               style={{ animationDelay: '0.3s' }}
             >
-              By staying ahead of current trends, we future-proof our clients so
-              that they anticipate, leap forward, and develop new operation
-              models that align with what is to come.
+              We continually develop methodologies and tools to accelerate the transition towards a Cognitive Society.
             </p>
             <p
               className="para wide blackColor"
               style={{ animationDelay: '0.6s' }}
             >
-              We look beyond [ what’s next ], to [ what’s after next ].
+              By staying ahead of current trends, we future-proof our clients so that they anticipate, leap forward, and develop new models that align with what is to come.
             </p>
           </div>
         </SwiperSlide>
@@ -885,11 +885,8 @@ const SharedHomeComponent: React.FC = () => {
             <h1 className="blackColor" style={{ animationDelay: '0.01s' }}>
               anthropology + technology
             </h1>
-            <p className="para blackColor" style={{ animationDelay: '0.6s' }}>
-              This best defines what we do at BLVCK
-              <span className="italics">PIXEL</span>. It means we envision and
-              prepare for a world in which human ingenuity converges with
-              machine intelligence to design a better future.{' '}
+            <p className="para wide blackColor" style={{ animationDelay: '0.6s' }}>
+              This best defines the core of our expertise. We seek to build a world where the symbiotic relationship between human ingenuity and machine intelligence forms the foundation for a better society.
             </p>
           </div>
         </SwiperSlide>
@@ -931,10 +928,12 @@ const SharedHomeComponent: React.FC = () => {
             <h1 className="blackColor" style={{ animationDelay: '0.01s' }}>
               services
             </h1>
-            <p className="para blackColor" style={{ animationDelay: '0.6s' }}>
-              Through advisory, consulting, strategic planning, prototyping, and
-              realisation, we prepare and transition our clients into the age of
-              artificial general intelligence.
+            <p className="para wide blackColor" style={{ animationDelay: '0.3s' }}>
+              Through applied foresight, strategic planning, prototyping and implementation, we prepare enterprises, organisations and government bodies to take advantage of the accelerating technological disruption.
+            </p>
+
+            <p className="para wide blackColor" style={{ animationDelay: '0.6s' }}>
+              Our future-proofing services is a three-stage cycle of <a href="#" className="purpleColor">foresight</a>, <a href="#" className="purpleColor">preparation</a>, and <a href="#" className="purpleColor">implementation</a>. We do <a href="#" className="purpleColor">innovation field trips</a> too, fostering visionary outlooks.
             </p>
           </div>
         </SwiperSlide>
@@ -946,18 +945,17 @@ const SharedHomeComponent: React.FC = () => {
               what’s after next
             </h1>
             <p className="blackColor" style={{ animationDelay: '0.3s' }}>
-              <span className="purpleColor italics">Foresight</span> | 3-5 years
+              <span className="purpleColor italics">Foresight</span> | Look
               ahead
             </p>
-            <ul className="blackColor" style={{ animationDelay: '0.6s' }}>
-              <li className="blackColor">
-                - Foresight Forum Conferences: expertise on future tech{' '}
-              </li>
-              <li className="blackColor">
-                - Strategic Foresight Reports: bespoke research and
-                presentations
-              </li>
-            </ul>
+
+            <p className="para wide blackColor" style={{ animationDelay: '0.5s' }}>
+              We produce comprehensive reports on current trends and future trajectories for strategic decision-making. Our tailored reports address specific client needs, integrating cultural insights to offer a nuanced understanding of future industry landscapes for proactive innovation.
+            </p>
+
+            <p className="para wide blackColor italics" style={{ animationDelay: '0.7s' }}>
+              Trend Analysis and Forecasting, Custom Foresight Reports, Qualitative and Quantitative research, Market Analysis, Technological Assessments, Scenario Planning, Delphi studies
+              </p>
           </div>
         </SwiperSlide>
 
@@ -968,29 +966,16 @@ const SharedHomeComponent: React.FC = () => {
               what’s next
             </h1>
             <p className="blackColor" style={{ animationDelay: '0.3s' }}>
-              <span className="purpleColor italics">Preparation</span> | 1-2
-              years ahead
+              <span className="purpleColor italics">Preparation</span> | Get ready
             </p>
-            <ul className="blackColor" style={{ animationDelay: '0.6s' }}>
-              <li className="blackColor">
-                - Development of strategies to respond to rapidly evolving
-                markets
-              </li>
-              <li className="blackColor">
-                - Research and conception of innovative workplace systems
-              </li>
-              <li className="blackColor">
-                - Research and ideation of innovative business models based on
-                emerging technologies
-              </li>
-              <li className="blackColor">
-                - Predictive market research to identify business opportunities
-                and changing consumer behavior
-              </li>
-              <li className="blackColor">
-                - Organisation of seminars for directors and C Suite Executives
-              </li>
-            </ul>
+            
+            <p className="para wide blackColor" style={{ animationDelay: '0.5s' }}>
+              We facilitate immersive workshops involving key stakeholders for scenario development and strategic road mapping. Our applied foresight sessions are collaborative and produce robust strategic plans that incorporate diverse perspectives anticipating future challenges, enabling organizations to prepare effectively for tech innovations.
+            </p>
+
+            <p className="para wide blackColor italics" style={{ animationDelay: '0.7s' }}>
+              Executive Education and Training, Strategic Planning Workshops, Scenario Development, Collaborative Applied Foresight, Adaptive Strategy Formulation, Risk Anticipation Exercises
+            </p>
           </div>
         </SwiperSlide>
 
@@ -1002,24 +987,37 @@ const SharedHomeComponent: React.FC = () => {
             </h1>
             <p className="blackColor" style={{ animationDelay: '0.3s' }}>
               <span className="purpleColor italics">Implementation</span> |
-              Today!
+              Act today
             </p>
-            <ul className="blackColor" style={{ animationDelay: '0.6s' }}>
-              <li className="blackColor">
-                - Design of iterative go-to-market business cases and use cases
-              </li>
-              <li className="blackColor">
-                - Innovation workshops for management, product development, and
-                marketing teams
-              </li>
-              <li className="blackColor">
-                - Prototyping of innovative business operations and workplace
-                systems
-              </li>
-              <li className="blackColor">
-                - Project management for implementation of emerging technologies
-              </li>
-            </ul>
+            
+            <p className="para wide blackColor" style={{ animationDelay: '0.5s' }}>
+              We set up controlled environments to develop proof of concepts, reducing risk and enhancing innovation success. Our Innovation Labs and Pilot Programs facilitate the research and conception of cutting-edge products, services, and workplaces, turning applied foresight into tangible business operations.
+            </p>
+
+            <p className="para wide blackColor italics" style={{ animationDelay: '0.7s' }}>
+              Rapid Prototyping, Proof of Concept Development, Iterative go-to-market Business Cases, Workplace Innovation, Systems Transformation, Process Optimization
+            </p>
+          </div>
+        </SwiperSlide>
+
+        {/* Ib */}
+        <SwiperSlide className="slide">
+          <div className="slide-content">
+            <h1 className="blackColor" style={{ animationDelay: '0.01s' }}>
+              what’s beyond
+            </h1>
+            <p className="blackColor" style={{ animationDelay: '0.3s' }}>
+              <span className="purpleColor italics">Innovation field trips</span> |
+              Explore frontiers
+            </p>
+            
+            <p className="para wide blackColor" style={{ animationDelay: '0.5s' }}>
+              We organize immersive 4-5-day learning journeys that expose executives to cutting-edge innovations and disruptive technologies. Our curated trips include high-level meetings with Strategy Chiefs of global tech giants and CEOs of disruptive startups. These expeditions provide unparalleled insights into emerging and forthcoming trends, boosting innovation mindsets and strategic foresight for participants.
+            </p>
+
+            <p className="para wide blackColor italics" style={{ animationDelay: '0.7s' }}>
+              Smart Cities, Artificial Intelligence, Robotics, Mobility, Genetics, Healthcare, Fintech, Spacetech, Agritech, Foodtech, Watertech, Sportstech, etc.
+            </p>
           </div>
         </SwiperSlide>
 
@@ -1160,18 +1158,16 @@ const SharedHomeComponent: React.FC = () => {
             <h1 className="blackColor" style={{ animationDelay: '0.01s' }}>
               our team + partners
             </h1>
-            <p className="blackColor para " style={{ animationDelay: '0.6s' }}>
+            <p className="blackColor para " style={{ animationDelay: '0.3s' }}>
               <span
                 className="italics"
                 style={{ marginBottom: '10px', display: 'block' }}
               >
                 What makes us so different?
               </span>
-              <span className="">
-                It’s all about our unique set up and perspective on the future.
-                Beyond being [ visionaries ] and [ thought-leaders ], we are [
-                builders ].
-              </span>
+            </p> 
+            <p className="para wide blackColor" style={{ animationDelay: '0.6s' }}>
+              We believe in competitiveness, not competition. A principle guiding our collaborative efforts with integrators, academia and research laboratories. We leverage forthcoming and disruptive technologies to breathe soul into hybrid and living systems.
             </p>
           </div>
         </SwiperSlide>
@@ -1180,7 +1176,7 @@ const SharedHomeComponent: React.FC = () => {
         <SwiperSlide className="slide">
           <div className="slide-content">
             <h1 className="blackColor" style={{ animationDelay: '0.01s' }}>
-              consulting
+              ideation
             </h1>
             <p
               className="para wide blackColor"

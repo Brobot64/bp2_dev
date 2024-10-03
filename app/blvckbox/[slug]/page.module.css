@@ -100,7 +100,8 @@
   .blvckbookDetail {
     background-color: #ffffff;
     animation: fadeInNew 0.5s ease-in-out;
-    flex: 1 0 100vh;
+    /* flex: 1 0 100vh; */
+    flex: 1 0 100dvh;
     scroll-snap-align: start;
     display: flex;
     flex-direction: column;
@@ -315,13 +316,15 @@
   
   .popup-inner .wrapper {
     overflow-y: auto;
-    max-height: calc(100vh - 100px);
+    /* max-height: calc(100vh - 100px); */
+    max-height: calc(100dvh - 100px);
     padding-right: 10px;
   }
 
   .popup-inner .wrapper {
     overflow-y: auto;
-    max-height: calc(100vh - 100px);
+    /* max-height: calc(100vh - 100px); */
+    max-height: calc(100dvh - 100px);
   }
   
   .popup-inner .wrapper::-webkit-scrollbar {

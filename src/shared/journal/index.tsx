@@ -413,7 +413,8 @@ function JournalSharedPage({ slug }: { slug?: string }) {
               : `url('/default-bg.png')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            minHeight: '100vh',
+            // minHeight: '100vh',
+            minHeight: '100dvh',
           }}
         >
           <div className={uiStyle.pageContainerWide} id="blvckbook">
