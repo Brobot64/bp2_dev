@@ -859,10 +859,7 @@ const SharedHomeComponent: React.FC = () => {
               className="para wide blackColor"
               style={{ animationDelay: '0.01s' }}
             >
-              Our vision is focused on the convergence of technologies that will
-              affect the way we live and work in the coming years: blockchain,
-              artificial intelligence, spatial computing, advanced data
-              management systems, robotics,...
+              Our vision is focused on Cognitive Transformation: the convergence of technologies that will affect the way we live and work in the coming years such as artificial intelligence, blockchain and cryptography, spatial computing, advanced data mesh, robotics,...
             </p>
             <p
               className="para wide blackColor"
