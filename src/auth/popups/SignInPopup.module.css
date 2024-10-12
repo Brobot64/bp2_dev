@@ -341,9 +341,9 @@
     position: relative;
   }
 
-  .socialLogin li::after{
+  /* .socialLogin li::after{
 
-  }
+  } */
 
   .socialLogin li a{
     color: #a5a5a5;
