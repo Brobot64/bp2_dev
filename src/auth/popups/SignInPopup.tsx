@@ -722,7 +722,7 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                     personal information to create your account.
                   </p>
                   <div className={style.searchInput}>
-                    <form onSubmit={handleSignUp}>
+                    <form onSubmit={handleSignUp} className={style.formz}>
                       <div className={style.row}>
                         <div className={style.frmGrp}>
                           <input

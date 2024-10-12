@@ -341,9 +341,9 @@
     position: relative;
   }
 
-  .socialLogin li::after{
+  /* .socialLogin li::after{
 
-  }
+  } */
 
   .socialLogin li a{
     color: #a5a5a5;
@@ -470,3 +470,52 @@
       opacity: 1;
     }
   }
+
+/* Add Mobile Package Responsive */
+@media (max-width: 768px) {
+  /* .navTabs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  } */
+
+  .popup.black .packages{
+    overflow-x: auto;
+  }
+
+  .formz {
+    min-width: 100%;
+  }
+  .row{
+    flex-direction: column;
+    gap: 10px;
+    /* max-width: 90%; */
+    margin-bottom: 7px;
+  }
+  .frmGrp {
+    margin: 0;
+    padding: 0 !important;
+    margin-bottom: 8px;
+  }
+
+  .popup.black .searchInput input{
+    min-width: 100%;
+  }
+
+  .passwordWrapper input[type=password],
+  .passwordWrapper input[type=text] {
+    padding-right: 4px;
+  }
+
+  .popup.black .packages .package span:nth-child(2) {
+    margin-top: 10px;
+    padding: 0px 0px 9px;
+    font-size: 40px !important;
+  }
+
+  .popup.black .packages .package {
+    min-width: 200px;
+  }
+  
+}
+  
