@@ -26,7 +26,7 @@ function Description({ text }: { text: string }) {
         }}
       />
       {text.length > maxLength && (
-        <button onClick={toggleReadMore} className="inline text-sm font-normal text-gray-400 italic">
+        <button onClick={toggleReadMore} className="inline text-sm font-normal text-white hover:text-[#d704e7] transition-[.3s]">
           &nbsp;[ &nbsp;{isExpanded ? 'read less' : 'read more'} &nbsp;]
         </button>
       )}

@@ -451,6 +451,10 @@ const SharedHomeComponent: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    swiperRef.current?.slideTo(0);
+  }, [])
+
+  useEffect(() => {
     const updateWindowDimensions = () => {
       setIsMobile(window.innerWidth <= 768);
     };
@@ -679,7 +683,7 @@ const SharedHomeComponent: React.FC = () => {
         handleGoBack={handleGoBack}
         openSearchPopup={openSearchPopup}
         openSignInPopup={openSignInPopup}
-        displayGoBack={true}
+        displayGoBack={false}
         swiperRef={swiperRef}
         showHome={false}
         invert={false}
@@ -1352,7 +1356,7 @@ const SharedHomeComponent: React.FC = () => {
                 )}
               </div>
 
-              <div className="swiper-container stew flex w-fit mx-auto ">
+              <div className=" stew  px-[70px] relative flex w-fit mx-auto ">
                 <button
                   className={`
                   ${isBgDark ? 'white' : ''} navigationArrow left
@@ -1364,6 +1368,7 @@ const SharedHomeComponent: React.FC = () => {
 
                 
               <div className="sides flex gap-[25px] mx-[10px] max-w-[1010px] overflow-x-auto md:mx-0">
+
                 {boxesData.map((journal, index) => (
                   <Link
                     key={journal.id}

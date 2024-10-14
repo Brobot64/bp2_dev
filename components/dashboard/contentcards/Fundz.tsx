@@ -208,7 +208,7 @@ const BlvckCardDetail: React.FC = () => {
         openSearchPopup={() => {}}
         openSignInPopup={openSignInPopup}
         displayGoBack={true}
-        showHome={false}
+        showHome={true}
         invert={false}
         isProtected={true}
       />

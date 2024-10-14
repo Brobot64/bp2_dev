@@ -327,7 +327,7 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
         openSearchPopup={() => {}}
         openSignInPopup={openSignInPopup}
         displayGoBack={true}
-        showHome={false}
+        showHome={true}
         invert={false}
         isProtected={true}
       />

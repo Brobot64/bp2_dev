@@ -189,6 +189,11 @@ body {
   text-justify: auto;
   text-align: justify;
   font-size: 20px !important;
+  text-align: left !important;
+}
+
+.fashk p {
+  text-align: left !important;
 }
 
   

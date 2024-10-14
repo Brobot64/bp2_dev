@@ -325,7 +325,7 @@ function JournalSharedPage({ slug }: { slug?: string }) {
         }}
         displayGoBack={true}
         swiperRef={swiperRef}
-        showHome={false}
+        showHome={true}
         invert={false}
       />
 
@@ -523,7 +523,7 @@ function JournalSharedPage({ slug }: { slug?: string }) {
             </h1>
 
             <div className="trush grid grid-cols-1 md:grid-cols-3 gap-[20px] max-h-[60vh] overflow-y-auto md:gap-[50px]" ref={contentScroll}>
-            <button
+            {/* <button
               onClick={contentScrollUp} // bg-gray-200
               className="absolute md:hidden right-0 z-50 top-[15vh] bg-transparent text-gray-200 hover:bg-gray-200 hover:text-gray-700 px-4 py-2 rounded"
             >
@@ -535,7 +535,7 @@ function JournalSharedPage({ slug }: { slug?: string }) {
               className="absolute md:hidden right-0 z-50 bottom-[20vh] bg-transparent text-gray-200 hover:bg-gray-200 hover:text-gray-700 px-4 py-2 rounded"
             >
               ↓
-            </button>
+            </button> */}
               {
                 contentcards.length > 0 && contentcards.map((item, index) => (
                   <div
@@ -566,7 +566,7 @@ function JournalSharedPage({ slug }: { slug?: string }) {
               }
             </div>
 
-            <div className={`${uiStyle.signature}`}>
+            {/* <div className={`${uiStyle.signature}`}>
               <Image
                 src="/signature.png"
                 alt="Signature Author"
@@ -574,7 +574,7 @@ function JournalSharedPage({ slug }: { slug?: string }) {
                 height={250}
               />
               <h3>Teddy Pahagbia</h3>
-            </div>
+            </div> */}
           </div>
         </SwiperSlide>
       </Swiper>
