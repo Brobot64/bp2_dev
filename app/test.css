@@ -757,6 +757,7 @@
     width: 100%;
     max-width: 100%;
     margin: 0;
+    padding: 0 70px !important;
   }
 }
 
@@ -882,15 +883,21 @@
 
 }
 
+.trush {
+  display: flex !important;
+  position: relative;
+  padding-bottom: 10px;
+  margin: 60px 20px;
+}
 
 .trush::-webkit-scrollbar {
-  height: 10px;
-  width: 10px;
+  height: 5px;
+  width: 5px;
 }
 .trush::-webkit-scrollbar-track {
-  border-radius: 5px;
+  border-radius: 2px;
   background-color: #f2fdff00;
-  border: 2px solid #ffffff00;
+  border: .5px solid #ffffff00;
 }
 
 .trush::-webkit-scrollbar-track:hover {
@@ -902,9 +909,9 @@
 }
 
 .trush::-webkit-scrollbar-thumb {
-  border-radius: 20px;
+  border-radius: 6px;
   background-color: #323631c8;
-  border: 3px solid #ffffff20;
+  border: .5px solid #ffffff20;
 }
 
 .trush::-webkit-scrollbar-thumb:hover {
@@ -924,6 +931,10 @@
 @media (max-width: 768px) {
   .mySwiper {
     height: 100dvh !important;  
+  }
+  .cursor-pointer {
+    min-width: 180px !important;
+    max-width: 180px !important;
   }
   
 }

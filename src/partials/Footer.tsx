@@ -6,7 +6,7 @@ const Footer: React.FC = () => {
     <div className={style.footer}>
       {/* <a href='#'>BLVCKBOOK</a>
       <a href='#'>the foresight journal. </a> */}
-      <span>
+      <span style={{ display: 'flex' }}>
         ©2024 by BLVCK
         <span className={style.italics} style={{ padding: 0 }}>
           PIXEL
