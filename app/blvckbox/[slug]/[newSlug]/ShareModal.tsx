@@ -3,6 +3,7 @@ import styles from './ShareModal.module.css';
 import { TwitterShareButton, LinkedinShareButton, TwitterIcon, LinkedinIcon } from 'react-share';
 import { AiOutlineCopy } from 'react-icons/ai';
 import Notification from '../../../../components/notification/page';
+import InstgramSVG from '@/public/1.svg'
 
 interface ShareModalProps {
   isOpen: boolean;

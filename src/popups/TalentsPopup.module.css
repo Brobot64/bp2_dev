@@ -42,15 +42,24 @@
     margin-bottom: 30px;
   }
 
+  .popup.default .close,
+  .popup.talents .close {
+    color: #d6d6d6;
+    z-index: 999;
+    font-family: 'HelveticaNeueCyr-UltraLight';
+    font-weight: 100;
+    font-size: 25px;
+  }
+
 .close{
     position: absolute;
     top: 30px;
     right: 30px;
 }
 
-.popup.talents .close{
+/* .popup.talents .close{
   color: #000000 !important;
-}
+} */
 
 .popup.talents h6{
     font-size: 18px;

@@ -25,6 +25,7 @@ import SignInPopup from '@/src/auth/popups/SignInPopup';
 import Image from 'next/image';
 import axios from 'axios';
 import { getFullMonth } from '@shared/home';
+import { borderColors  } from '@/tribe';
 
 
  // Added by brobot 
@@ -62,6 +63,11 @@ interface EditorialType {
 interface ApiResponse {
   contentcards: ContentCardType[];
   editorial: EditorialType | null;
+}
+
+function getColor(colors: any[], index: any) {
+  console.log('colors,: ', colors[index % colors.length])
+  return colors[index % colors.length];
 }
 
 // Ended here
@@ -223,12 +229,11 @@ function JournalSharedPage({ slug }: { slug?: string }) {
       slides.push(content.substring(start, end).trim());
       start = end;
     }
-
     return slides;
   };
 
   const editorialSlides = editorial
-    ? splitContentIntoSlides(editorial.section, 600)
+    ? splitContentIntoSlides(editorial.section, 500)
     : [];
 
   const handleMouseEnter = () => {
@@ -362,7 +367,7 @@ function JournalSharedPage({ slug }: { slug?: string }) {
           thresholdDelta: 1,
         }}
         onSlideChange={(swiper) => {
-          console.log('slide change', swiper.activeIndex);
+          // console.log('slide change', swiper.activeIndex);
           if (swiper.activeIndex <= 10) {
             setIsBgDark(true);
           } else {
@@ -404,114 +409,95 @@ function JournalSharedPage({ slug }: { slug?: string }) {
         </SwiperSlide>
 
         {/* Editorials */}
-        <SwiperSlide className='minders'>
-        <section
-          className={uiStyle.editorialSection}
-          style={{
-            backgroundImage: editorial
-              ? `url(${process.env.NEXT_PUBLIC_BASE_URL}/storage/${editorial.background_image})`
-              : `url('/default-bg.png')`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            // minHeight: '100vh',
-            minHeight: '100dvh',
-          }}
-        >
-          <div className={uiStyle.pageContainerWide} id="blvckbook">
-            <div className={uiStyle.wrapper}>
-              <div className={uiStyle.col}>
-                <h1>[ foreword ]</h1>
-                <Swiper
-                  onInit={(swiper) => {
-                    swiperRef.current = swiper;
-                  }}
-                  spaceBetween={0}
-                  centeredSlides={false}  // Not centering to allow free scrolling
-                  slidesPerView={'auto'}  // Allows scrolling through the entire content
-                  speed={1350}
-                  freeMode={true}  // Keep free mode for smooth scroll experience
-                  effect="fade"
-                  fadeEffect={{
-                    crossFade: true,
-                  }}
-                  modules={[
-                    Pagination,
-                    EffectFade,
-                    Mousewheel,
-                    Keyboard,
-                  ]}
-                  className={uiStyle.editorialSwiper}
-                  mousewheel={{
-                    forceToAxis: true,
-                    sensitivity: 1,
-                    releaseOnEdges: false,
-                    invert: false,
-                  }}
-                  direction={'horizontal'}  // Retain horizontal scroll
-                  followFinger={true}
-                  autoHeight={false}
-                  threshold={15}
-                  onMouseEnter={handleMouseEnter}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  {editorialSlides.length > 0 ? 
-                  // (
-                  //   editorialSlides.map((slideContent, index) => (
-                  //     <SwiperSlide key={index} className={uiStyle.swiperslide}>
-                  //       <p>{slideContent}</p>
-                  //     </SwiperSlide>
-                  //   ))
-                  // )
-                  (
-                    <SwiperSlide className={uiStyle.swiperslide}>
-                      <button
-                          onClick={scrollUp} // bg-gray-200
-                          className="absolute md:hidden w-full left-0 z-50 top-0 bg-transparent text-gray-200 hover:bg-gray-200 hover:text-gray-700 px-4 py-2 rounded"
-                        >
-                          ↑
-                        </button> 
-                        
-                        <button
-                          onClick={scrollDown}
-                          className="absolute md:hidden w-full left-0 z-50 bottom-0 bg-transparent text-gray-200 hover:bg-gray-200 hover:text-gray-700 px-4 py-2 rounded"
-                        >
-                          ↓
-                        </button>
 
-                      <div 
-                        ref={scrollRef}
-                        className='fashk relative h-full max-h-[320px] overflow-y-auto p-slide py-[20px]'
-                        dangerouslySetInnerHTML={{
-                          __html: `${editorial?.section}`, // Passing the variable
-                        }}
-                      >
-                       
-
-                        
+        {/* Added Splited Editorials */}
+        {
+          editorialSlides.length > 0 ? 
+          (
+            editorialSlides.map((slidecontent, index) => (
+              slidecontent !== '<p></p>' && slidecontent !== '<p> </p>' && slidecontent !== '</p>' ? (  // Check if slidecontent is not an empty paragraph
+                <SwiperSlide className='minders' key={index}>
+                  <section
+                    className={uiStyle.editorialSection}
+                    style={{
+                      backgroundImage: editorial
+                        ? `url(${process.env.NEXT_PUBLIC_BASE_URL}/storage/${editorial.background_image})`
+                        : `url('/default-bg.png')`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      minHeight: '100dvh',
+                    }}
+                  >
+                    <div className={uiStyle.pageContainerWide} id="blvckbook">
+                      <div className={uiStyle.wrapper}>
+                        <div className={uiStyle.col}>
+                          <h1>[ foreword ]</h1>
+                          <Swiper
+                            onInit={(swiper) => {
+                              swiperRef.current = swiper;
+                            }}
+                            spaceBetween={0}
+                            centeredSlides={false}
+                            slidesPerView={'auto'}
+                            speed={1350}
+                            freeMode={true}
+                            effect="fade"
+                            fadeEffect={{
+                              crossFade: true,
+                            }}
+                            modules={[
+                              Pagination,
+                              EffectFade,
+                              Mousewheel,
+                              Keyboard,
+                            ]}
+                            className={uiStyle.editorialSwiper}
+                            mousewheel={{
+                              forceToAxis: true,
+                              sensitivity: 1,
+                              releaseOnEdges: false,
+                              invert: false,
+                            }}
+                            direction={'horizontal'}
+                            followFinger={true}
+                            autoHeight={false}
+                            threshold={15}
+                            onMouseEnter={handleMouseEnter}
+                            onMouseLeave={handleMouseLeave}
+                          >
+                            <SwiperSlide className={uiStyle.swiperslide}>
+                              <div 
+                                ref={scrollRef}
+                                dangerouslySetInnerHTML={{
+                                  __html: `${slidecontent}`,
+                                }}
+                              >                           
+                              </div>
+                            </SwiperSlide>
+                          </Swiper>
+                        </div>
+                        <div className={uiStyle.signature}>
+                          <Image
+                            src="/signature.png"
+                            alt="Signature Author"
+                            width={250}
+                            height={250}
+                          />
+                          <h3>Teddy Pahagbia</h3>
+                        </div>
                       </div>
-                    </SwiperSlide>
-                  )
-                   : (
-                    <SwiperSlide>
-                      <p>Loading editorial content...</p>
-                    </SwiperSlide>
-                  )}
-                </Swiper>
-
-              </div>
-              <div className={uiStyle.signature}>
-                <Image
-                  src="/signature.png"
-                  alt="Signature Author"
-                  width={250}
-                  height={250}
-                />
-                <h3>Teddy Pahagbia</h3>
-              </div>
-            </div>
-          </div>
-        </section>
-        </SwiperSlide>
+                    </div>
+                  </section>
+                </SwiperSlide>
+              ) : null  // If slidecontent is '<p></p>', render nothing
+            ))
+          ) : (
+            <SwiperSlide>
+              <p>Loading editorial content...</p>
+            </SwiperSlide>
+          )
+        }
+        
 
         
 
@@ -546,8 +532,11 @@ function JournalSharedPage({ slug }: { slug?: string }) {
                   className="cursor-pointer"
                 >
                   <div 
-                    className={`${uiStyle.vinyl} border-[3px] md:border-[8px] text-center flex items-center justify-center h-[100px] md:h-[200px] w-[100px] md:w-[300px] rounded-3xl`} 
+                    className={`${uiStyle.vinyl} border-[3px] md:border-[8px] text-center flex items-center justify-center h-[100px] md:h-[200px] w-[100px] md:w-[300px] rounded-3xl relative overflow-hidden transition`} 
                     style={{ 
+                      borderColor: 
+                        hoveredCardIndex === index
+                        ? getColor(borderColors, index) : 'white',
                       backgroundImage:
                           hoveredCardIndex === index
                             ? item.background ? `url(${process.env.NEXT_PUBLIC_BASE_URL}/${item.background})` : `url(/pixel2.png)`
@@ -557,7 +546,8 @@ function JournalSharedPage({ slug }: { slug?: string }) {
                     onMouseEnter={() => setHoveredCardIndex(index)}
                     onMouseLeave={() => setHoveredCardIndex(null)}
                   >
-                    <p className="text-[23px] md:text-[15px] font-bold" style={{ fontSize: '25px', fontWeight: 'lighter' }}>
+                    <span className='absolute w-full h-full bg-[#1c1c1c3c]'/>
+                    <p className="text-[23px] max-w-[200px] md:text-[15px] font-bold" style={{ fontSize: '25px', fontWeight: 'lighter' }}>
                       {item.title}
                     </p>
                   </div>
@@ -565,16 +555,6 @@ function JournalSharedPage({ slug }: { slug?: string }) {
                 ))
               }
             </div>
-
-            {/* <div className={`${uiStyle.signature}`}>
-              <Image
-                src="/signature.png"
-                alt="Signature Author"
-                width={250}
-                height={250}
-              />
-              <h3>Teddy Pahagbia</h3>
-            </div> */}
           </div>
         </SwiperSlide>
       </Swiper>

@@ -16,6 +16,8 @@ import {
 } from 'react-share';
 import './Popup.css';
 
+import { AiOutlineInstagram, AiOutlineWhatsApp, AiOutlineLinkedin, AiOutlineX } from 'react-icons/ai';
+
 interface SharePopupProps {
   onClose: () => void;
   post: {
@@ -37,7 +39,10 @@ function Sharepopup({ onClose, post }: SharePopupProps) {
 
   useEffect(() => {
     console.log('shareurl: ', shareUrl)
-  }, [])
+  }, []);
+  
+  const instagramShareUrl = `https://www.instagram.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+
   
 
 
@@ -50,16 +55,16 @@ function Sharepopup({ onClose, post }: SharePopupProps) {
 
           <ul className="share-list">
             {/* Facebook */}
-            <li>
+            {/* <li>
               <FacebookShareButton url={shareUrl} hashtag={`#${hashtags[0]}`}>
                 <FacebookIcon size={32} round={true} />
               </FacebookShareButton>
-            </li>
+            </li> */}
 
             {/* LinkedIn */}
             <li>
               <LinkedinShareButton url={shareUrl} title={post.title} summary={post.description}>
-                <LinkedinIcon size={32} round={true} />
+                <AiOutlineLinkedin size={32} />
               </LinkedinShareButton>
             </li>
 
@@ -67,24 +72,20 @@ function Sharepopup({ onClose, post }: SharePopupProps) {
             <li>
               <TwitterShareButton url={shareUrl} title={post.title}>
               {/* hashtags={hashtags} */}
-                <XIcon size={32} round={true} />
+                <AiOutlineX size={31} />
               </TwitterShareButton>
             </li>
 
-            <li>
+            {/* <li>
               <WhatsappShareButton url={shareUrl} title={post.title} htmlTitle={post.title}>
-                <WhatsappIcon size={32} round={true}/>
+                <AiOutlineWhatsApp size={32}/>
               </WhatsappShareButton>
-            </li>
+            </li> */}
 
             {/* Instagram (Note: Instagram does not support direct share via web) */}
             <li>
-              <a
-                href="https://www.instagram.com/_blvckpixel_"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <RiInstagramLine size={32} />
+              <a href={instagramShareUrl} target="_blank" rel="noopener noreferrer">
+                <AiOutlineInstagram size={32} />
               </a>
             </li>
           </ul>
