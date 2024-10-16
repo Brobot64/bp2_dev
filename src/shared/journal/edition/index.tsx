@@ -409,7 +409,7 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
                         {item.title}
                       </h1>
                       <button
-                        className="text-sm flex items-center gap-2 text-nowrap"
+                        className="text-sm flex items-center gap-2 text-nowrap hover:!text-[#F000FF]"
                         onClick={() => openShareModal({
                             title: item.title,
                             slug: `/journal/${slug}/${edition}/${item.slug}`,

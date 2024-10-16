@@ -77,6 +77,7 @@ const BlvckCards: React.FC<CardProps> = ({ title, slug, blvckboxSlug, contentcar
             <div className={style.title}>
               <h1 className={style.snippetTitle}>{title}</h1>
               <button
+                className='hover:!text-[#F000FF]'
                 onClick={(e) => {
                   e.stopPropagation();
                   openShareModal(e, dynamicPath, title, desc);

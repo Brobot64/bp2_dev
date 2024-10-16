@@ -298,7 +298,7 @@ const BlvckCardDetail: React.FC = () => {
                         {blvckCard.title}
                       </h1>
                       <button
-                        className="text-sm flex items-center gap-2"
+                        className="text-sm flex items-center gap-2 hover:!text-[#F000FF]"
                         onClick={() => setSharePopupVisible(true)}
                       >
                         <FaShareNodes/> [ share ]
