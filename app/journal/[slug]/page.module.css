@@ -472,6 +472,12 @@
     cursor: grab;
   }
 
+  .editorialSwiper .swiperslide {
+    color: #fff !important;
+    font-size: 20px !important;
+    font-family: 'HelveticaNeueCyr-Light' !important;
+  }
+
   .editorialSwiper .swiperslide:active{
     cursor: grabbing;
   }
@@ -494,6 +500,9 @@
   .pageContainerWide {
     padding: 15px !important;
     margin: 0px;
+  }
+  .editorialSwiper .swiperslide {
+    font-size: 16px !important;
   }
 }
 /* Ended Here */

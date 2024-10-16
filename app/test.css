@@ -891,6 +891,7 @@
 }
 
 .trush::-webkit-scrollbar {
+  display: none;
   height: 5px;
   width: 5px;
 }
