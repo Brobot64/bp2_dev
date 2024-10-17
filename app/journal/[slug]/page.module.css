@@ -49,7 +49,7 @@
 }
 
 .editorialSection .wrapper .col{
-  width: 50%;
+  width: 65%;
   /* justify-self: revert; */
   flex: 1 1 auto;
   display: flex;
@@ -75,6 +75,17 @@
   height: 100dvh;
   scroll-snap-type: y mandatory; 
   overflow-y: scroll;
+}
+
+
+
+@media (max-width: 1024px) {
+  .editorialSection .wrapper .col {
+    width: 90%;
+  }
+  .vinyl {
+    width: 100%;
+  }
 }
 
 
