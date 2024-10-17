@@ -533,6 +533,7 @@ function JournalSharedPage({ slug }: { slug?: string }) {
                   key={index + item.blvckbox_id}
                   onClick={() => {
                     handleJournalClick(`/journal/${slug}/${item.slug}`);
+                    localStorage.setItem('borderColor', getColor(borderColors, index));
                   }}
                   className="cursor-pointer"
                 >
