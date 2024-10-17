@@ -88,6 +88,7 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
     const [error, setError] = React.useState<string | null>(null);
     const [currentPage, setCurrentPage] = React.useState(1);
     const [hasMore, setHasMore] = React.useState(true);
+    const [borderColor, setBorderColor] = React.useState('#F000FF');
 
     const { ref, inView } = useInView({
       threshold: 1.0,
@@ -200,6 +201,11 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
         fetchData(currentPage + 1);
       }
     }, [inView, fetchData, currentPage, hasMore]);
+
+    useEffect(() => { 
+      const trap = JSON.stringify(localStorage.getItem('borderColor'));
+      setBorderColor(trap);
+    }, [])
 
 
     // Share DAta
@@ -362,8 +368,11 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
                   pagination={{ clickable: true }}
                   autoplay={false}
                   speed={1000}
+                  style={{
+                    borderColor: borderColor.replace(/"/g, '') || '#fff'
+                  }}
                   loop={true}
-                  className="mySwiper1 border-[5px] rounded-[15px] overflow-hidden border-white"
+                  className={`mySwiper1 border-[5px] rounded-[15px] overflow-hidden ${borderColor ? `border-[${borderColor.replace(/"/g, '')}]` : 'border-white'}`}
                   spaceBetween={0}
                   modules={[
                     Autoplay,
@@ -409,7 +418,7 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
                         {item.title}
                       </h1>
                       <button
-                        className="text-sm flex items-center gap-2 text-nowrap"
+                        className="text-sm flex items-center gap-2 text-nowrap hover:!text-[#F000FF]"
                         onClick={() => openShareModal({
                             title: item.title,
                             slug: `/journal/${slug}/${edition}/${item.slug}`,

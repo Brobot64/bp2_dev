@@ -431,7 +431,7 @@ function JournalSharedPage({ slug }: { slug?: string }) {
                     <div className={uiStyle.pageContainerWide} id="blvckbook">
                       <div className={uiStyle.wrapper}>
                         <div className={uiStyle.col}>
-                          <h1>[ foreword ]</h1>
+                          { index === 0 && (<h1>[ foreword ]</h1>) }
                           <Swiper
                             onInit={(swiper) => {
                               swiperRef.current = swiper;
@@ -476,15 +476,20 @@ function JournalSharedPage({ slug }: { slug?: string }) {
                             </SwiperSlide>
                           </Swiper>
                         </div>
-                        <div className={uiStyle.signature}>
-                          <Image
-                            src="/signature.png"
-                            alt="Signature Author"
-                            width={250}
-                            height={250}
-                          />
-                          <h3>Teddy Pahagbia</h3>
-                        </div>
+                        
+                        {
+                          index === 0 && (
+                            <div className={uiStyle.signature}>
+                              <Image
+                                src="/signature.png"
+                                alt="Signature Author"
+                                width={250}
+                                height={250}
+                              />
+                              <h3>Teddy Pahagbia</h3>
+                            </div>
+                          )
+                        }
                       </div>
                     </div>
                   </section>
@@ -528,6 +533,7 @@ function JournalSharedPage({ slug }: { slug?: string }) {
                   key={index + item.blvckbox_id}
                   onClick={() => {
                     handleJournalClick(`/journal/${slug}/${item.slug}`);
+                    localStorage.setItem('borderColor', getColor(borderColors, index));
                   }}
                   className="cursor-pointer"
                 >

@@ -68,6 +68,12 @@
     font-family: 'HelveticaNeueCyr-Light';
 }
 
+@media (max-width: 768px) {
+  .popup.talents h6 {
+    margin: 0;
+  }
+}
+
 .popup.talents .job-listings{
     display: flex;
     flex-direction: column;
