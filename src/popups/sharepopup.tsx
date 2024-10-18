@@ -48,7 +48,7 @@ function Sharepopup({ onClose, post }: SharePopupProps) {
 
   return (
     <div className="popup-container black">
-      <div className="popup default !h-fit">
+      <div className="popup default !h-fit rounded-[20px]">
         <div className="desc">
           <h4 className="text-2xl">Interesting discovery?</h4>
           <p>Select where you want to share...</p>
@@ -64,7 +64,7 @@ function Sharepopup({ onClose, post }: SharePopupProps) {
             {/* LinkedIn */}
             <li>
               <LinkedinShareButton url={shareUrl} title={post.title} summary={post.description}>
-                <AiOutlineLinkedin size={32} />
+                <RiLinkedinLine size={32} />
               </LinkedinShareButton>
             </li>
 
@@ -72,7 +72,7 @@ function Sharepopup({ onClose, post }: SharePopupProps) {
             <li>
               <TwitterShareButton url={shareUrl} title={post.title}>
               {/* hashtags={hashtags} */}
-                <AiOutlineX size={31} />
+                <RiTwitterXLine size={31} />
               </TwitterShareButton>
             </li>
 
@@ -85,7 +85,7 @@ function Sharepopup({ onClose, post }: SharePopupProps) {
             {/* Instagram (Note: Instagram does not support direct share via web) */}
             <li>
               <a href={instagramShareUrl} target="_blank" rel="noopener noreferrer">
-                <AiOutlineInstagram size={32} />
+                <RiInstagramLine size={32} />
               </a>
             </li>
           </ul>
