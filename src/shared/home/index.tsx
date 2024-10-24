@@ -1374,6 +1374,9 @@ const SharedHomeComponent: React.FC = () => {
                     key={journal.id}
                     href={`/journal/${journal.slug}/?bnxn=1`}
                     className={`relative journal-container bg-cover bg-center bg-no-repeat ${activeIndex === index ? 'rainbow-border' : ''} rounded-lg `}
+                    lang='en'
+                    hrefLang='en'
+                    translate='no'
                     onMouseEnter={() => handleHover(index)} 
                     style={{
                       backgroundImage: `url(${process.env.NEXT_PUBLIC_BASE_URL}/${journal.background})`,

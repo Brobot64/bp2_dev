@@ -89,6 +89,7 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
     const [currentPage, setCurrentPage] = React.useState(1);
     const [hasMore, setHasMore] = React.useState(true);
     const [borderColor, setBorderColor] = React.useState('#F000FF');
+    const [isHovered, setIsHovered] = useState(false);
 
     const { ref, inView } = useInView({
       threshold: 1.0,
@@ -243,6 +244,33 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
     setSignInPopupVisible(false);
   };
 
+  const ShareButton = ({item}: {item: any}) => {
+    return (
+      <button
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="text-sm flex items-center gap-2 text-nowrap"
+      style={{
+        color: isHovered
+          ? borderColor
+            ? borderColor.replace(/"/g, '') // Apply dynamic borderColor if provided
+            : "#dd47f7" // Fallback to hoverColor from localStorage
+          : '', // Default color if not hovered
+        transition: 'color 0.3s ease', // Smooth color transition
+      }}
+      onClick={() => openShareModal({
+        title: item.title,
+        slug: `/journal/${slug}/${edition}/${item.slug}`,
+        description: item.description,
+        meta_keywords: item?.meta_keywords,
+        images: item.images,
+      })}
+    >
+      <FaShareNodes /> [ share ]
+    </button>
+    )
+  }
+
   const openSignInPopup = () => {
     setSignInPopupVisible(true);
   };
@@ -334,7 +362,7 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
         openSignInPopup={openSignInPopup}
         displayGoBack={true}
         showHome={true}
-        invert={false}
+        invert={true}
         isProtected={true}
       />
 
@@ -417,8 +445,12 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
                       <h1 className="text-base md:text-xl font-bold">
                         {item.title}
                       </h1>
-                      <button
-                        className="text-sm flex items-center gap-2 text-nowrap hover:!text-[#F000FF]"
+                      {/* <button
+                      // onMouseEnter={()=> }
+                        className={`text-sm flex items-center gap-2 text-nowrap ${borderColor && `text-[${borderColor.replace(/"/g, '')}]`}  ${borderColor ? `hover:!text-[${borderColor.replace(/"/g, '')}]` : 'hover:!text-[#F000FF]'}`}
+                        style={{
+                          
+                        }}
                         onClick={() => openShareModal({
                             title: item.title,
                             slug: `/journal/${slug}/${edition}/${item.slug}`,
@@ -428,7 +460,8 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
                         })}
                       >
                         <FaShareNodes/> [ share ]
-                      </button>
+                      </button> */}
+                       <ShareButton item={item}/>
                     </div>
 
                     <Description text={item.description}/>
