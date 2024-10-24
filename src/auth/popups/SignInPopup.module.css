@@ -197,10 +197,18 @@
     right: 30px;
 }
 
+.close:hover{
+  color: #dd47f7;
+}
+
 .popup.black .close{
     color: #ffffff;
     font-size: 34px;
     font-family: 'HelveticaNeueCyr-Light';
+}
+
+.popup.black .close:hover{
+  color: #dd47f7;
 }
 
 .navTabs{

@@ -148,6 +148,15 @@
     color: #ffffff;
     font-size: 34px;
     font-family: 'HelveticaNeueCyr-Light';
+    transition: color .3s ease-in;
+}
+
+.popup.black .close:hover{
+  color: #DD47F7 !important;
+}
+
+.close:hover{
+  color: #DD47F7 !important;
 }
 
 @keyframes fadeIn {

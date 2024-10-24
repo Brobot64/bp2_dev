@@ -10,6 +10,8 @@
   justify-content: space-between;
 }
 
+
+
 .header a {
   font-size: 12px;
   font-family: 'HelveticaNeueCyr-Light';
@@ -46,9 +48,12 @@
   background-color: #ffffff !important;  
 }
 
-
 .header.invert a {
   color: #ffffff !important;
+}
+
+.header.invert a:hover{
+  color: #dd47f7 !important;  
 }
 
 .header.fixed {
@@ -136,3 +141,5 @@
   width: 16px;
   margin-left: 10px;
 }
+
+

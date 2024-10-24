@@ -168,6 +168,14 @@ function JournalSharedPage({ slug }: { slug?: string }) {
     }
   };
 
+  const getSlideLength = () => {
+    if (swiperRef.current) {
+      const totalSlides = swiperRef.current.slides.length;
+      return totalSlides// Go to the last slide (zero-based index)
+    }
+  };
+  
+
   const goToNextSlide = () => {
     if (swiperRef.current) {
       swiperRef.current.slideNext();
@@ -179,6 +187,15 @@ function JournalSharedPage({ slug }: { slug?: string }) {
       swiperRef.current.slideTo(index);
     }
   };
+
+  const goToLastSlide = () => {
+    if (swiperRef.current) {
+      const totalSlides = swiperRef.current.slides.length;
+      console.log(totalSlides);
+      swiperRef.current.slideTo(totalSlides - 1); // Go to the last slide (zero-based index)
+    }
+  };
+  
   const [contentcards, setContentcards] = React.useState<ContentCardType[]>([]);
   const [editorial, setEditorial] = React.useState<EditorialType | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -253,18 +270,25 @@ function JournalSharedPage({ slug }: { slug?: string }) {
 
 
   useEffect(() => {
+    // Fetch session data
     const tile: any = sessionStorage.getItem('blackboxBx');
     setJournalBlackBox(JSON.parse(tile));
     
+    // Check the search parameters
     const fint = searchies.has('bnxn');
+  
     if (!fint) {
-      goToSpecificSlide(1);
-      if(searchies.has('cntnt')) {
-        goToNextSlide();
+      goToSpecificSlide(1);  // Go to specific slide if 'bnxn' not found
+  
+      if (searchies.has('cntnt')) {
+        // Delay execution to allow all slides to render
+        setTimeout(() => {
+          goToLastSlide(); // Go to the last slide after editorial slides are injected
+        }, 2000); // Adjust timeout duration as necessary based on your slide injection timing
       }
       return;
     }
-  }, []);
+  }, [swiperRef.current?.slides.length]); 
   
 
   useEffect(() => {
@@ -478,7 +502,8 @@ function JournalSharedPage({ slug }: { slug?: string }) {
                         </div>
                         
                         {
-                          index === 0 && (
+                          // @ts-ignore
+                          index === (editorialSlides.length - 1) && (
                             <div className={uiStyle.signature}>
                               <Image
                                 src="/signature.png"

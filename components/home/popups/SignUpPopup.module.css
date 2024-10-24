@@ -150,6 +150,14 @@
     font-family: 'HelveticaNeueCyr-Light';
 }
 
+.popup.black .close:hover{
+  color: #DD47F7 !important;
+}
+
+.close:hover{
+  color: #DD47F7 !important;
+}
+
 @keyframes fadeIn {
     from {
       opacity: 0;

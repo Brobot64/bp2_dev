@@ -5,6 +5,8 @@ import axios, { AxiosError } from 'axios';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useAuth } from '../../context/AuthProvider';
 import { useRouter } from 'next/navigation';
+import { RiCloseCircleLine } from 'react-icons/ri';
+import { AiOutlineClose } from 'react-icons/ai';
 
 interface SignInPopupProps {
   onClose: () => void;
@@ -174,7 +176,7 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
         axiosError.response.data.error
       ) {
         if (axiosError.response.status === 401) {
-          setErrors({ error: ['Unauthorized: Invalid email or password.'] });
+          setErrors({ error: ['Don\'t have an account yet?'] });
         } else if (axiosError.response.status === 403) {
           setErrors({
             error: ['Account not activated. Please check your email.'],
@@ -637,6 +639,14 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                               <a
                                 href="#"
                                 style={{ textDecoration: 'underline' }}
+                                onClick={() => handleTabChange('subscribe')}
+                              >
+                                Click here
+                              </a>
+                               &nbsp;to Subscribe to the BLVCKBOOK <br/><br/>
+                               <a
+                                href="#"
+                                style={{ textDecoration: 'underline' }}
                                 onClick={() => handleTabChange('forget')}
                               >
                                 Forget Password?
@@ -644,6 +654,13 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                             </p>
                           ))
                         )}
+                          {/* <a
+                            href="#"
+                            style={{ textDecoration: 'underline' }}
+                            onClick={() => handleTabChange('forget')}
+                          >
+                            Forget Password
+                          </a> */}
                       </div>
                     </form>
                   </div>
@@ -842,8 +859,8 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
             </p>
           )}
           {showCloseButton && (
-            <button onClick={onClose} className={style.close}>
-              x
+            <button onClick={onClose} className={style.close} style={{ fontSize: '20px !important' }}>
+              <AiOutlineClose size={24}/>
             </button>
           )}
         </div>

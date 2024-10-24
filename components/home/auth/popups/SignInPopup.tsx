@@ -637,10 +637,12 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                               <a
                                 href="#"
                                 style={{ textDecoration: 'underline' }}
-                                onClick={() => handleTabChange('forget')}
+                                onClick={() => handleTabChange('subscribe')}
+                                // forget
                               >
-                                Forget Password?
+                                Click Here
                               </a>
+                              to Subscribe to the BLVCKBOOK
                             </p>
                           ))
                         )}

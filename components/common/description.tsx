@@ -9,6 +9,12 @@ function Description({ text }: { text: string }) {
     setIsExpanded(!isExpanded);
   };
 
+
+
+  const [isHovered, setIsHovered] = useState(false);
+
+  const borderColor = JSON.stringify(localStorage.getItem('borderColor'))
+
   // Split the description text into paragraphs and format them as HTML
   const formattedDescription = text
     .split('\r\n\r\n')
@@ -26,7 +32,15 @@ function Description({ text }: { text: string }) {
         }}
       />
       {text.length > maxLength && (
-        <button onClick={toggleReadMore} className="inline text-sm font-normal text-white hover:text-[#d704e7] transition-[.3s]">
+        <button 
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          onClick={toggleReadMore} 
+          className={`inline text-sm font-normal text-white hover:text-[${borderColor.replace(/"/g, '')}] transition duration-300`}
+          style={{
+            color: isHovered ? `${borderColor.replace(/"/g, '')}` : "white"//"#DD47F7"
+          }}
+        >
           &nbsp;[ &nbsp;{isExpanded ? 'read less' : 'read more'} &nbsp;]
         </button>
       )}
