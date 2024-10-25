@@ -201,10 +201,14 @@
   color: #dd47f7;
 }
 
+.popup.default .close,
+.popup.talents .close,
 .popup.black .close{
-    color: #ffffff;
-    font-size: 34px;
-    font-family: 'HelveticaNeueCyr-Light';
+  color: #d6d6d6;
+  z-index: 999;
+  font-family: 'HelveticaNeueCyr-UltraLight';
+  font-weight: 100;
+  font-size: 25px;
 }
 
 .popup.black .close:hover{
@@ -223,6 +227,11 @@
     cursor: pointer;
     font-weight: 400;
     color: #a5a5a5 !important;
+}
+
+.navTabs h2:hover {
+  color: #dd47f7 !important;
+  transition: color .3s ease-in-out;
 }
 
 .navTabs h2.active{

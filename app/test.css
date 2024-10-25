@@ -954,5 +954,29 @@ a:hover {
 }
 
 
+/* Add this to your global CSS file or as a Tailwind plugin */
+.rainbow-border {
+  box-shadow: 0 0 10px 5px rgba(255, 0, 0, 0.7), 
+              0 0 20px 5px rgba(255, 165, 0, 0.7), 
+              0 0 30px 5px rgba(255, 255, 0, 0.7),
+              0 0 40px 5px rgba(0, 128, 0, 0.7),
+              0 0 50px 5px rgba(0, 0, 255, 0.7),
+              0 0 60px 5px rgba(75, 0, 130, 0.7),
+              0 0 70px 5px rgba(238, 130, 238, 0.7);
+  transition: box-shadow 0.3s ease;
+}
+
+.journal-container:hover,
+.journal-container:active {
+  box-shadow: 0 0 10px 5px rgba(255, 0, 0, 0.7), 
+              0 0 20px 5px rgba(255, 165, 0, 0.7), 
+              0 0 30px 5px rgba(255, 255, 0, 0.7),
+              0 0 40px 5px rgba(0, 128, 0, 0.7),
+              0 0 50px 5px rgba(0, 0, 255, 0.7),
+              0 0 60px 5px rgba(75, 0, 130, 0.7),
+              0 0 70px 5px rgba(238, 130, 238, 0.7);
+}
+
+
 
 

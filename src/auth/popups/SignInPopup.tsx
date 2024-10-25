@@ -859,8 +859,9 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
             </p>
           )}
           {showCloseButton && (
-            <button onClick={onClose} className={style.close} style={{ fontSize: '20px !important' }}>
-              <AiOutlineClose size={24}/>
+            <button onClick={onClose} className={style.close} >
+              {/* <AiOutlineClose size={24}/>  style={{ fontSize: '20px !important' }}*/}
+              x
             </button>
           )}
         </div>
