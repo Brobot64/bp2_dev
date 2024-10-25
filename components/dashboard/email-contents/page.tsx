@@ -29,7 +29,7 @@ const Emails: React.FC = () => {
   const handleBodyChange = (content: string) => {
     setMessage(content); 
   };
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [isEmailSelect, setIsEmailSelect] = useState(false);
   const [error, setError] = useState<string>('');
   const { loggedUser } = useAuth();
@@ -49,20 +49,47 @@ const closeErrorMessage = () => {
     setError('');
 };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); //
 
     // Log the form data
     console.log({
-      to,
+      to: filteredEmails,
       subject,
-      body,
+      body: message,
     });
 
+    try {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/send-custom-email`, 
+        {
+          emailArray: filteredEmails,
+          subject,
+          body: message
+        }
+      );
+
+      const dial = response.status;
+      if(dial === 200 || dial === 200) {
+        setSuccessMessage("Email sent successfully");
+      } else {
+        setError("Error sending Emails");
+      }
+    } catch (error: any) {
+      setError(error?.message);
+    } finally {
+      setTimeout(() => {
+        setError('');
+        setSuccessMessage('')
+        setTo('');
+        setSubject('');
+        setBody('');
+      }, 5000);
+    }
+
     // Optionally, you can clear the fields after submission
-    setTo('');
-    setSubject('');
-    setBody('');
+    // setTo('');
+    // setSubject('');
+    // setBody('');
   };
 
   const closeModal = () => setIsEmailSelect(false);

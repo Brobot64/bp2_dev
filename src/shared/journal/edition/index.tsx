@@ -400,7 +400,7 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
                     borderColor: borderColor.replace(/"/g, '') || '#fff'
                   }}
                   loop={true}
-                  className={`mySwiper1 border-[5px] rounded-[15px] overflow-hidden ${borderColor ? `border-[${borderColor.replace(/"/g, '')}]` : 'border-white'}`}
+                  className={`mySwiper1 border-[5px] rounded-[15px] overflow-hidden [&>*span]:!bg-black ${borderColor ? `border-[${borderColor.replace(/"/g, '')}]` : 'border-white'} [&>span.swiper-pagination-bullet-active]:bg-[${borderColor.replace(/"/g, '')}]`}  swiper-pagination-bullet-active
                   spaceBetween={0}
                   modules={[
                     Autoplay,
