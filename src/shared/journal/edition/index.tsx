@@ -393,11 +393,25 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
                 <Swiper
                   slidesPerView={1}
                   navigation={false}
-                  pagination={{ clickable: true }}
+                  pagination={{
+                    clickable: true,
+                    // renderBullet: (index, className) => {
+                    //   // Use renderBullet to style pagination bullets with logic
+                    //   return `<span class="${className}" style="
+                    //     background-color: ${index === 0 ? 'yellow' : '#ddd'};">
+                    //   </span>`;
+                    // }
+                  }}
+                  // pagination={{ clickable: true }}
                   autoplay={false}
                   speed={1000}
                   style={{
                     borderColor: borderColor.replace(/"/g, '') || '#fff'
+                  }}
+                  onSwiper={(swiper) => {
+                    // Initial active bullet coloring
+                    const activeBullet = swiper.pagination.bullets[swiper.activeIndex];
+                    if (activeBullet) activeBullet.style.backgroundColor = `${borderColor.replace(/"/g, '')}`;
                   }}
                   loop={true}
                   className={`mySwiper1 border-[5px] rounded-[15px] overflow-hidden [&>*span]:!bg-black ${borderColor ? `border-[${borderColor.replace(/"/g, '')}]` : 'border-white'} [&>span.swiper-pagination-bullet-active]:bg-[${borderColor.replace(/"/g, '')}]`}  swiper-pagination-bullet-active
@@ -419,7 +433,14 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
                       setIsBgDark(true);
                     } else {
                       setIsBgDark(false);
-                    }
+                    } 
+
+                    swiper.pagination.bullets.forEach((bullet) => {
+                      bullet.style.backgroundColor = '#ddd'; // default color for inactive bullets
+                    });
+                    const activeBullet = swiper.pagination.bullets[swiper.activeIndex];
+                    if (activeBullet) activeBullet.style.backgroundColor = `${borderColor.replace(/"/g, '')}`; // color for the active bullet
+                  
                   }}
                   effect="fade"
                 >
