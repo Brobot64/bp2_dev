@@ -265,12 +265,19 @@ const BlvckCardDetail: React.FC = () => {
                   fadeEffect={{
                     crossFade: true,
                   }}
+                  
                   onSlideChange={(swiper) => {
                     console.log('slide change', swiper.activeIndex);
                     if (swiper.activeIndex <= 10) {
                       setIsBgDark(true);
                     } else {
                       setIsBgDark(false);
+                    }
+
+                    if (swiper.pagination && swiper.pagination.bullets) {
+                      swiper.pagination.bullets.forEach((bullet) => {
+                        bullet.style.backgroundColor = "yellow";
+                      });
                     }
                   }}
                   effect="fade"
