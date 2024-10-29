@@ -262,7 +262,7 @@ a:hover {
   right: -2vw;
 
   overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-y: auto;
   z-index: 999999;
   transition: top 0.3s ease;
   display: flex;
@@ -275,7 +275,7 @@ a:hover {
 
 .menu-items .wrapper {
   overflow-x: hidden;
-  overflow-y: hidden;
+  overflow-y: auto;
   width: 200px;
   height: 85px;
   padding-bottom: 55px;

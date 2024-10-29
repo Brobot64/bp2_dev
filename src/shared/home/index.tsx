@@ -288,20 +288,20 @@ const SharedHomeComponent: React.FC = () => {
     }, 200);
   }, 95);
 
-  useEffect(() => {
-    const menuItemsContainer = document.getElementById('menu-items');
-    if (menuItemsContainer) {
-      menuItemsContainer.addEventListener('wheel', handleWheel);
-    }
-    return () => {
-      if (menuItemsContainer) {
-        menuItemsContainer.removeEventListener('wheel', handleWheel);
-      }
-      if (wheelTimeout.current) {
-        clearTimeout(wheelTimeout.current);
-      }
-    };
-  }, [activeMenu]);
+  // useEffect(() => {
+  //   const menuItemsContainer = document.getElementById('menu-items');
+  //   if (menuItemsContainer) {
+  //     menuItemsContainer.addEventListener('wheel', handleWheel);
+  //   }
+  //   return () => {
+  //     if (menuItemsContainer) {
+  //       menuItemsContainer.removeEventListener('wheel', handleWheel);
+  //     }
+  //     if (wheelTimeout.current) {
+  //       clearTimeout(wheelTimeout.current);
+  //     }
+  //   };
+  // }, [activeMenu]);
 
   useEffect(() => {
     const activeSlideIndex = swiperRef.current?.activeIndex;
@@ -621,7 +621,8 @@ const SharedHomeComponent: React.FC = () => {
         <a className={`selected-value `} style={{ display: 'none' }}>
           {activeMenu !== null ? menus[activeMenu] : 'Select Menu'}
         </a>
-        <div className="wrapper" ref={containerRef}>
+        <div className="wrapper" >
+        {/* ref={containerRef} */}
           {menus.map((menu, index) => (
             <a
               href="#"
@@ -1369,36 +1370,36 @@ const SharedHomeComponent: React.FC = () => {
                 
               <div className="sides flex gap-[25px] mx-[10px] max-w-[1010px] overflow-x-auto md:mx-0">
 
-                {boxesData.map((journal, index) => (
-                  <Link
-                    key={journal.id}
-                    href={`/journal/${journal.slug}/?bnxn=1`}
-                    className={`relative journal-container bg-cover bg-center bg-no-repeat ${activeIndex === index ? 'rainbow-border' : ''} rounded-lg `}
-                    lang='en'
-                    hrefLang='en'
-                    translate='no'
-                    onMouseEnter={() => handleHover(index)} 
-                    style={{
-                      backgroundImage: `url(${process.env.NEXT_PUBLIC_BASE_URL}/${journal.background})`,
-                    }}
-                    onClick={() => {
-                      sessionStorage.setItem('blackboxBx', JSON.stringify(journal));
-                    }}
-                    // @ts-ignore
-                    ref={(el) => (journalRefs.current[index] = el)}
-                  >
-                    <h6>{journal.title}</h6>
-                    <span>BLVCK<span className='italic'>BOOK</span>  |  the foresight journal. 
-                    </span>
-                    {/* <span>{journal.edition}</span> */}
+              {boxesData.map((journal, index) => (
+                <Link
+                  key={journal.id}
+                  href={`/journal/${journal.slug}/?bnxn=1`}
+                  className={`relative journal-container bg-cover bg-center bg-no-repeat ${activeIndex === index ? 'rainbow-border' : ''} rounded-lg`}
+                  lang="en"
+                  hrefLang="en"
+                  translate="no"
+                  onMouseEnter={() => handleHover(index)} 
+                  style={{
+                    backgroundImage: `url(${process.env.NEXT_PUBLIC_BASE_URL}/${journal.background})`,
+                  }}
+                  onClick={() => {
+                    sessionStorage.setItem('blackboxBx', JSON.stringify(journal));
+                  }}
+                  // @ts-ignore
+                  ref={(el) => (journalRefs.current[index] = el)}
+                >
+                  <h6 lang="en" translate="no">{journal.title}</h6>
+                  <span lang="en" translate="no">
+                    BLVCK<span className="italic">BOOK</span> | the foresight journal.
+                  </span>
+                  {/* <span lang="en" translate="no">{journal.edition}</span> */}
 
-                    <div className="absolute matbtm capitalize bottom-2 right-2">
-                      { 
-                        `${getFullMonth(journal.date)}, ${getFullYear(journal.date)}`
-                      }
-                    </div>
-                  </Link>
-                ))}
+                  <div className="absolute matbtm capitalize bottom-2 right-2" lang="en" translate="no">
+                    {`${getFullMonth(journal.date)}, ${getFullYear(journal.date)}`}
+                  </div>
+                </Link>
+              ))}
+
               </div>
 
                 <button

@@ -258,7 +258,7 @@ const Subscriptions: React.FC = () => {
               className={`${style.inputField} border-b-2 ml-2 mb-2`}
             />
             {/* {style.featuresContainer} */}
-            <div className="flex flex -col gap-2">
+            <div className="flex flex-col gap-2">
               <h4 className='font-[600]'>Select Features</h4>
               {
                 features ? (
@@ -276,7 +276,7 @@ const Subscriptions: React.FC = () => {
                 ) : (<>No available Features</>)
               }
             </div>
-            <button className={`${style.submitButton} p-1 px-2 mx-2 bg-slate-300 rounded mt-2`} onClick={handlePackageSubmit}>Submit</button>
+            <button className={`${style.submitButton} p-1 px-2 mx-2 bg-slate-300 rounded mt-4`} onClick={handlePackageSubmit}>Submit</button>
             <button className={`${style.cancelButton}  p-1 px-2 mx-2 bg-slate-300 rounded mt-2`} onClick={() => setIsAddingPackage(false)}>Cancel</button>
           </div>
           { error && <MessagePopup message={error} onClose={closeErrorMessage}/> }
