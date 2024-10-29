@@ -340,21 +340,28 @@ function JournalSharedPage({ slug }: { slug?: string }) {
     return () => clearInterval(interval);
   }, []);
 
+  // Added By Brobot
+  
+  const openSignInPopup = () => setSignInPopupVisible(true);
+  const handleEditProfile = () => {
+    openSignInPopup();
+    setEditProfile(true);
+  };
+
   return (
     <>
       <Header
         fixedNav={true}
-        openEditProfile={() => {}}
+        openEditProfile={handleEditProfile}
         handleGoBack={() => {
           router.push('/');
         }}
         openSearchPopup={() => {}}
-        openSignInPopup={() => {
-          setSignInPopupVisible(true);
-        }}
+        openSignInPopup={openSignInPopup}
         displayGoBack={true}
         swiperRef={swiperRef}
         showHome={true}
+        showToggleButton={true}
         invert={false}
       />
 
