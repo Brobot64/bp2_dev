@@ -77,7 +77,7 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
   const [editable, setEditable] = useState<boolean>(false);
   const [userRole, setUserRole] = useState<string>('');
   const router = useRouter();
-  const [demFeatures, setDemFeatures] = useState<any[]>([]);
+  const [demFeatures, setDemFeatures] = useState<Feature[]>([]);
   const [authUser, setAuthUser] = useState<boolean>(false);
   const [packages, setPackages] = useState<any[]>([]);
   const [showPackageSelection, setShowPackageSelection] =
@@ -102,13 +102,13 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
   useEffect(() => {
     const fetchPackages = async () => {
       try {
-        const featureRes = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/features`)
-        setDemFeatures(featureRes.data.data);
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/packages`
-        );
-        setPackages(response.data);
-        console.log(featureRes.data);
+        const [featuresResponse, packagesResponse] = await Promise.all([
+          axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/features`),
+          axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/packages`),
+        ]);
+
+        setDemFeatures(featuresResponse.data.data || []); // Ensure it’s an array
+        setPackages(packagesResponse.data || []);
       } catch (error) {
         console.error('Failed to fetch packages', error);
       }
@@ -116,6 +116,11 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
 
     fetchPackages();
   }, []);
+
+  function getFeatureNameById(id: string | number): string | null {
+    const feature = demFeatures.find((item) => item.id === parseInt(id as string, 10));
+    return feature ? feature.name : null;
+  }
 
   useEffect(() => {
     if (loggedUser?.role_id == 1 || loggedUser?.role_id == 2) {
@@ -579,11 +584,9 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                         </span>
                         <span>
                           <ul>
-                            {pkg.features.map(
-                              (feature: string, index: number) => (
-                                <li key={index}>{getFeatureNameById(demFeatures, feature)}</li>
-                              )
-                            )}
+                            {pkg.features.map((featureId: any, index: number) => (
+                              <li key={index}>{getFeatureNameById(featureId) || 'Unknown Feature'}</li>
+                            ))}
                           </ul>
                             
                         </span>
@@ -724,11 +727,9 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                         </span>
                         <span>
                           <ul>
-                            {pkg.features.map(
-                              (feature: string, index: number) => (
-                                <li key={index}>{getFeatureNameById(demFeatures, feature)}</li>
-                              )
-                            )}
+                            {pkg.features.map((featureId: any, index: number) => (
+                              <li key={index}>{getFeatureNameById(featureId) || 'Unknown Feature'}</li>
+                            ))}
                           </ul>
                         </span>
                       </div>

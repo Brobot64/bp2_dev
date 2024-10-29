@@ -579,11 +579,11 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                           <sub>£</sub>
                         </span>
                         <span>
-                        <ul>
-                          {pkg.features.map((featureId: any, index: number) => (
-                            <li key={index}>{getFeatureNameById(featureId) || 'Unknown Feature'}</li>
-                          ))}
-                        </ul>
+                          <ul>
+                            {pkg.features.map((featureId: any, index: number) => (
+                              <li key={index}>{getFeatureNameById(featureId) || 'Unknown Feature'}</li>
+                            ))}
+                          </ul>
                         </span>
                       </div>
                     ))}
@@ -734,16 +734,11 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                           <sub>£</sub>
                         </span>
                         <span>
-                        <ul>
-                          {pkg.features.map((featureId: string, index: number) => {
-                            const feature = demFeatures.find((f) => f.id === parseInt(featureId, 10)); // Convert featureId to a number
-                            return (
-                              <li key={index}>
-                                {feature ? feature.name : featureId} {/* Fallback to ID if feature name isn't found */}
-                              </li>
-                            );
-                          })}
-                        </ul>
+                          <ul>
+                            {pkg.features.map((featureId: any, index: number) => (
+                              <li key={index}>{getFeatureNameById(featureId) || 'Unknown Feature'}</li>
+                            ))}
+                          </ul>
                         </span>
                       </div>
                     ))}
