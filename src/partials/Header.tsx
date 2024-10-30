@@ -54,13 +54,14 @@ const Header: React.FC<HeaderProps> = ({
     if (!loading && loggedUser) {
       if (loggedUser.role_id === 3) {
         const payment = loggedUser?.payments[0];
+        console.log(loggedUser);
 
-        if (payment.status === 'pending') {
-          // redirect to payment page
-          router.push(`/payment/${loggedUser.uuid}`);
-        } else if (payment.status === 'completed') {
-          console.log('User has an active subscription');
-        }
+        // if (payment.status === 'pending') {
+        //   // redirect to payment page
+        //   router.push(`/payment/${loggedUser.uuid}`);
+        // } else if (payment.status === 'completed') {
+        //   console.log('User has an active subscription');
+        // }
       }
     }
   }, [loading, loggedUser]);
