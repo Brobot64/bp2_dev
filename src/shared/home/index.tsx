@@ -638,7 +638,7 @@ const SharedHomeComponent: React.FC = () => {
                       : afterActiveMenu === index
                         ? 'bactive'
                         : ''
-                } ${isBgDark ? 'white' : ''}
+                } ${isBgDark ? 'bactive white' : ''}
               `}
             >
               {activeMenu === index ? menu : menu}
@@ -822,6 +822,12 @@ const SharedHomeComponent: React.FC = () => {
                : <>Loading....</>
             }
           </Swiper>
+        </SwiperSlide>
+
+        <SwiperSlide className='slide'>
+          <div className="slide-content">
+            BLVCKPIXEL
+          </div>
         </SwiperSlide>
 
         {/* slide 2 */}
