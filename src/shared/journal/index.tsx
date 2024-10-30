@@ -274,6 +274,8 @@ function JournalSharedPage({ slug }: { slug?: string }) {
     const tile: any = sessionStorage.getItem('blackboxBx');
     setJournalBlackBox(JSON.parse(tile));
     
+    goToSpecificSlide(1);
+    
     // Check the search parameters
     const fint = searchies.has('bnxn');
   
@@ -288,6 +290,8 @@ function JournalSharedPage({ slug }: { slug?: string }) {
       }
       return;
     }
+    
+    goToSpecificSlide(1);
   }, [swiperRef.current?.slides.length]); 
   
 
@@ -361,7 +365,7 @@ function JournalSharedPage({ slug }: { slug?: string }) {
         displayGoBack={true}
         swiperRef={swiperRef}
         showHome={true}
-        showToggleButton={true}
+        // showToggleButton={true}
         invert={false}
       />
 
@@ -373,6 +377,16 @@ function JournalSharedPage({ slug }: { slug?: string }) {
           onEditProfile={editProfile}
         />
       )}
+
+      <div className='absolute z-[1000] right-3 top-14 flex flex-col text-right text-slate-300' style={{ 
+        fontSize: '12px',
+        lineHeight: '16px',
+        fontWeight: '200'
+       }}>
+        <a href="">home</a>
+        <a href="">forward</a>
+        <a href="">content</a>
+      </div>
 
       <Swiper
         onInit={(swiper) => {
