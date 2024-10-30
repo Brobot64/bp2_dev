@@ -26,6 +26,7 @@ type User = {
   profession: string;
   patients: number;
   lastLogin: string;
+  selected_package: string;
 };
 
 const ManageUsers: React.FC = () => {
@@ -207,6 +208,7 @@ const ManageUsers: React.FC = () => {
                   </th>
                   <th>Name</th>
                   <th>Email</th>
+                  <th>Subscription</th>
                   <th>First Login</th>
                   <th>Member Since</th>
                   <th>Last Login</th>
@@ -235,6 +237,7 @@ const ManageUsers: React.FC = () => {
                     </td>
                     <td>{user.name}</td>
                     <td>{user.email}</td>
+                    <td>{user.selected_package}</td>
                     <td>{format(new Date(user.first_login_at), 'PPpp')}</td>
                     <td>{format(new Date(user.created_at), 'PPpp')}</td>
                     <td>

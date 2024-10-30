@@ -11,6 +11,23 @@
     align-items: center;
     z-index: 9999999;
   }
+
+  .dropdown {
+    position: absolute;
+    background-color: black;
+    border: 1px solid #ccc;
+    z-index: 1;
+  }
+  
+  .dropdownItem {
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  
+  .dropdownItem:hover {
+    color: black !important;
+    background-color: #f0f0f0;
+  }
   
   .popup {
     background: rgba(255, 255, 255, 1);

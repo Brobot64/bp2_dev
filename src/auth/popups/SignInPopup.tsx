@@ -81,6 +81,16 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
 
   const [showForgotPassword, setShowForgotPassword] = useState<boolean>(false);
 
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedPayment, setSelectedPayment] = useState('Bitcoin');
+
+  const paymentTypes = ['Bitcoin', 'Credit Card', 'PayPal', 'Bank Transfer'];
+
+  const handlePaymentChange = (payment: any) => {
+    setSelectedPayment(payment);
+    setIsDropdownOpen(false); // Close dropdown after selection
+  };
+
   const handleDashboardNavigation = () => {
     router.push('/dashboard');
   };
@@ -229,7 +239,8 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
       console.log('Password reset link sent', response.data);
       setLoading(false);
       setSuccess(true);
-      setButtonText('✔');
+      // setButtonText('✔');
+      setButtonText('Check your email and click on the password reset link')
     } catch (error) {
       console.error('Password reset failed', error);
       const axiosError = error as AxiosError<{ error: string }>;
@@ -541,11 +552,24 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                       </div>
                     </div>
                     <div className={`${style.subscription} ${style.frmGrp}`}>
-                      <div className={` ${style.muted} `}>
+                      <div className={` ${style.muted}`}>
                         Method of payment:{' '}
                       </div>
-                      <div className={` ${style.cPlan} `}>Bitcoin</div>
-                      <div className={` ${style.action} `}>[Change]</div>
+                      <div className={` ${style.cPlan}`}>
+                        {selectedPayment}
+                      </div>
+                      <div className={` ${style.action} cursor-pointer`} onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+                        [Change]
+                      </div>
+                      {isDropdownOpen && (
+                        <div className={style.dropdown}>
+                          {paymentTypes.map((payment, index) => (
+                            <div key={index} className={style.dropdownItem} onClick={() => handlePaymentChange(payment)}>
+                              {payment}
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
 
                     <div
