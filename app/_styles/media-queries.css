@@ -112,6 +112,18 @@
     width: 100% !important;
   }
 
+  .slide-text {
+    position: absolute;
+    left: 50px;
+    opacity: 0;
+    transition: opacity 2s ease-in-out; /* Slow fade effect */
+  }
+  
+  .slide-text.active {
+    opacity: 1;
+  }
+  
+
   .mySwiper .swiper-wrapper .slide > div.scrollanimation {
     margin-left: 0 !important;
     margin-right: 0 !important;

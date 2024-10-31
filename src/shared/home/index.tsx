@@ -31,6 +31,7 @@ import Link from 'next/link';
 import { useApp } from '@/src/context/AppProvider';
 import { BiSortAlt2 } from 'react-icons/bi';
 import axios from 'axios';
+import Image from 'next/image';
 
 export const getFullMonth = (dateString: string): string => {
   const date = new Date(dateString);
@@ -98,6 +99,16 @@ const SharedHomeComponent: React.FC = () => {
     'journal',
     'contact | jobs',
   ];
+
+  const [showText, setShowText] = useState(0);
+
+useEffect(() => {
+  const interval = setInterval(() => {
+    setShowText((prev) => (prev === 0 ? 1 : 0));
+  }, 5000); // Change every 3 seconds
+
+  return () => clearInterval(interval);
+}, []);
 
   // added by Brobot
   const [activeIndex, setActiveIndex] = useState(0);
@@ -170,7 +181,7 @@ const SharedHomeComponent: React.FC = () => {
   const handleGoBack = () => {
     console.log(visitedSlides);
     if (visitedSlides.length > 1) {
-      const lastVisitedIndex = visitedSlides[visitedSlides.length - 2];
+      const lastVisitedIndex = visitedSlides[visitedSlides.length - 3];
       if (swiperRef.current) {
         swiperRef.current.slideTo(lastVisitedIndex);
         setVisitedSlides((prev) => prev.slice(0, -1));
@@ -241,12 +252,12 @@ const SharedHomeComponent: React.FC = () => {
     setIsOpen(false);
     if (swiperRef.current) {
       if (index === 0) swiperRef.current.slideTo(1);
-      else if (index === 1) swiperRef.current.slideTo(4);
-      else if (index === 2) swiperRef.current.slideTo(6);
-      else if (index === 3) swiperRef.current.slideTo(11);
-      else if (index === 4) swiperRef.current.slideTo(13);
-      else if (index === 5) swiperRef.current.slideTo(16);
-      else if (index === 6) swiperRef.current.slideTo(17);
+      else if (index === 1) swiperRef.current.slideTo(5); // -1  5
+      else if (index === 2) swiperRef.current.slideTo(7);
+      else if (index === 3) swiperRef.current.slideTo(12);
+      else if (index === 4) swiperRef.current.slideTo(14);
+      else if (index === 5) swiperRef.current.slideTo(17);
+      else if (index === 6) swiperRef.current.slideTo(18);
       setActiveMenu(index);
     }
   };
@@ -310,7 +321,7 @@ const SharedHomeComponent: React.FC = () => {
       swiperRef.current &&
       swiperRef.current.activeIndex
     ) {
-      const slideMapping = [1, 4, 6, 11, 13, 16, 17];
+      const slideMapping = [1, 5, 7, 12, 14, 17, 18];
       setTimeout(() => {
         swiperRef.current?.slideTo(slideMapping[activeMenu]);
       }, 10);
@@ -501,36 +512,36 @@ const SharedHomeComponent: React.FC = () => {
             mobileMenuContainer.style.display = 'block';
           }
         }
-        if (activeSlideIndex >= 1 && activeSlideIndex < 4) {
+        if (activeSlideIndex >= 1 && activeSlideIndex < 5) {
           setActiveMenu(0);
           setAfterActiveMenu(1);
           scrollToActiveMenuItem(0);
-        } else if (activeSlideIndex >= 4 && activeSlideIndex < 6) {
+        } else if (activeSlideIndex >= 5 && activeSlideIndex < 7) {
           setBeforeActiveMenu(0);
           setActiveMenu(1);
           setAfterActiveMenu(2);
           scrollToActiveMenuItem(1);
-        } else if (activeSlideIndex >= 6 && activeSlideIndex < 11) {
+        } else if (activeSlideIndex >= 7 && activeSlideIndex < 12) {
           setBeforeActiveMenu(1);
           setActiveMenu(2);
           setAfterActiveMenu(3);
           scrollToActiveMenuItem(2);
-        } else if (activeSlideIndex >= 11 && activeSlideIndex < 13) {
+        } else if (activeSlideIndex >= 12 && activeSlideIndex < 14) {
           setBeforeActiveMenu(2);
           setActiveMenu(3);
           setAfterActiveMenu(4);
           scrollToActiveMenuItem(3);
-        } else if (activeSlideIndex >= 13 && activeSlideIndex < 16) {
+        } else if (activeSlideIndex >= 14 && activeSlideIndex < 17) {
           setBeforeActiveMenu(3);
           setActiveMenu(4);
           setAfterActiveMenu(5);
           scrollToActiveMenuItem(4);
-        } else if (activeSlideIndex === 16) {
+        } else if (activeSlideIndex === 17) {
           setBeforeActiveMenu(4);
           setActiveMenu(5);
           setAfterActiveMenu(6);
           scrollToActiveMenuItem(5);
-        } else if (activeSlideIndex >= 17) {
+        } else if (activeSlideIndex >= 18) {
           setBeforeActiveMenu(5);
           setActiveMenu(6);
           scrollToActiveMenuItem(6);
@@ -559,7 +570,8 @@ const SharedHomeComponent: React.FC = () => {
           swiperRef.current?.activeIndex === 15 ||
           swiperRef.current?.activeIndex === 16 ||
           swiperRef.current?.activeIndex === 17 ||
-          swiperRef.current?.activeIndex === 18
+          swiperRef.current?.activeIndex === 18 ||
+          swiperRef.current?.activeIndex === 19
         ) {
           setTimeout(() => {
             swiperRef.current?.mousewheel.enable();
@@ -735,7 +747,7 @@ const SharedHomeComponent: React.FC = () => {
             setIsBgDark(false);
           }
 
-          if (swiper.activeIndex === 16) {
+          if (swiper.activeIndex === 17) {
             setIsBgDark(true);
           } else {
             setIsBgDark(false);
@@ -826,9 +838,33 @@ const SharedHomeComponent: React.FC = () => {
 
         <SwiperSlide className='slide'>
           <div className="slide-content">
-            BLVCKPIXEL
+            <div
+              className="flex gap-4 relative items-center h-fit"
+              style={{ fontFamily: `HelveticaNeueCyr-Light!important` }}
+            >
+              <img
+                src="/logo-cube-transparent-bck.png"
+                alt=""
+                className="h-[25px] md:h-[40px] !text-[24px] md:!text-[40px]"
+              />
+              <span
+                className={`slide-text uppercase !text-[24px] md:!text-[40px] ${
+                  showText === 0 ? "active" : ""
+                }`}
+              >
+                blvck<span className="italic">pixel</span>
+              </span>
+              <span
+                className={`slide-text !text-[24px] md:!text-[40px] ${
+                  showText === 1 ? "active" : ""
+                }`}
+              >
+                the foresight company
+              </span>
+            </div>
           </div>
         </SwiperSlide>
+
 
         {/* slide 2 */}
         <SwiperSlide className="slide">

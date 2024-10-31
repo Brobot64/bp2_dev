@@ -101,6 +101,18 @@ a:hover {
   width: 60%;
 }
 
+.slide-text {
+  position: absolute;
+  left: 50px;
+  opacity: 0;
+  transition: opacity 1s ease-in-out; /* Slow fade effect */
+}
+
+.slide-text.active {
+  opacity: 1;
+}
+
+
 .mySwiper > .swiper-wrapper > .slide-banner .banner-slider-content h3 {
   font-size: 70px;
   font-family: 'HelveticaNeueCyr-Roman';
@@ -192,6 +204,9 @@ a:hover {
   margin-right: 20px;
   top: -2px;
 }
+
+
+
 
 .mySwiper > .swiper-wrapper > .slide .italics {
   font-family: 'HelveticaNeueCyr-LightItalic' !important;
@@ -894,6 +909,15 @@ a:hover {
   position: relative;
   padding-bottom: 10px;
   margin: 60px 20px;
+}
+
+.kunli button {
+  position: absolute;
+  font-size: 32px;
+  z-index: 100;
+  color: white;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 
