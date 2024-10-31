@@ -101,7 +101,34 @@ a:hover {
   width: 60%;
 }
 
+
+
+.jornbtn {
+  font-family: HelveticaNeueCyr-Light!important;
+  font-size: 11px !important;
+  line-height: 12px;
+  color: #d2d2d2c9;
+  text-transform: lowercase;
+  transition: all .2s ease-in;
+  text-align: right !important;
+}
+
+.jornbtn:hover {
+  color: #DD47F7 !important;
+}
+
+.jornbtn.active {
+  font-family: HelveticaNeueCyr-Roman!important;
+  font-size: 16.5px !important;
+  font-weight: 550;
+  line-height: 17.5px;
+  color: #000000;
+}
+
+
 .slide-text {
+  font-family: HelveticaNeueCyr-Light!important;
+  font-weight: 500 !important;
   position: absolute;
   left: 50px;
   opacity: 0;
