@@ -89,6 +89,18 @@ function JournalSharedPage({ slug }: { slug?: string }) {
 
   const [journalBlackBox, setJournalBlackBox] = React.useState({});
 
+  const goToPreviousSlide = () => {
+    if (swiperRef.current) swiperRef.current.slidePrev();
+  };
+
+  const goToNextSlide = () => {
+    if (swiperRef.current) swiperRef.current.slideNext();
+  };
+
+  const goToSpecificSlide = (slideIndex: number) => {
+    if (swiperRef.current) swiperRef.current.slideTo(slideIndex);
+  };
+
   const goToSlide = (slideNumber: number) => {
     console.log(swiperRef)
     
@@ -223,17 +235,17 @@ const handleTNext = () => {
   };
   
 
-  const goToNextSlide = () => {
-    if (swiperRef.current) {
-      swiperRef.current.slideNext();
-    }
-  };
+  // const goToNextSlide = () => {
+  //   if (swiperRef.current) {
+  //     swiperRef.current.slideNext();
+  //   }
+  // };
 
-  const goToSpecificSlide = (index: number) => {
-    if (swiperRef.current) {
-      swiperRef.current.slideTo(index);
-    }
-  };
+  // const goToSpecificSlide = (index: number) => {
+  //   if (swiperRef.current) {
+  //     swiperRef.current.slideTo(index);
+  //   }
+  // };
 
   const goToLastSlide = () => {
     if (swiperRef.current) {
@@ -317,29 +329,25 @@ const handleTNext = () => {
 
 
   useEffect(() => {
-    // Fetch session data
-    const tile: any = sessionStorage.getItem('blackboxBx');
-    setJournalBlackBox(JSON.parse(tile));
-    
-    goToSpecificSlide(1);
-    
-    // Check the search parameters
-    const fint = searchies.has('bnxn');
+    if (contentcards.length > 0) {
+      const tile: any = sessionStorage.getItem('blackboxBx');
+      setJournalBlackBox(JSON.parse(tile));
   
-    if (!fint) {
-      goToSpecificSlide(1);  // Go to specific slide if 'bnxn' not found
+      const hasBnxn = searchies.has('bnxn');
+      const hasCntnt = searchies.has('cntnt');
   
-      if (searchies.has('cntnt')) {
-        // Delay execution to allow all slides to render
-        setTimeout(() => {
-          goToLastSlide(); // Go to the last slide after editorial slides are injected
-        }, 2000); // Adjust timeout duration as necessary based on your slide injection timing
+      if (!hasBnxn) {
+        goToLastSlide();
+  
+        if (hasCntnt) {
+          setTimeout(goToLastSlide, 2000);
+        }
+      } else {
+        goToSpecificSlide(1);
       }
-      return;
     }
-    
-    goToSpecificSlide(1);
-  }, [swiperRef.current?.slides.length]); 
+  }, [contentcards]);
+  
   
 
   useEffect(() => {
@@ -424,23 +432,10 @@ const handleTNext = () => {
           onEditProfile={editProfile}
         />
       )}
-
-{/* Menu Item */}
-      <div className='absolute z-[1000] right-3 top-14 flex flex-col text-right text-slate-300' style={{ 
-        fontSize: '12px',
-        lineHeight: '16px',
-        fontWeight: '200'
-       }}>
-        <a onClick={() => goToSlide(0)}>home</a>
-        <a onClick={() => goToSlide(1)}>forward</a>
-        <a onClick={goToLastSlide}>content</a>
-      </div>
-
-      {/* Menu Items Ended */}
       
 
       <Swiper
-        onInit={(swiper) => {
+         onInit={(swiper) => {
           swiperRef.current = swiper;
         }}
         spaceBetween={0}
@@ -612,7 +607,8 @@ const handleTNext = () => {
 
             <div className='relative kunli'>
              <button
-                onClick={contentScrollUp}
+                onClick={handleTPrev}
+                className='hover:text-[#DD47F7] transition'
                 style={{
                   left: '-30px'
                 }}
@@ -637,10 +633,10 @@ const handleTNext = () => {
                       className={`${uiStyle.vinyl} border-[3px] md:border-[8px] text-center flex items-center justify-center h-[100px] md:h-[200px] w-[100px] md:w-[300px] rounded-3xl relative overflow-hidden transition`}
                       style={{
                         borderColor:
-                          hoveredCardIndex === index
+                        (hoveredCardIndex === index || activeIndex === index)
                           ? getColor(borderColors, index) : 'white',
                         backgroundImage:
-                            hoveredCardIndex === index
+                        (hoveredCardIndex === index || activeIndex === index)
                               ? item.background ? `url(${process.env.NEXT_PUBLIC_BASE_URL}/${item.background})` : `url(/pixel2.png)`
                               : 'none',
                        backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', transition: 'background-size 0.5s ease, background-image 0.5s ease',
@@ -658,7 +654,8 @@ const handleTNext = () => {
                 }
               </div>
                 <button
-                  onClick={contentScrollDown}
+                  onClick={handleTNext}
+                  className='hover:text-[#DD47F7] transition'
                   style={{
                     right: '-30px'
                   }}
@@ -669,6 +666,27 @@ const handleTNext = () => {
           </div>
         </SwiperSlide>
       </Swiper>
+
+      {/* Menu Item */}
+      <div
+        className="absolute z-[1000] right-3 top-14 flex flex-col text-right text-slate-300"
+        style={{
+          fontSize: '12px',
+          lineHeight: '16px',
+          fontWeight: '200',
+        }}
+      >
+        <button onClick={() => goToSlide(0)} className=" text-white py-1 px-2 rounded">
+          home
+        </button>
+        <button onClick={() => goToSlide(1)} className=" text-white py-1 px-2 rounded">
+          forward
+        </button>
+        <button onClick={goToLastSlide} className="text-white py-1 px-2 rounded">
+          content
+        </button>
+      </div>
+      {/* Menu Items Ended */}
     </>
   );
 }
