@@ -67,7 +67,7 @@ interface ApiResponse {
 }
 
 function getColor(colors: any[], index: any) {
-  console.log('colors,: ', colors[index % colors.length])
+  // console.log('colors,: ', colors[index % colors.length])
   return colors[index % colors.length];
 }
 
@@ -89,20 +89,9 @@ function JournalSharedPage({ slug }: { slug?: string }) {
 
   const [journalBlackBox, setJournalBlackBox] = React.useState({});
 
-  const goToPreviousSlide = () => {
-    if (swiperRef.current) swiperRef.current.slidePrev();
-  };
-
-  const goToNextSlide = () => {
-    if (swiperRef.current) swiperRef.current.slideNext();
-  };
-
-  const goToSpecificSlide = (slideIndex: number) => {
-    if (swiperRef.current) swiperRef.current.slideTo(slideIndex);
-  };
 
   const goToSlide = (slideNumber: number) => {
-    console.log(swiperRef)
+    // console.log(swiperRef)
     
     if (swiperRef.current) {
       swiperRef.current.slideTo(slideNumber, 500); // 500ms transition
@@ -135,6 +124,22 @@ const handleTNext = () => {
     scrollToActive(newIndex);
     return newIndex;
   });
+};
+
+
+
+const goToPreviousSlide = () => {
+  if (swiperRef.current) swiperRef.current.slidePrev();
+};
+
+const goToNextSlide = () => {
+  if (swiperRef.current) {
+    swiperRef.current.slideNext();
+  }
+};
+
+const goToSpecificSlide = (slideIndex: number) => {
+  if (swiperRef.current) swiperRef.current.slideTo(slideIndex);
 };
 
   // const goToLastSlide = () => {
@@ -329,24 +334,30 @@ const handleTNext = () => {
 
 
   useEffect(() => {
-    if (contentcards.length > 0) {
-      const tile: any = sessionStorage.getItem('blackboxBx');
-      setJournalBlackBox(JSON.parse(tile));
+    // Fetch session data
+    const tile: any = sessionStorage.getItem('blackboxBx');
+    setJournalBlackBox(JSON.parse(tile));
+    
+    goToSpecificSlide(1);
+    
+    // Check the search parameters
+    const fint = searchies.has('bnxn');
   
-      const hasBnxn = searchies.has('bnxn');
-      const hasCntnt = searchies.has('cntnt');
+    if (!fint) {
+      goToSpecificSlide(1);
+      //goToLastSlide();  // Go to specific slide if 'bnxn' not found
   
-      if (!hasBnxn) {
-        goToLastSlide();
-  
-        if (hasCntnt) {
-          setTimeout(goToLastSlide, 2000);
-        }
-      } else {
-        goToSpecificSlide(1);
+      if (searchies.has('cntnt')) {
+        // Delay execution to allow all slides to render
+        setTimeout(() => {
+          goToLastSlide(); // Go to the last slide after editorial slides are injected
+        }, 2000); // Adjust timeout duration as necessary based on your slide injection timing
       }
+      return;
     }
-  }, [contentcards]);
+    
+    goToSpecificSlide(1);
+  }, [swiperRef.current?.slides.length]); 
   
   
 
@@ -399,6 +410,14 @@ const handleTNext = () => {
     return () => clearInterval(interval);
   }, []);
 
+
+  const [activeButton, setActiveButton] = React.useState(null);
+
+  const handleButtonClick = (buttonName: any, action: () => void) => {
+    setActiveButton(buttonName);
+    action();
+  };
+
   // Added By Brobot
   
   const openSignInPopup = () => setSignInPopupVisible(true);
@@ -432,12 +451,32 @@ const handleTNext = () => {
           onEditProfile={editProfile}
         />
       )}
+
+       {/* Menu Item */}
+       <div
+        className="absolute z-[1000] right-3 top-14 flex flex-col text-right text-slate-300"
+        style={{
+          fontSize: '12px',
+          lineHeight: '16px',
+          fontWeight: '200',
+          textAlign: 'right'
+        }}
+      >
+        <button onClick={() => handleButtonClick(1, goToNextSlide)} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === 1 ? 'active' : ''}`}>
+          {activeButton === 1 ? `[ home ]` : 'home'}
+        </button>
+        <button onClick={() => handleButtonClick(2, goToNextSlide)} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === 2 ? 'active' : ''}`}>
+          {activeButton === 2 ? `[ forward ]` : 'forward'}
+        </button>
+        <button onClick={() => handleButtonClick(3, goToLastSlide)} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === 3 ? 'active' : ''}`}>
+          {activeButton === 3 ? `[ content ]` : 'content'}
+        </button>
+      </div>
+      {/* Menu Items Ended */}
       
 
       <Swiper
-         onInit={(swiper) => {
-          swiperRef.current = swiper;
-        }}
+        onSwiper={(swiper) => (swiperRef.current = swiper)}
         spaceBetween={0}
         centeredSlides={true}
         slidesPerView={1}
@@ -458,7 +497,7 @@ const handleTNext = () => {
           thresholdDelta: 1,
         }}
         onSlideChange={(swiper) => {
-          // console.log('slide change', swiper.activeIndex);
+          console.log('slide change', swiper.activeIndex);
           if (swiper.activeIndex <= 10) {
             setIsBgDark(true);
           } else {
@@ -666,27 +705,6 @@ const handleTNext = () => {
           </div>
         </SwiperSlide>
       </Swiper>
-
-      {/* Menu Item */}
-      <div
-        className="absolute z-[1000] right-3 top-14 flex flex-col text-right text-slate-300"
-        style={{
-          fontSize: '12px',
-          lineHeight: '16px',
-          fontWeight: '200',
-        }}
-      >
-        <button onClick={() => goToSlide(0)} className=" text-white py-1 px-2 rounded">
-          home
-        </button>
-        <button onClick={() => goToSlide(1)} className=" text-white py-1 px-2 rounded">
-          forward
-        </button>
-        <button onClick={goToLastSlide} className="text-white py-1 px-2 rounded">
-          content
-        </button>
-      </div>
-      {/* Menu Items Ended */}
     </>
   );
 }
