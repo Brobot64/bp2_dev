@@ -462,7 +462,7 @@ const goToSpecificSlide = (slideIndex: number) => {
           textAlign: 'right'
         }}
       >
-        <button onClick={() => goToSpecificSlide(3)} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === 1 ? 'active' : ''}`}>
+        <button onClick={() => handleButtonClick(1, goToNextSlide)} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === 1 ? 'active' : ''}`}>
           {activeButton === 1 ? `[ home ]` : 'home'}
         </button>
         <button onClick={() => handleButtonClick(2, goToNextSlide)} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === 2 ? 'active' : ''}`}>
