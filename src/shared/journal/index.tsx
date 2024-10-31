@@ -26,6 +26,7 @@ import Image from 'next/image';
 import axios from 'axios';
 import { getFullMonth } from '@shared/home';
 import { borderColors  } from '@/tribe';
+import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
 
 
  // Added by brobot 
@@ -70,6 +71,8 @@ function getColor(colors: any[], index: any) {
   return colors[index % colors.length];
 }
 
+
+
 // Ended here
 
 function JournalSharedPage({ slug }: { slug?: string }) {
@@ -85,6 +88,50 @@ function JournalSharedPage({ slug }: { slug?: string }) {
   const router = useRouter();
 
   const [journalBlackBox, setJournalBlackBox] = React.useState({});
+
+  const goToSlide = (slideNumber: number) => {
+    console.log(swiperRef)
+    
+    if (swiperRef.current) {
+      swiperRef.current.slideTo(slideNumber, 500); // 500ms transition
+    }
+  };
+
+  const divRef = useRef([]);
+
+  const scrollToActive = (index: any) => {
+    if (divRef.current[index]) {
+      // @ts-ignore
+      divRef.current[index].scrollIntoView({ behavior: 'smooth', inline: 'center' });
+    }
+  };
+
+  const [activeIndex, setActiveIndex] = React.useState(0);
+
+
+const handleTPrev = () => {
+  setActiveIndex((prevIndex) => {
+    const newIndex = prevIndex === 0 ? contentcards.length - 1 : prevIndex - 1;
+    scrollToActive(newIndex);
+    return newIndex;
+  });
+};
+
+const handleTNext = () => {
+  setActiveIndex((prevIndex) => {
+    const newIndex = prevIndex === contentcards.length - 1 ? 0 : prevIndex + 1;
+    scrollToActive(newIndex);
+    return newIndex;
+  });
+};
+
+  // const goToLastSlide = () => {
+  //   if (swiperRef1.current) {
+  //     const lastIndex = swiperRef1.current.slides.length - 1; // Get the last slide index
+  //     swiperRef1.current.slideTo(lastIndex, 500); // Move to the last slide with a smooth transition
+  //   }
+  // };
+  
 
   const scrollRef = useRef(null);
   const contentScroll = useRef(null)
@@ -378,15 +425,19 @@ function JournalSharedPage({ slug }: { slug?: string }) {
         />
       )}
 
+{/* Menu Item */}
       <div className='absolute z-[1000] right-3 top-14 flex flex-col text-right text-slate-300' style={{ 
         fontSize: '12px',
         lineHeight: '16px',
         fontWeight: '200'
        }}>
-        <a href="">home</a>
-        <a href="">forward</a>
-        <a href="">content</a>
+        <a onClick={() => goToSlide(0)}>home</a>
+        <a onClick={() => goToSlide(1)}>forward</a>
+        <a onClick={goToLastSlide}>content</a>
       </div>
+
+      {/* Menu Items Ended */}
+      
 
       <Swiper
         onInit={(swiper) => {
@@ -559,53 +610,61 @@ function JournalSharedPage({ slug }: { slug?: string }) {
               [ contents ]
             </h1>
 
-            <div className="trush grid grid-cols-1 md:grid-cols-3 gap-[20px] max-h-[60vh] overflow-y-auto md:gap-[50px]" ref={contentScroll}>
-            {/* <button
-              onClick={contentScrollUp} // bg-gray-200
-              className="absolute md:hidden right-0 z-50 top-[15vh] bg-transparent text-gray-200 hover:bg-gray-200 hover:text-gray-700 px-4 py-2 rounded"
-            >
-              ↑
-            </button> 
-            
-            <button
-              onClick={contentScrollDown}
-              className="absolute md:hidden right-0 z-50 bottom-[20vh] bg-transparent text-gray-200 hover:bg-gray-200 hover:text-gray-700 px-4 py-2 rounded"
-            >
-              ↓
-            </button> */}
-              {
-                contentcards.length > 0 && contentcards.map((item, index) => (
-                  <div
-                  key={index + item.blvckbox_id}
-                  onClick={() => {
-                    handleJournalClick(`/journal/${slug}/${item.slug}`);
-                    localStorage.setItem('borderColor', getColor(borderColors, index));
-                  }}
-                  className="cursor-pointer"
-                >
-                  <div 
-                    className={`${uiStyle.vinyl} border-[3px] md:border-[8px] text-center flex items-center justify-center h-[100px] md:h-[200px] w-[100px] md:w-[300px] rounded-3xl relative overflow-hidden transition`} 
-                    style={{ 
-                      borderColor: 
-                        hoveredCardIndex === index
-                        ? getColor(borderColors, index) : 'white',
-                      backgroundImage:
-                          hoveredCardIndex === index
-                            ? item.background ? `url(${process.env.NEXT_PUBLIC_BASE_URL}/${item.background})` : `url(/pixel2.png)`
-                            : 'none',
-                     backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', transition: 'background-size 0.5s ease, background-image 0.5s ease', 
+            <div className='relative kunli'>
+             <button
+                onClick={contentScrollUp}
+                style={{
+                  left: '-30px'
+                }}
+              >
+                <SlArrowLeft/>
+              </button>
+              <div className="trush grid relative grid-cols-1 md:grid-cols-3 gap-[20px] max-h-[60vh] overflow-y-auto md:gap-[50px]" ref={contentScroll}>
+              
+                {
+                  contentcards.length > 0 && contentcards.map((item, index) => (
+                    <div
+                    key={index + item.blvckbox_id}
+                    onClick={() => {
+                      handleJournalClick(`/journal/${slug}/${item.slug}`);
+                      localStorage.setItem('borderColor', getColor(borderColors, index));
                     }}
-                    onMouseEnter={() => setHoveredCardIndex(index)}
-                    onMouseLeave={() => setHoveredCardIndex(null)}
+                    className="cursor-pointer"
+                    // @ts-ignore
+                    ref={(el) => (divRef.current[index] = el)}
                   >
-                    <span className='absolute w-full h-full bg-[#1c1c1c3c]'/>
-                    <p className="text-[23px] max-w-[200px] md:text-[15px] font-bold" style={{ fontSize: '25px', fontWeight: 'lighter' }}>
-                      {item.title}
-                    </p>
+                    <div
+                      className={`${uiStyle.vinyl} border-[3px] md:border-[8px] text-center flex items-center justify-center h-[100px] md:h-[200px] w-[100px] md:w-[300px] rounded-3xl relative overflow-hidden transition`}
+                      style={{
+                        borderColor:
+                          hoveredCardIndex === index
+                          ? getColor(borderColors, index) : 'white',
+                        backgroundImage:
+                            hoveredCardIndex === index
+                              ? item.background ? `url(${process.env.NEXT_PUBLIC_BASE_URL}/${item.background})` : `url(/pixel2.png)`
+                              : 'none',
+                       backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', transition: 'background-size 0.5s ease, background-image 0.5s ease',
+                      }}
+                      onMouseEnter={() => setHoveredCardIndex(index)}
+                      onMouseLeave={() => setHoveredCardIndex(null)}
+                    >
+                      <span className='absolute w-full h-full bg-[#1c1c1c3c]'/>
+                      <p className="text-[23px] max-w-[200px] md:text-[15px] font-bold" style={{ fontSize: '25px', fontWeight: 'lighter' }}>
+                        {item.title}
+                      </p>
+                    </div>
                   </div>
-                </div>
-                ))
-              }
+                  ))
+                }
+              </div>
+                <button
+                  onClick={contentScrollDown}
+                  style={{
+                    right: '-30px'
+                  }}
+                >
+                  <SlArrowRight/>
+                </button>
             </div>
           </div>
         </SwiperSlide>
