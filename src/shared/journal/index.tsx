@@ -9,6 +9,7 @@ import {
   Pagination,
   Mousewheel,
   Keyboard,
+  Navigation,
 } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
 import 'swiper/css';
@@ -97,7 +98,6 @@ function JournalSharedPage({ slug }: { slug?: string }) {
       swiperRef.current.slideTo(slideNumber, 500); // 500ms transition
     }
   };
-
   const divRef = useRef([]);
 
   const scrollToActive = (index: any) => {
@@ -117,6 +117,18 @@ const handleTPrev = () => {
     return newIndex;
   });
 };
+
+
+
+
+const littleMod = (index: number) => {
+  // @ts-ignore
+  swiperRef.current.swiper.slideTo(index)
+}
+
+
+
+
 
 const handleTNext = () => {
   setActiveIndex((prevIndex) => {
@@ -139,6 +151,7 @@ const goToNextSlide = () => {
 };
 
 const goToSpecificSlide = (slideIndex: number) => {
+  console.log("slide to: ", slideIndex)
   if (swiperRef.current) swiperRef.current.slideTo(slideIndex);
 };
 
@@ -228,6 +241,7 @@ const goToSpecificSlide = (slideIndex: number) => {
 
   const goToPrevSlide = () => {
     if (swiperRef.current) {
+      swiperRef.current.activeIndex = 1;
       swiperRef.current.slidePrev();
     }
   };
@@ -344,7 +358,7 @@ const goToSpecificSlide = (slideIndex: number) => {
     const fint = searchies.has('bnxn');
   
     if (!fint) {
-      goToSpecificSlide(1);
+      // goToSpecificSlide(1);
       //goToLastSlide();  // Go to specific slide if 'bnxn' not found
   
       if (searchies.has('cntnt')) {
@@ -355,8 +369,8 @@ const goToSpecificSlide = (slideIndex: number) => {
       }
       return;
     }
-    
-    goToSpecificSlide(1);
+    setActiveButton(2);
+    // goToSpecificSlide(1);
   }, [swiperRef.current?.slides.length]); 
   
   
@@ -411,7 +425,7 @@ const goToSpecificSlide = (slideIndex: number) => {
   }, []);
 
 
-  const [activeButton, setActiveButton] = React.useState(null);
+  const [activeButton, setActiveButton] = React.useState(1);
 
   const handleButtonClick = (buttonName: any, action: () => void) => {
     setActiveButton(buttonName);
@@ -424,6 +438,14 @@ const goToSpecificSlide = (slideIndex: number) => {
   const handleEditProfile = () => {
     openSignInPopup();
     setEditProfile(true);
+  };
+
+
+  const handleMenuClick = (index: number) => {
+    console.log(swiperRef.current?.slides)
+    if (swiperRef.current) {
+      swiperRef.current.slideTo(index);
+    }
   };
 
   return (
@@ -451,32 +473,11 @@ const goToSpecificSlide = (slideIndex: number) => {
           onEditProfile={editProfile}
         />
       )}
-
-       {/* Menu Item */}
-       <div
-        className="absolute z-[1000] right-3 top-14 flex flex-col text-right text-slate-300"
-        style={{
-          fontSize: '12px',
-          lineHeight: '16px',
-          fontWeight: '200',
-          textAlign: 'right'
-        }}
-      >
-        <button onClick={() => handleButtonClick(1, goToNextSlide)} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === 1 ? 'active' : ''}`}>
-          {activeButton === 1 ? `[ home ]` : 'home'}
-        </button>
-        <button onClick={() => handleButtonClick(2, goToNextSlide)} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === 2 ? 'active' : ''}`}>
-          {activeButton === 2 ? `[ forward ]` : 'forward'}
-        </button>
-        <button onClick={() => handleButtonClick(3, goToLastSlide)} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === 3 ? 'active' : ''}`}>
-          {activeButton === 3 ? `[ content ]` : 'content'}
-        </button>
-      </div>
-      {/* Menu Items Ended */}
       
 
       <Swiper
-        onSwiper={(swiper) => (swiperRef.current = swiper)}
+        onInit={(swiper) => (swiperRef.current = swiper)}
+        // onSwiper={(swiper) => (swiperRef.current = swiper)}
         spaceBetween={0}
         centeredSlides={true}
         slidesPerView={1}
@@ -488,7 +489,7 @@ const goToSpecificSlide = (slideIndex: number) => {
         fadeEffect={{
           crossFade: true,
         }}
-        modules={[Autoplay, Pagination, EffectFade, Mousewheel, Keyboard]}
+        modules={[Autoplay, Pagination, EffectFade, Mousewheel, Keyboard, Navigation]}
         className="mySwiper"
         mousewheel={{
           forceToAxis: true,
@@ -649,7 +650,7 @@ const goToSpecificSlide = (slideIndex: number) => {
                 onClick={handleTPrev}
                 className='hover:text-[#DD47F7] transition'
                 style={{
-                  left: '-30px'
+                  left: '-25px'
                 }}
               >
                 <SlArrowLeft/>
@@ -696,7 +697,7 @@ const goToSpecificSlide = (slideIndex: number) => {
                   onClick={handleTNext}
                   className='hover:text-[#DD47F7] transition'
                   style={{
-                    right: '-30px'
+                    right: '-25px'
                   }}
                 >
                   <SlArrowRight/>
@@ -705,6 +706,33 @@ const goToSpecificSlide = (slideIndex: number) => {
           </div>
         </SwiperSlide>
       </Swiper>
+
+      
+       {/* Menu Item */}
+      {
+        swiperRef &&  <div
+        className="absolute z-[1000] right-3 top-16 flex flex-col text-right text-slate-300"
+        style={{
+          fontSize: '12px',
+          lineHeight: '16px',
+          fontWeight: '200',
+          textAlign: 'right'
+        }}
+      >
+        <button onClick={() => handleButtonClick(1, () => swiperRef.current?.slideTo(0))} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === 1 ? 'active' : ''}`}>
+          {activeButton === 1 ? `[ home ]` : 'home'}
+        </button>
+
+        <button onClick={() => handleButtonClick(2, () => swiperRef.current?.slideTo(1))} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === 2 ? 'active' : ''}`}>
+          {activeButton === 2 ? `[ foreward ]` : 'foreward'}
+        </button>
+
+        <button onClick={() => handleButtonClick(3, () => handleMenuClick(2))} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === 3 ? 'active' : ''}`}>
+          {activeButton === 3 ? `[ content ]` : 'content'}
+        </button>
+      </div>
+      }
+      {/* Menu Items Ended */}
     </>
   );
 }
