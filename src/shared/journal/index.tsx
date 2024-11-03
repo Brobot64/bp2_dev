@@ -80,6 +80,7 @@ function JournalSharedPage({ slug }: { slug?: string }) {
   const { isBgDark, setIsBgDark } = useApp();
   const swiperRef = useRef<SwiperCore | null>(null);
   const swiperRefForeword = useRef<SwiperCore | null>(null);
+  const swiperRefConclude = useRef<SwiperCore | null>(null);
   const [bannerBg, setBannerBg] = React.useState('defalut.jpg');
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const [signInPopupVisible, setSignInPopupVisible] = React.useState(false);
@@ -89,6 +90,7 @@ function JournalSharedPage({ slug }: { slug?: string }) {
   const router = useRouter();
 
   const [journalBlackBox, setJournalBlackBox] = React.useState({});
+
 
 
   const goToSlide = (slideNumber: number) => {
@@ -145,10 +147,16 @@ const goToPreviousSlide = () => {
 };
 
 const goToNextSlide = () => {
+  
   if (swiperRef.current) {
     swiperRef.current.slideNext();
+  } else {
+    console.error("Swiper reference is not available.");
   }
 };
+
+
+
 
 const goToSpecificSlide = (slideIndex: number) => {
   console.log("slide to: ", slideIndex)
@@ -276,6 +284,7 @@ const goToSpecificSlide = (slideIndex: number) => {
   
   const [contentcards, setContentcards] = React.useState<ContentCardType[]>([]);
   const [editorial, setEditorial] = React.useState<EditorialType | null>(null);
+  const [conclusion, setConclusion] = React.useState<EditorialType | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
@@ -331,6 +340,10 @@ const goToSpecificSlide = (slideIndex: number) => {
     ? splitContentIntoSlides(editorial.section, 500)
     : [];
 
+  const conclusionSlides = conclusion
+    ? splitContentIntoSlides(conclusion.section, 500)
+    : [];
+
   const handleMouseEnter = () => {
     swiperRef.current?.autoplay.stop();
   };
@@ -345,6 +358,12 @@ const goToSpecificSlide = (slideIndex: number) => {
       setIsLoggedIn(true);
     }
   }, []);
+
+  useEffect(() => {
+    if (editorialSlides.length > 0) {
+      setTuneNum(editorialSlides.length + 1);
+    }
+  }, [editorialSlides])
 
 
   useEffect(() => {
@@ -393,6 +412,7 @@ const goToSpecificSlide = (slideIndex: number) => {
         );
         setContentcards(response.data.contentcards);
         setEditorial(response.data.editorial);
+        setConclusion(response.data.conclusion);
       } catch (error) {
         console.error('Error fetching contentcards:', error);
         setError('Failed to fetch data.');
@@ -426,6 +446,7 @@ const goToSpecificSlide = (slideIndex: number) => {
 
 
   const [activeButton, setActiveButton] = React.useState(1);
+  const [tuneNum, setTuneNum] = React.useState(1);
 
   const handleButtonClick = (buttonName: any, action: () => void) => {
     setActiveButton(buttonName);
@@ -498,7 +519,15 @@ const goToSpecificSlide = (slideIndex: number) => {
           thresholdDelta: 1,
         }}
         onSlideChange={(swiper) => {
-          console.log('slide change', swiper.activeIndex);
+          if (swiper.activeIndex >= 1 && swiper.activeIndex < tuneNum) {
+            setActiveButton(2)
+          } else if (swiper.activeIndex >= tuneNum + 2) {
+            setActiveButton(tuneNum + 2)
+          } else {
+            setActiveButton(swiper.activeIndex + 1);  
+          }
+          // console.log(swiper.activeIndex >= 1)
+          // console.log(swiper.activeIndex < tuneNum)
           if (swiper.activeIndex <= 10) {
             setIsBgDark(true);
           } else {
@@ -540,8 +569,6 @@ const goToSpecificSlide = (slideIndex: number) => {
         </SwiperSlide>
 
         {/* Editorials */}
-
-        {/* Added Splited Editorials */}
         {
           editorialSlides.length > 0 ? 
           (
@@ -563,49 +590,16 @@ const goToSpecificSlide = (slideIndex: number) => {
                       <div className={uiStyle.wrapper}>
                         <div className={uiStyle.col}>
                           { index === 0 && (<h1>[ foreword ]</h1>) }
-                          <Swiper
-                            onInit={(swiper) => {
-                              swiperRef.current = swiper;
-                            }}
-                            spaceBetween={0}
-                            centeredSlides={false}
-                            slidesPerView={'auto'}
-                            speed={1350}
-                            freeMode={true}
-                            effect="fade"
-                            fadeEffect={{
-                              crossFade: true,
-                            }}
-                            modules={[
-                              Pagination,
-                              EffectFade,
-                              Mousewheel,
-                              Keyboard,
-                            ]}
-                            className={uiStyle.editorialSwiper}
-                            mousewheel={{
-                              forceToAxis: true,
-                              sensitivity: 1,
-                              releaseOnEdges: false,
-                              invert: false,
-                            }}
-                            direction={'horizontal'}
-                            followFinger={true}
-                            autoHeight={false}
-                            threshold={15}
-                            onMouseEnter={handleMouseEnter}
-                            onMouseLeave={handleMouseLeave}
-                          >
-                            <SwiperSlide className={uiStyle.swiperslide}>
-                              <div 
-                                ref={scrollRef}
-                                dangerouslySetInnerHTML={{
-                                  __html: `${slidecontent}`,
-                                }}
-                              >                           
-                              </div>
-                            </SwiperSlide>
-                          </Swiper>
+                          
+                          <div className={uiStyle.swiperslide}>
+                            <div 
+                              ref={scrollRef}
+                              dangerouslySetInnerHTML={{
+                                __html: `${slidecontent}`,
+                              }}
+                            >                           
+                            </div>
+                          </div>
                         </div>
                         
                         {
@@ -634,6 +628,7 @@ const goToSpecificSlide = (slideIndex: number) => {
             </SwiperSlide>
           )
         }
+       
         
 
         
@@ -705,12 +700,74 @@ const goToSpecificSlide = (slideIndex: number) => {
             </div>
           </div>
         </SwiperSlide>
+
+
+        {/* Added Splited ConclusionSlides */}
+
+        {conclusionSlides.length > 0 ? 
+          (
+            conclusionSlides.map((slidecontent, index) => (
+              slidecontent !== '<p></p>' && slidecontent !== '<p> </p>' && slidecontent !== '</p>' ? (  // Check if slidecontent is not an empty paragraph
+                <SwiperSlide className='minders' key={index}>
+                  <section
+                    className={uiStyle.editorialSection}
+                    style={{
+                      backgroundImage: conclusion
+                        ? `url(${process.env.NEXT_PUBLIC_BASE_URL}/storage/${conclusion.background_image})`
+                        : `url('/default-bg.png')`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      minHeight: '100dvh',
+                    }}
+                  >
+                    <div className={uiStyle.pageContainerWide} id="blvckbook">
+                      <div className={uiStyle.wrapper}>
+                        <div className={uiStyle.col}>
+                          { index === 0 && (<h1>[ afterword ]</h1>) }
+                          
+                          <div className={uiStyle.swiperslide}>
+                            <div 
+                              ref={scrollRef}
+                              dangerouslySetInnerHTML={{
+                                __html: `${slidecontent}`,
+                              }}
+                            >                           
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {
+                          // @ts-ignore
+                          index === (conclusion.length - 1) && (
+                            <div className={uiStyle.signature}>
+                              <Image
+                                src="/signature.png"
+                                alt="Signature Author"
+                                width={250}
+                                height={250}
+                              />
+                              <h3>Teddy Pahagbia</h3>
+                            </div>
+                          )
+                        }
+                      </div>
+                    </div>
+                  </section>
+                </SwiperSlide>
+              ) : null  // If slidecontent is '<p></p>', render nothing
+            ))
+          ) : (
+            <SwiperSlide>
+              <p>Loading afterword content...</p>
+            </SwiperSlide>
+          )
+        }
+        
       </Swiper>
 
       
        {/* Menu Item */}
-      {
-        swiperRef &&  <div
+      <div
         className="absolute z-[1000] right-3 top-16 flex flex-col text-right text-slate-300"
         style={{
           fontSize: '12px',
@@ -727,11 +784,14 @@ const goToSpecificSlide = (slideIndex: number) => {
           {activeButton === 2 ? `[ foreward ]` : 'foreward'}
         </button>
 
-        <button onClick={() => handleButtonClick(3, () => handleMenuClick(2))} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === 3 ? 'active' : ''}`}>
-          {activeButton === 3 ? `[ content ]` : 'content'}
+        <button onClick={() => handleButtonClick(tuneNum, () => swiperRef.current?.slideTo(tuneNum))} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === tuneNum + 1 ? 'active' : ''}`}>
+          {activeButton === tuneNum + 1 ? `[ content ]` : 'content'}
+        </button>
+
+        <button onClick={() => handleButtonClick(3, () => swiperRef.current?.slideTo(tuneNum + 1))} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === tuneNum + 2 ? 'active' : ''}`}>
+          {activeButton === tuneNum + 2 ? `[ afterword ]` : 'afterword'}
         </button>
       </div>
-      }
       {/* Menu Items Ended */}
     </>
   );

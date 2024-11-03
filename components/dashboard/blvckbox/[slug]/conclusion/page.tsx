@@ -4,6 +4,7 @@ import Dropzone from 'react-dropzone';
 import { useRouter } from 'next/navigation';
 import { FaUpload, FaTrash } from 'react-icons/fa';
 import style from '../../../../all.module.css';
+import QuillEditor from '@components/dashboard/email-contents/QuillEditor';
 
 type EditConclusionProps = {
     slug: string;
@@ -15,6 +16,10 @@ const ConclusionPage: React.FC<EditConclusionProps> = ({ slug }) => {
     const [backgroundPreview, setBackgroundPreview] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+
+    const handleBodyChange = (content: string) => {
+        setSection(content); 
+      };
 
     useEffect(() => {
         const fetchConclusionData = async () => {
@@ -98,13 +103,14 @@ const ConclusionPage: React.FC<EditConclusionProps> = ({ slug }) => {
                     <form onSubmit={handleSubmit} className={style.formWrap}>
                         <div className={style.formGroup}>
                             <label htmlFor="section">Subtitle</label>
-                            <textarea
+                            {/* <textarea
                                 id="section"
                                 placeholder='Enter Subtitle'
                                 value={section}
                                 onChange={(e) => handleSectionChange(e.target.value)}
                                 rows={10}
-                            />
+                            /> */}
+                            <QuillEditor value={section} onChange={handleBodyChange}/>
                         </div>
 
                         <div className={style.formGroup}>

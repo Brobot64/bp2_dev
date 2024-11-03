@@ -30,6 +30,15 @@
   margin-bottom: 1em;
 }
 
+
+.editorialSection div{
+  font-family: 'HelveticaNeueCyr-Light';
+  color: #ffffff;
+  text-justify: auto;
+  text-align: justify;
+  font-size: 20px;
+}
+
 .editorialSection p{
   color: #ffffff;
   text-justify: auto;

@@ -907,6 +907,35 @@ a:hover {
   z-index: -100;
 }
 
+.nweton {
+  max-height: 280px;
+  overflow-y: auto;
+  list-style: circle !important;
+}
+
+.nweton li {
+  list-style: circle !important;
+  margin: 0 7px;
+  padding-left: 6px;
+  position: relative;
+}
+
+.nweton li::before {
+  content: '';
+  position: absolute;
+  height: 3px;
+  width: 3px;
+  border-radius: 50%;
+  border: .5px solid white;
+  left: 0;
+  top: 8px;
+  transform: translateY(50%);
+}
+
+.nweton::-webkit-scrollbar {
+  display: none;
+}
+
 
 @media (max-width: 768px) {
   .mySwiper > .swiper-wrapper > .slide-banner .banner-slider-content h3 {

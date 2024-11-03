@@ -84,10 +84,23 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedPayment, setSelectedPayment] = useState('Bitcoin');
 
-  const paymentTypes = ['Bitcoin', 'Credit Card', 'PayPal', 'Bank Transfer'];
+  const paymentTypes = ['Cypto', 'Card', 'PayPal', 'Bank Transfer'];
 
-  const handlePaymentChange = (payment: any) => {
+  const handlePaymentChange = async (payment: string) => {
     setSelectedPayment(payment);
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/user/payment-method`, {
+          payment_method: payment.toLowerCase(),
+        },
+        {
+          headers: { Authorization: token },
+        }
+      );
+      console.log("Payment Method updated")
+    } catch (error: any) {
+      console.log(error?.message)
+    }
     setIsDropdownOpen(false); // Close dropdown after selection
   };
 
@@ -166,6 +179,7 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
             setEmail(userData.user.email);
             setPhone(userData.user.phone);
             setUserRole(userData.user.role);
+            // setSelectedPayment()
           }
         } catch (error) {
           console.error('Failed to fetch user data', error);
@@ -602,8 +616,8 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                           {pkg.price}
                           <sub>£</sub>
                         </span>
-                        <span>
-                          <ul>
+                        <span className='!px-[20px]'>
+                          <ul className='nweton'>
                             {pkg.features.map((featureId: any, index: number) => (
                               <li key={index}>{getFeatureNameById(featureId) || 'Unknown Feature'}</li>
                             ))}
@@ -757,8 +771,8 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                           {pkg.price}
                           <sub>£</sub>
                         </span>
-                        <span>
-                          <ul>
+                        <span className='!px-[20px]'>
+                          <ul className='nweton'>
                             {pkg.features.map((featureId: any, index: number) => (
                               <li key={index}>{getFeatureNameById(featureId) || 'Unknown Feature'}</li>
                             ))}
