@@ -54,7 +54,9 @@
   margin-bottom: 20px;
 }
 
-.editorialSection p{
+.editorialSection p,
+.editorialSection div{
+  font-family: 'HelveticaNeueCyr-Light';
   color: #ffffff;
   text-justify: auto;
   text-align: justify;

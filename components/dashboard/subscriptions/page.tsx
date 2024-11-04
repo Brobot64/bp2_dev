@@ -59,11 +59,18 @@ const Subscriptions: React.FC = () => {
 
   const handleSave = async (id: number) => {
     const token = localStorage.getItem('token');
+    // Optimistically update the package in the frontend
     const updatedPackage = {
       ...editPackage,
       features: selectedFeatures, 
     };
     try {
+      // Optimistically update the package in the frontend
+    setPackages((prevPackages: any) =>
+      prevPackages.map((pkg: any) =>
+        pkg.id === updatedPackage.id ? updatedPackage : pkg
+      )
+    );
       await axios.put(`${process.env.NEXT_PUBLIC_API_BASE_URL}/dashboard/packages/${id}`, updatedPackage, {
         headers: {
           Authorization: `${token}`,
@@ -189,12 +196,14 @@ const Subscriptions: React.FC = () => {
   const handlePackageSubmit = async () => {
     setError('');
     const token = localStorage.getItem('token');
+    const data = {
+      ...newPackage,
+      features: newPackage.features.map((featureId) => featureId.toString()), 
+    };
+
     try {
-      const data = {
-        ...newPackage,
-        features: newPackage.features.map((featureId) => featureId.toString()), 
-      };
-      console.log(data);
+      setPackages((prevPackages) => [...prevPackages, data])
+      // console.log(data);
       await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/dashboard/packages`, data, {
         headers: {
           Authorization: `${token}`,

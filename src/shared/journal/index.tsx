@@ -9,6 +9,7 @@ import {
   Pagination,
   Mousewheel,
   Keyboard,
+  Navigation,
 } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
 import 'swiper/css';
@@ -79,6 +80,7 @@ function JournalSharedPage({ slug }: { slug?: string }) {
   const { isBgDark, setIsBgDark } = useApp();
   const swiperRef = useRef<SwiperCore | null>(null);
   const swiperRefForeword = useRef<SwiperCore | null>(null);
+  const swiperRefConclude = useRef<SwiperCore | null>(null);
   const [bannerBg, setBannerBg] = React.useState('defalut.jpg');
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const [signInPopupVisible, setSignInPopupVisible] = React.useState(false);
@@ -90,6 +92,7 @@ function JournalSharedPage({ slug }: { slug?: string }) {
   const [journalBlackBox, setJournalBlackBox] = React.useState({});
 
 
+
   const goToSlide = (slideNumber: number) => {
     // console.log(swiperRef)
     
@@ -97,7 +100,6 @@ function JournalSharedPage({ slug }: { slug?: string }) {
       swiperRef.current.slideTo(slideNumber, 500); // 500ms transition
     }
   };
-
   const divRef = useRef([]);
 
   const scrollToActive = (index: any) => {
@@ -118,6 +120,18 @@ const handleTPrev = () => {
   });
 };
 
+
+
+
+const littleMod = (index: number) => {
+  // @ts-ignore
+  swiperRef.current.swiper.slideTo(index)
+}
+
+
+
+
+
 const handleTNext = () => {
   setActiveIndex((prevIndex) => {
     const newIndex = prevIndex === contentcards.length - 1 ? 0 : prevIndex + 1;
@@ -133,12 +147,19 @@ const goToPreviousSlide = () => {
 };
 
 const goToNextSlide = () => {
+  
   if (swiperRef.current) {
     swiperRef.current.slideNext();
+  } else {
+    console.error("Swiper reference is not available.");
   }
 };
 
+
+
+
 const goToSpecificSlide = (slideIndex: number) => {
+  console.log("slide to: ", slideIndex)
   if (swiperRef.current) swiperRef.current.slideTo(slideIndex);
 };
 
@@ -228,6 +249,7 @@ const goToSpecificSlide = (slideIndex: number) => {
 
   const goToPrevSlide = () => {
     if (swiperRef.current) {
+      swiperRef.current.activeIndex = 1;
       swiperRef.current.slidePrev();
     }
   };
@@ -262,6 +284,7 @@ const goToSpecificSlide = (slideIndex: number) => {
   
   const [contentcards, setContentcards] = React.useState<ContentCardType[]>([]);
   const [editorial, setEditorial] = React.useState<EditorialType | null>(null);
+  const [conclusion, setConclusion] = React.useState<EditorialType | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
@@ -317,6 +340,10 @@ const goToSpecificSlide = (slideIndex: number) => {
     ? splitContentIntoSlides(editorial.section, 500)
     : [];
 
+  const conclusionSlides = conclusion
+    ? splitContentIntoSlides(conclusion.section, 500)
+    : [];
+
   const handleMouseEnter = () => {
     swiperRef.current?.autoplay.stop();
   };
@@ -332,6 +359,12 @@ const goToSpecificSlide = (slideIndex: number) => {
     }
   }, []);
 
+  useEffect(() => {
+    if (editorialSlides.length > 0) {
+      setTuneNum(editorialSlides.length + 1);
+    }
+  }, [editorialSlides])
+
 
   useEffect(() => {
     // Fetch session data
@@ -344,7 +377,7 @@ const goToSpecificSlide = (slideIndex: number) => {
     const fint = searchies.has('bnxn');
   
     if (!fint) {
-      goToSpecificSlide(1);
+      // goToSpecificSlide(1);
       //goToLastSlide();  // Go to specific slide if 'bnxn' not found
   
       if (searchies.has('cntnt')) {
@@ -355,8 +388,8 @@ const goToSpecificSlide = (slideIndex: number) => {
       }
       return;
     }
-    
-    goToSpecificSlide(1);
+    setActiveButton(2);
+    // goToSpecificSlide(1);
   }, [swiperRef.current?.slides.length]); 
   
   
@@ -379,6 +412,7 @@ const goToSpecificSlide = (slideIndex: number) => {
         );
         setContentcards(response.data.contentcards);
         setEditorial(response.data.editorial);
+        setConclusion(response.data.conclusion);
       } catch (error) {
         console.error('Error fetching contentcards:', error);
         setError('Failed to fetch data.');
@@ -411,7 +445,8 @@ const goToSpecificSlide = (slideIndex: number) => {
   }, []);
 
 
-  const [activeButton, setActiveButton] = React.useState(null);
+  const [activeButton, setActiveButton] = React.useState(1);
+  const [tuneNum, setTuneNum] = React.useState(1);
 
   const handleButtonClick = (buttonName: any, action: () => void) => {
     setActiveButton(buttonName);
@@ -424,6 +459,14 @@ const goToSpecificSlide = (slideIndex: number) => {
   const handleEditProfile = () => {
     openSignInPopup();
     setEditProfile(true);
+  };
+
+
+  const handleMenuClick = (index: number) => {
+    console.log(swiperRef.current?.slides)
+    if (swiperRef.current) {
+      swiperRef.current.slideTo(index);
+    }
   };
 
   return (
@@ -451,32 +494,11 @@ const goToSpecificSlide = (slideIndex: number) => {
           onEditProfile={editProfile}
         />
       )}
-
-       {/* Menu Item */}
-       <div
-        className="absolute z-[1000] right-3 top-14 flex flex-col text-right text-slate-300"
-        style={{
-          fontSize: '12px',
-          lineHeight: '16px',
-          fontWeight: '200',
-          textAlign: 'right'
-        }}
-      >
-        <button onClick={() => handleButtonClick(1, goToNextSlide)} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === 1 ? 'active' : ''}`}>
-          {activeButton === 1 ? `[ home ]` : 'home'}
-        </button>
-        <button onClick={() => handleButtonClick(2, goToNextSlide)} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === 2 ? 'active' : ''}`}>
-          {activeButton === 2 ? `[ forward ]` : 'forward'}
-        </button>
-        <button onClick={() => handleButtonClick(3, goToLastSlide)} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === 3 ? 'active' : ''}`}>
-          {activeButton === 3 ? `[ content ]` : 'content'}
-        </button>
-      </div>
-      {/* Menu Items Ended */}
       
 
       <Swiper
-        onSwiper={(swiper) => (swiperRef.current = swiper)}
+        onInit={(swiper) => (swiperRef.current = swiper)}
+        // onSwiper={(swiper) => (swiperRef.current = swiper)}
         spaceBetween={0}
         centeredSlides={true}
         slidesPerView={1}
@@ -488,7 +510,7 @@ const goToSpecificSlide = (slideIndex: number) => {
         fadeEffect={{
           crossFade: true,
         }}
-        modules={[Autoplay, Pagination, EffectFade, Mousewheel, Keyboard]}
+        modules={[Autoplay, Pagination, EffectFade, Mousewheel, Keyboard, Navigation]}
         className="mySwiper"
         mousewheel={{
           forceToAxis: true,
@@ -497,7 +519,15 @@ const goToSpecificSlide = (slideIndex: number) => {
           thresholdDelta: 1,
         }}
         onSlideChange={(swiper) => {
-          console.log('slide change', swiper.activeIndex);
+          if (swiper.activeIndex >= 1 && swiper.activeIndex < tuneNum) {
+            setActiveButton(2)
+          } else if (swiper.activeIndex >= tuneNum + 2) {
+            setActiveButton(tuneNum + 2)
+          } else {
+            setActiveButton(swiper.activeIndex + 1);  
+          }
+          // console.log(swiper.activeIndex >= 1)
+          // console.log(swiper.activeIndex < tuneNum)
           if (swiper.activeIndex <= 10) {
             setIsBgDark(true);
           } else {
@@ -539,8 +569,6 @@ const goToSpecificSlide = (slideIndex: number) => {
         </SwiperSlide>
 
         {/* Editorials */}
-
-        {/* Added Splited Editorials */}
         {
           editorialSlides.length > 0 ? 
           (
@@ -562,49 +590,16 @@ const goToSpecificSlide = (slideIndex: number) => {
                       <div className={uiStyle.wrapper}>
                         <div className={uiStyle.col}>
                           { index === 0 && (<h1>[ foreword ]</h1>) }
-                          <Swiper
-                            onInit={(swiper) => {
-                              swiperRef.current = swiper;
-                            }}
-                            spaceBetween={0}
-                            centeredSlides={false}
-                            slidesPerView={'auto'}
-                            speed={1350}
-                            freeMode={true}
-                            effect="fade"
-                            fadeEffect={{
-                              crossFade: true,
-                            }}
-                            modules={[
-                              Pagination,
-                              EffectFade,
-                              Mousewheel,
-                              Keyboard,
-                            ]}
-                            className={uiStyle.editorialSwiper}
-                            mousewheel={{
-                              forceToAxis: true,
-                              sensitivity: 1,
-                              releaseOnEdges: false,
-                              invert: false,
-                            }}
-                            direction={'horizontal'}
-                            followFinger={true}
-                            autoHeight={false}
-                            threshold={15}
-                            onMouseEnter={handleMouseEnter}
-                            onMouseLeave={handleMouseLeave}
-                          >
-                            <SwiperSlide className={uiStyle.swiperslide}>
-                              <div 
-                                ref={scrollRef}
-                                dangerouslySetInnerHTML={{
-                                  __html: `${slidecontent}`,
-                                }}
-                              >                           
-                              </div>
-                            </SwiperSlide>
-                          </Swiper>
+                          
+                          <div className={uiStyle.swiperslide}>
+                            <div 
+                              ref={scrollRef}
+                              dangerouslySetInnerHTML={{
+                                __html: `${slidecontent}`,
+                              }}
+                            >                           
+                            </div>
+                          </div>
                         </div>
                         
                         {
@@ -633,6 +628,7 @@ const goToSpecificSlide = (slideIndex: number) => {
             </SwiperSlide>
           )
         }
+       
         
 
         
@@ -649,7 +645,7 @@ const goToSpecificSlide = (slideIndex: number) => {
                 onClick={handleTPrev}
                 className='hover:text-[#DD47F7] transition'
                 style={{
-                  left: '-30px'
+                  left: '-25px'
                 }}
               >
                 <SlArrowLeft/>
@@ -696,7 +692,7 @@ const goToSpecificSlide = (slideIndex: number) => {
                   onClick={handleTNext}
                   className='hover:text-[#DD47F7] transition'
                   style={{
-                    right: '-30px'
+                    right: '-25px'
                   }}
                 >
                   <SlArrowRight/>
@@ -704,7 +700,99 @@ const goToSpecificSlide = (slideIndex: number) => {
             </div>
           </div>
         </SwiperSlide>
+
+
+        {/* Added Splited ConclusionSlides */}
+
+        {conclusionSlides.length > 0 ? 
+          (
+            conclusionSlides.map((slidecontent, index) => (
+              slidecontent !== '<p></p>' && slidecontent !== '<p> </p>' && slidecontent !== '</p>' ? (  // Check if slidecontent is not an empty paragraph
+                <SwiperSlide className='minders' key={index}>
+                  <section
+                    className={uiStyle.editorialSection}
+                    style={{
+                      backgroundImage: conclusion
+                        ? `url(${process.env.NEXT_PUBLIC_BASE_URL}/storage/${conclusion.background_image})`
+                        : `url('/default-bg.png')`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      minHeight: '100dvh',
+                    }}
+                  >
+                    <div className={uiStyle.pageContainerWide} id="blvckbook">
+                      <div className={uiStyle.wrapper}>
+                        <div className={uiStyle.col}>
+                          { index === 0 && (<h1>[ afterword ]</h1>) }
+                          
+                          <div className={uiStyle.swiperslide}>
+                            <div 
+                              ref={scrollRef}
+                              dangerouslySetInnerHTML={{
+                                __html: `${slidecontent}`,
+                              }}
+                            >                           
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {
+                          // @ts-ignore
+                          index === (conclusion.length - 1) && (
+                            <div className={uiStyle.signature}>
+                              <Image
+                                src="/signature.png"
+                                alt="Signature Author"
+                                width={250}
+                                height={250}
+                              />
+                              <h3>Teddy Pahagbia</h3>
+                            </div>
+                          )
+                        }
+                      </div>
+                    </div>
+                  </section>
+                </SwiperSlide>
+              ) : null  // If slidecontent is '<p></p>', render nothing
+            ))
+          ) : (
+            <SwiperSlide>
+              <p>Loading afterword content...</p>
+            </SwiperSlide>
+          )
+        }
+        
       </Swiper>
+
+      
+       {/* Menu Item */}
+      <div
+        className="absolute z-[1000] right-3 top-16 flex flex-col text-right text-slate-300"
+        style={{
+          fontSize: '12px',
+          lineHeight: '16px',
+          fontWeight: '200',
+          textAlign: 'right'
+        }}
+      >
+        <button onClick={() => handleButtonClick(1, () => swiperRef.current?.slideTo(0))} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === 1 ? 'active' : ''}`}>
+          {activeButton === 1 ? `[ home ]` : 'home'}
+        </button>
+
+        <button onClick={() => handleButtonClick(2, () => swiperRef.current?.slideTo(1))} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === 2 ? 'active' : ''}`}>
+          {activeButton === 2 ? `[ foreward ]` : 'foreward'}
+        </button>
+
+        <button onClick={() => handleButtonClick(tuneNum, () => swiperRef.current?.slideTo(tuneNum))} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === tuneNum + 1 ? 'active' : ''}`}>
+          {activeButton === tuneNum + 1 ? `[ content ]` : 'content'}
+        </button>
+
+        <button onClick={() => handleButtonClick(3, () => swiperRef.current?.slideTo(tuneNum + 1))} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === tuneNum + 2 ? 'active' : ''}`}>
+          {activeButton === tuneNum + 2 ? `[ afterword ]` : 'afterword'}
+        </button>
+      </div>
+      {/* Menu Items Ended */}
     </>
   );
 }
