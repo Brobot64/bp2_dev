@@ -383,12 +383,12 @@ const goToSpecificSlide = (slideIndex: number) => {
       if (searchies.has('cntnt')) {
         // Delay execution to allow all slides to render
         setTimeout(() => {
-          goToLastSlide(); // Go to the last slide after editorial slides are injected
+          goToSpecificSlide(tuneNum); // Go to the last slide after editorial slides are injected
         }, 2000); // Adjust timeout duration as necessary based on your slide injection timing
       }
       return;
     }
-    setActiveButton(2);
+    // setActiveButton(2);
     // goToSpecificSlide(1);
   }, [swiperRef.current?.slides.length]); 
   
@@ -738,7 +738,7 @@ const goToSpecificSlide = (slideIndex: number) => {
                         
                         {
                           // @ts-ignore
-                          index === (conclusion.length - 1) && (
+                          index === (conclusionSlides.length - 1) && (
                             <div className={uiStyle.signature}>
                               <Image
                                 src="/signature.png"
