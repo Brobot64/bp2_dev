@@ -1412,7 +1412,7 @@ const handleOpenPartner = (det: any) => {
                 ].map((src, index) => (
                   <SwiperSlide
                     key={index}
-                    onClick={() => handleOpenPartner(src)}
+                    onMouseEnter={() => handleOpenPartner(src)}
                     className="slide partner-img"
                   >
                     <img src={src} width={100} alt={`Slide ${index}`} />

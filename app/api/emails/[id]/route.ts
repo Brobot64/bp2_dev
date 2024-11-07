@@ -1,4 +1,4 @@
-import * as emailTemplateService from '@/src/backends/service/emailService'
+import { deleteEmail, getEmailById, updateEmail } from '@/src/backends/service/emailService';
 import { responseHandler } from '@/src/backends/utils/responseHandler';
 
 export const GET = async (
@@ -6,7 +6,7 @@ export const GET = async (
     { params }: { params: { id: string } },
   ) => {
     try {
-        const template = await emailTemplateService.getEmailTemplateById(Number(params.id));
+        const template = await getEmailById(Number(params.id));
         return responseHandler(template, 200);
     } catch (error: any) {
         return responseHandler(error?.message, 400);        
@@ -19,7 +19,7 @@ export const PUT = async (
 ) => {
     try {
         const { title, content } = await request.json();
-        const response = await emailTemplateService.updateEmailTemplate(Number(params.id), title, content);
+        const response = await updateEmail(Number(params.id), {title, content});
         return responseHandler(response, 200);
     } catch (error: any) {
         return responseHandler(error?.message, 400);
@@ -32,7 +32,7 @@ export const DELETE = async (
     { params }: { params: { id: string } },
 ) => {
     try {
-        const response = await emailTemplateService.deleteEmailTemplate(Number(params.id));
+        const response = await deleteEmail(Number(params.id));
         return responseHandler(response, 200);
     } catch (error: any) {
         return responseHandler(error?.message, 400);
