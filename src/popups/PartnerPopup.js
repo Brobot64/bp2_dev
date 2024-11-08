@@ -1,17 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import style from './PartnerPopup.module.css';
 
-const PartnerPopup = ({ onClose, pic = '/banner1.jpg', details = 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.' }) => {
+const PartnerPopup = ({ onClose, pic}) => {
+  const mainRef = useRef(null);
+
+  useEffect(() => {
+    function handleClickOut(e) {
+      if (mainRef.current && !mainRef.current.contains(e.target)) {
+        onClose();
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOut);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOut);
+    };
+  }, [mainRef]);
 
   return (
     <div className={style.popupContainer}>
-      <div className={` ${style.popup} ${style.talents} `}>
+      <div className={` ${style.popup} ${style.talents} `} ref={mainRef}>
         <div className={`${style.mainhub}`}>
-            <img src={pic}/>
+            <img src={pic.src}/>
             <div className={`${style.texties}`}>
-                <span> <h2>[ partner name ]</h2> &nbsp; &nbsp; <h2 className='italic capitalize text-[#DD47F7]'>partnership type</h2> </span>
-                <p>
-                { details }
+                <span> <h2> [ {pic.name} ] </h2> &nbsp; &nbsp; <h2 className='italic capitalize text-[#DD47F7]'>partnership type</h2> </span>
+                <p className='demi'>
+                { pic.details }
                 </p>
             </div>
         </div>
