@@ -383,12 +383,12 @@ const goToSpecificSlide = (slideIndex: number) => {
       if (searchies.has('cntnt')) {
         // Delay execution to allow all slides to render
         setTimeout(() => {
-          goToLastSlide(); // Go to the last slide after editorial slides are injected
+          goToSpecificSlide(tuneNum); // Go to the last slide after editorial slides are injected
         }, 2000); // Adjust timeout duration as necessary based on your slide injection timing
       }
       return;
     }
-    setActiveButton(2);
+    // setActiveButton(2);
     // goToSpecificSlide(1);
   }, [swiperRef.current?.slides.length]); 
   
@@ -475,7 +475,7 @@ const goToSpecificSlide = (slideIndex: number) => {
         fixedNav={true}
         openEditProfile={handleEditProfile}
         handleGoBack={() => {
-          router.push('/');
+          swiperRef.current?.slidePrev();
         }}
         openSearchPopup={() => {}}
         openSignInPopup={openSignInPopup}
@@ -665,7 +665,7 @@ const goToSpecificSlide = (slideIndex: number) => {
                     ref={(el) => (divRef.current[index] = el)}
                   >
                     <div
-                      className={`${uiStyle.vinyl} border-[3px] md:border-[8px] text-center flex items-center justify-center h-[100px] md:h-[200px] w-[100px] md:w-[300px] rounded-3xl relative overflow-hidden transition`}
+                      className={`${uiStyle.vinyl} border-[3px] md:border-[8px] text-center flex items-center justify-center h-[100px] md:h-[200px] w-[100px] md:w-[300px] relative overflow-hidden transition`}
                       style={{
                         borderColor:
                         (hoveredCardIndex === index || activeIndex === index)
@@ -738,7 +738,7 @@ const goToSpecificSlide = (slideIndex: number) => {
                         
                         {
                           // @ts-ignore
-                          index === (conclusion.length - 1) && (
+                          index === (conclusionSlides.length - 1) && (
                             <div className={uiStyle.signature}>
                               <Image
                                 src="/signature.png"
@@ -790,6 +790,10 @@ const goToSpecificSlide = (slideIndex: number) => {
 
         <button onClick={() => handleButtonClick(3, () => swiperRef.current?.slideTo(tuneNum + 1))} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === tuneNum + 2 ? 'active' : ''}`}>
           {activeButton === tuneNum + 2 ? `[ afterword ]` : 'afterword'}
+        </button>
+
+        <button onClick={() => router.push('/')} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === tuneNum + 2 ? 'active' : ''}`}>
+          {activeButton === 190 ? `[ exit ]` : 'exit'}
         </button>
       </div>
       {/* Menu Items Ended */}

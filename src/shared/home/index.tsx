@@ -19,6 +19,7 @@ import '../../../app/test.css';
 import SignInPopup from '@/src/auth/popups/SignInPopup';
 import SearchPopup from '@/src/popups/SearchPopup';
 import TalentsPopup from '@/src/popups/TalentsPopup';
+import PartnerPopup from '@/src/popups/PartnerPopup';
 import DefaultPopup from '@/src/popups/DefaultPopup';
 import { SlArrowLeft, SlArrowRight } from 'react-icons/sl';
 SwiperCore.use([Navigation, Pagination]);
@@ -74,9 +75,11 @@ const SharedHomeComponent: React.FC = () => {
   const [isSignInPopupVisible, setSignInPopupVisible] = useState(false);
   const [isSearchPopupVisible, setSearchPopupVisible] = useState(false);
   const [isTalentsPopupVisible, setTalentsPopupVisible] = useState(false);
+  const [isPartnerPopupVisible, setPartnerPopupVisible] = useState(false);
   const swiperRef = useRef<SwiperCore | null>(null);
   const swiperRef1 = useRef<SwiperCore | null>(null);
   const swiperRef2 = useRef<SwiperCore | null>(null);
+  const swiperRefPartner = useRef<SwiperCore | null>(null);
   const swiperRefBanner = useRef<SwiperCore | null>(null);
   const swiperRefJournal = useRef<SwiperCore | null>(null);
   const [activeMenu, setActiveMenu] = useState<number>(0);
@@ -88,6 +91,7 @@ const SharedHomeComponent: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [bannerBg, setBannerBg] = useState('');
   const [years, setYears] = useState<number[]>([2024, 2023, 2022, 2021, 2020]);
+  const [partnerDet, setPartnerDet] = useState('');
   const [selectedYear, setSelectedYear] = useState<number>(2024);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const menus = [
@@ -109,6 +113,12 @@ useEffect(() => {
 
   return () => clearInterval(interval);
 }, []);
+
+
+const handleOpenPartner = (det: any) => {
+  setPartnerPopupVisible(!isPartnerPopupVisible);
+  setPartnerDet(det);
+}
 
   // added by Brobot
   const [activeIndex, setActiveIndex] = useState(0);
@@ -204,6 +214,9 @@ useEffect(() => {
   const closeSearchPopup = () => setSearchPopupVisible(false);
   const openTalentsPopup = () => setTalentsPopupVisible(true);
   const closeTalentsPopup = () => setTalentsPopupVisible(false);
+  
+  const openPartnerPopup = () => setPartnerPopupVisible(true);
+  const closePartnerPopup = () => setPartnerPopupVisible(false);
 
   const handleSignInSuccess = (token: string) => {
     if (token) {
@@ -234,6 +247,18 @@ useEffect(() => {
     }
   };
 
+  const handlePrevPart = () => {
+    if (swiperRefPartner.current) {
+      swiperRefPartner.current.slidePrev();
+    }
+  };
+
+  const handleNextPart = () => {
+    if (swiperRefPartner.current) {
+      swiperRefPartner.current.slideNext();
+    }
+  };
+
   const handlePrev1 = () => {
     if (swiperRef2.current) {
       swiperRef2.current.slidePrev();
@@ -248,6 +273,7 @@ useEffect(() => {
 
   // function to handle menu click and slide to the corresponding slide
   const handleMenuClick = (index: number) => {
+    saveNumberToSession(index);
     setActiveMenu(index);
     setIsOpen(false);
     if (swiperRef.current) {
@@ -275,6 +301,24 @@ useEffect(() => {
       }, delay);
     };
   };
+
+  const [savedNumber, setSavedNumber] = useState<number>(0);
+
+  // Function to handle saving the number to sessionStorage
+  const saveNumberToSession = (numberToSave: number) => {
+    sessionStorage.setItem("savedNumber", numberToSave.toString());
+    setActiveMenu(numberToSave);
+  };
+
+  // Check for the saved number in sessionStorage on component mount
+  useEffect(() => {
+    const storedNumber = sessionStorage.getItem("savedNumber");
+    if (storedNumber) {
+      setActiveMenu(parseInt(storedNumber, 10));
+      console.log(parseInt(storedNumber, 10));
+    }
+    // swiperRef.current?.slideTo(savedNumber)
+  }, []);
 
   //
   const handleWheel = debounce((event: WheelEvent) => {
@@ -668,6 +712,7 @@ useEffect(() => {
       )}
       {isSearchPopupVisible && <SearchPopup onClose={closeSearchPopup} />}
       {isTalentsPopupVisible && <TalentsPopup onClose={closeTalentsPopup} />}
+      {isPartnerPopupVisible && <PartnerPopup onClose={closePartnerPopup} pic={partnerDet} />}
       {popupVisible && (
         <DefaultPopup
           title={popupContent.title}
@@ -886,7 +931,7 @@ useEffect(() => {
         {/* slide 3 */}
         <SwiperSlide className="slide">
           <div className="slide-content">
-            <h1 className="blackColor" style={{ animationDelay: '0.01s' }}>
+            <h1 className="blackColor" style={{ animationDelay: '0.02s' }}>
               vision
             </h1>
             <p
@@ -904,7 +949,7 @@ useEffect(() => {
           <div className="slide-content">
             <p
               className="para wide blackColor"
-              style={{ animationDelay: '0.01s' }}
+              style={{ animationDelay: '0.02s' }}
             >
               Our vision is focused on Cognitive Transformation: the convergence of technologies that will affect the way we live and work in the coming years such as artificial intelligence, blockchain and cryptography, spatial computing, advanced data mesh, robotics,...
             </p>
@@ -926,7 +971,7 @@ useEffect(() => {
         {/* slide 5 */}
         <SwiperSlide className="slide">
           <div className="slide-content">
-            <h1 className="blackColor" style={{ animationDelay: '0.01s' }}>
+            <h1 className="blackColor" style={{ animationDelay: '0.02s' }}>
               anthropology + technology
             </h1>
             <p className="para wide blackColor" style={{ animationDelay: '0.6s' }}>
@@ -940,7 +985,7 @@ useEffect(() => {
           <div className="slide-content">
             <p
               className="para wide blackColor"
-              style={{ animationDelay: '0.01s' }}
+              style={{ animationDelay: '0.02s' }}
             >
               The stone ax, the wheel, the steam engine, the computer, and now
               AI - the advancement of humanity has always been driven by our
@@ -969,7 +1014,7 @@ useEffect(() => {
         {/* slide 7 */}
         <SwiperSlide className="slide">
           <div className="slide-content">
-            <h1 className="blackColor" style={{ animationDelay: '0.01s' }}>
+            <h1 className="blackColor" style={{ animationDelay: '0.02s' }}>
               services
             </h1>
             <p className="para wide blackColor" style={{ animationDelay: '0.3s' }}>
@@ -985,7 +1030,7 @@ useEffect(() => {
         {/* slide 8 */}
         <SwiperSlide className="slide">
           <div className="slide-content">
-            <h1 className="blackColor" style={{ animationDelay: '0.01s' }}>
+            <h1 className="blackColor" style={{ animationDelay: '0.02s' }}>
               what’s after next
             </h1>
             <p className="blackColor" style={{ animationDelay: '0.3s' }}>
@@ -1006,7 +1051,7 @@ useEffect(() => {
         {/* slide 9 */}
         <SwiperSlide className="slide">
           <div className="slide-content">
-            <h1 className="blackColor" style={{ animationDelay: '0.01s' }}>
+            <h1 className="blackColor" style={{ animationDelay: '0.02s' }}>
               what’s next
             </h1>
             <p className="blackColor" style={{ animationDelay: '0.3s' }}>
@@ -1026,7 +1071,7 @@ useEffect(() => {
         {/* slide 10 */}
         <SwiperSlide className="slide">
           <div className="slide-content">
-            <h1 className="blackColor" style={{ animationDelay: '0.01s' }}>
+            <h1 className="blackColor" style={{ animationDelay: '0.02s' }}>
               what’s now
             </h1>
             <p className="blackColor" style={{ animationDelay: '0.3s' }}>
@@ -1047,7 +1092,7 @@ useEffect(() => {
         {/* Ib */}
         <SwiperSlide className="slide">
           <div className="slide-content">
-            <h1 className="blackColor" style={{ animationDelay: '0.01s' }}>
+            <h1 className="blackColor" style={{ animationDelay: '0.02s' }}>
               what’s beyond
             </h1>
             <p className="blackColor" style={{ animationDelay: '0.3s' }}>
@@ -1068,7 +1113,7 @@ useEffect(() => {
         {/* slide 11 */}
         <SwiperSlide className="slide">
           <div className="slide-content">
-            <h1 className="blackColor" style={{ animationDelay: '0.01s' }}>
+            <h1 className="blackColor" style={{ animationDelay: '0.02s' }}>
               clients
             </h1>
             <p
@@ -1165,7 +1210,7 @@ useEffect(() => {
         {/* slide 12 */}
         <SwiperSlide className="slide">
           <div className="slide-content">
-            <h1 className="blackColor" style={{ animationDelay: '0.01s' }}>
+            <h1 className="blackColor" style={{ animationDelay: '0.02s' }}>
               you
             </h1>
             <p
@@ -1199,7 +1244,7 @@ useEffect(() => {
         {/* slide 13 */}
         <SwiperSlide className="slide">
           <div className="slide-content">
-            <h1 className="blackColor" style={{ animationDelay: '0.01s' }}>
+            <h1 className="blackColor" style={{ animationDelay: '0.02s' }}>
               our team + partners
             </h1>
             <p className="blackColor para " style={{ animationDelay: '0.3s' }}>
@@ -1219,7 +1264,7 @@ useEffect(() => {
         {/* slide 14 */}
         <SwiperSlide className="slide">
           <div className="slide-content">
-            <h1 className="blackColor" style={{ animationDelay: '0.01s' }}>
+            <h1 className="blackColor" style={{ animationDelay: '0.02s' }}>
               ideation
             </h1>
             <p
@@ -1231,7 +1276,8 @@ useEffect(() => {
               prepare humanity for the incredible changes to come in our
               societies.
             </p>
-            <p
+
+            {/* <p
               className="para wide blackColor"
               style={{ animationDelay: '0.6s' }}
             >
@@ -1239,7 +1285,145 @@ useEffect(() => {
               emerging tech industry, the core team is backed by a global
               network of experts who create convergence-ready innovations for
               our clients.
-            </p>
+            </p> */}
+
+            <div
+              className="swiper-container partner"
+              style={{ animationDelay: '0.3s' }}
+            >
+              <button className="navigationArrow left" onClick={handlePrevPart}>
+                <SlArrowLeft />
+              </button>
+
+              {/* <Swiper
+                onInit={(swiper) => (swiperRefPartner.current = swiper)}
+                slidesPerView={5}
+                navigation={false}
+                autoplay={false}
+                speed={500}
+                loop={true}
+                className="mySwiper1"
+                spaceBetween={0}
+                style={{ width: '100%' }}
+                modules={[
+                  Pagination,
+                  EffectFade,
+                  Mousewheel,
+                  Keyboard,
+                ]}
+                keyboard={true}
+                breakpoints={{
+                  320: {
+                    slidesPerView: 2,
+                    spaceBetween: 10,
+                  },
+                  768: {
+                    slidesPerView: 3,
+                    spaceBetween: 15,
+                  },
+                  992: {
+                    slidesPerView: 3,
+                    spaceBetween: 20,
+                  },
+                  1200: {
+                    slidesPerView: 3,
+                    spaceBetween: 25,
+                  },
+                }}
+              >
+                <SwiperSlide onClick={() => console.log("Happily Cliecked")} className="slide partner-img">
+                  <img src="/banner1.jpg"  width={100} />
+                </SwiperSlide>
+                <SwiperSlide onClick={() => console.log("Happily Cliecked")} className="slide partner-img">
+                  <img src="/banner.jpg"  width={100} />
+                </SwiperSlide>
+                <SwiperSlide onClick={() => console.log("Happily Cliecked")} className="slide partner-img">
+                  <img src="/banner1.jpg"  width={100} />
+                </SwiperSlide>
+                <SwiperSlide onClick={() => console.log("Happily Cliecked")} className="slide partner-img">
+                  <img src="/img3.png"  width={100} />
+                </SwiperSlide>
+                <SwiperSlide onClick={() => console.log("Happily Cliecked")} className="slide partner-img">
+                  <img src="/banner1.jpg"  width={100} />
+                </SwiperSlide>
+                <SwiperSlide onClick={() => console.log("Happily Cliecked")} className="slide partner-img">
+                  <img src="/banner1.jpg"  width={100} />
+                </SwiperSlide>
+                <SwiperSlide onClick={() => console.log("Happily Cliecked")} className="slide partner-img">
+                  <img src="/banner1.jpg"  width={100} />
+                </SwiperSlide>
+                <SwiperSlide onClick={() => console.log("Happily Cliecked")} className="slide partner-img">
+                  <img src="/banner1.jpg"  width={100} />
+                </SwiperSlide>
+                <SwiperSlide onClick={() => console.log("Happily Cliecked")} className="slide partner-img">
+                  <img src="/banner1.jpg"  width={100} />
+                </SwiperSlide>
+                <SwiperSlide onClick={() => console.log("Happily Cliecked")} className="slide partner-img">
+                  <img src="/banner1.jpg"  width={100} />
+                </SwiperSlide>
+                <SwiperSlide onClick={() => console.log("Happily Cliecked")} className="slide partner-img">
+                  <img src="partners/Tenbeo_small.png"  width={100} />
+                </SwiperSlide>
+              </Swiper> */}
+
+              <Swiper
+                onInit={(swiper) => (swiperRefPartner.current = swiper)}
+                slidesPerView={5}
+                navigation={false}
+                autoplay={false}
+                speed={500}
+                loop={true}
+                className="mySwiper1"
+                spaceBetween={0}
+                style={{ width: '100%' }}
+                modules={[Pagination, EffectFade, Mousewheel, Keyboard]}
+                keyboard={true}
+                breakpoints={{
+                  320: {
+                    slidesPerView: 2,
+                    spaceBetween: 10,
+                  },
+                  768: {
+                    slidesPerView: 3,
+                    spaceBetween: 15,
+                  },
+                  992: {
+                    slidesPerView: 3,
+                    spaceBetween: 20,
+                  },
+                  1200: {
+                    slidesPerView: 3,
+                    spaceBetween: 25,
+                  },
+                }}
+              >
+                {[
+                  '/banner1.jpg',
+                  '/banner.jpg',
+                  '/banner1.jpg',
+                  '/img3.png',
+                  '/banner1.jpg',
+                  '/banner1.jpg',
+                  '/banner1.jpg',
+                  '/banner1.jpg',
+                  '/banner1.jpg',
+                  '/banner1.jpg',
+                  '/partners/Tenbeo_small.png',
+                ].map((src, index) => (
+                  <SwiperSlide
+                    key={index}
+                    onMouseEnter={() => handleOpenPartner(src)}
+                    className="slide partner-img"
+                  >
+                    <img src={src} width={100} alt={`Slide ${index}`} />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+
+              <button className="navigationArrow right" onClick={handleNextPart}>
+                <SlArrowRight />
+              </button>
+            </div>
           </div>
         </SwiperSlide>
 
@@ -1249,7 +1433,7 @@ useEffect(() => {
             <h1 className="blackColor">production</h1>
             <p
               className="para wide extra blackColor"
-              style={{ animationDelay: '0.01s' }}
+              style={{ animationDelay: '0.02s' }}
             >
               In addition, our partners bring complementary services that assure
               the readiness and scalability of our use cases and new business
@@ -1347,7 +1531,7 @@ useEffect(() => {
           style={{ backgroundColor: '#000', color: 'white' }}
         >
           <div className="slide-content">
-            <h1 className="fade-animation w-fit" style={{ animationDelay: '0.01s', display: 'flex', fontWeight: '700' }}>
+            <h1 className="fade-animation w-fit" style={{ animationDelay: '0.02s', display: 'flex', fontWeight: '700' }}>
               &nbsp;&nbsp;the BLVCK<span className='italic'>BOOK</span>&nbsp;&nbsp;
             </h1>
             <p
@@ -1462,7 +1646,7 @@ useEffect(() => {
           <div className="slide-content">
             <h1
               className="blackColor fade-animation"
-              style={{ animationDelay: '0.01s' }}
+              style={{ animationDelay: '0.02s' }}
             >
               get in touch
             </h1>

@@ -463,7 +463,7 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
                 <div className="mt-10 space-y-6">
                   <div className="flex justify-between flex-col gap-5" style={{ flexDirection: 'column' }}>
                     <div className='flex justify-between items-center'>
-                      <h1 className="text-base md:text-xl font-bold">
+                      <h1 className="text-base mutune md:text-[50px] font-bold md:leading-[60px]">
                         {item.title}
                       </h1>
                       {/* <button

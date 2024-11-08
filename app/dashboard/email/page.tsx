@@ -5,6 +5,7 @@ import Layout from '@components/layout/Layout';
 import Emails from '@components/dashboard/email-contents/page';
 import EmailComposer from '@components/dashboard/email-contents/EmailComposer';
 import QuillEditor from '@components/dashboard/email-contents/QuillEditor';
+import EmailTemplates from '@components/dashboard/email-contents/EmailTemplateEditor';
 
 const Page: React.FC = () => { 
   const [body, setBody] = useState<string>('');  // State to store the email body content
@@ -14,7 +15,8 @@ const Page: React.FC = () => {
   };
   return (
     <Layout>
-      <Emails/>
+      {/* <Emails/> */}
+      <EmailTemplates/>
       {/* <QuillEditor value={body} onChange={handleBodyChange} /> */}
     </Layout>
   )

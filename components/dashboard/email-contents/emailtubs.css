@@ -1,0 +1,32 @@
+.notification {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    border-radius: 5px;
+  }
+  
+  .error {
+    color: red;
+    margin-top: 5px;
+  }
+  
+  .ellipsis {
+    cursor: pointer;
+  }
+  
+  .popup {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .ellipsis:hover + .popup,
+  .popup:hover {
+    display: block;
+  }
+  
