@@ -252,7 +252,7 @@ const BlvckCardDetail: React.FC = () => {
                   autoplay={false}
                   speed={1000}
                   loop={true}
-                  className="mySwiper1 border-[5px] border-white rounded-[30px]"
+                  className="mySwiper1 border-[5px] border-white rounded-[3px]"
                   spaceBetween={0}
                   modules={[
                     Autoplay,

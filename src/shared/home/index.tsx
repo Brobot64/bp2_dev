@@ -1033,7 +1033,7 @@ const handleOpenPartner = (det: any) => {
             </p>
 
             <p className="para wide blackColor" style={{ animationDelay: '0.6s' }}>
-              Our future-proofing services is a three-stage cycle of <a href="#" className="purpleColor">foresight</a>, <a href="#" className="purpleColor">preparation</a>, and <a href="#" className="purpleColor">implementation</a>. We do <a href="#" className="purpleColor">innovation field trips</a> too, fostering visionary outlooks.
+              Our future-proofing services is a three-stage cycle of <a href="#" className="purpleColor">foresight</a>, <a href="#" className="purpleColor">preparation</a>, and <a href="#" className="purpleColor">implementation</a>. We do <a href="#" className="purpleColor">learning journeys</a> too, fostering visionary outlooks.
             </p>
           </div>
         </SwiperSlide>
@@ -1070,11 +1070,14 @@ const handleOpenPartner = (det: any) => {
             </p>
             
             <p className="para wide blackColor" style={{ animationDelay: '0.5s' }}>
-              We facilitate immersive workshops involving key stakeholders for scenario development and strategic road mapping. Our applied foresight sessions are collaborative and produce robust strategic plans that incorporate diverse perspectives anticipating future challenges, enabling organizations to prepare effectively for tech innovations.
+            We facilitate immersive workshops, exclusive live events, and membership programs designed to inspire, prepare, 
+            and guide organizations through future challenges. Our offerings include collaborative foresight sessions, strategic
+            planning, and direct engagement with thought leaders, all crafted to foster resilient, forward-thinking strategies.
             </p>
 
             <p className="para wide blackColor italics" style={{ animationDelay: '0.7s' }}>
-              Executive Education and Training, Strategic Planning Workshops, Scenario Development, Collaborative Applied Foresight, Adaptive Strategy Formulation, Risk Anticipation Exercises
+            CogShift Live Sessions and Membership Club, Executive Education and Training, Strategic Planning Workshops, 
+            Scenario Development, Collaborative Applied Foresight, Tech Discovery Sessions
             </p>
           </div>
         </SwiperSlide>
@@ -1104,15 +1107,16 @@ const handleOpenPartner = (det: any) => {
         <SwiperSlide className="slide">
           <div className="slide-content">
             <h1 className="blackColor" style={{ animationDelay: '0.02s' }}>
-              what’s beyond
+              what&apos;s beyond
             </h1>
             <p className="blackColor" style={{ animationDelay: '0.3s' }}>
-              <span className="purpleColor italics">Innovation field trips</span> |
+              <span className="purpleColor italics">Learning
+              journeys.</span> |
               Explore frontiers
             </p>
             
             <p className="para wide blackColor" style={{ animationDelay: '0.5s' }}>
-              We organize immersive 4-5-day learning journeys that expose executives to cutting-edge innovations and disruptive technologies. Our curated trips include high-level meetings with Strategy Chiefs of global tech giants and CEOs of disruptive startups. These expeditions provide unparalleled insights into emerging and forthcoming trends, boosting innovation mindsets and strategic foresight for participants.
+              We organize immersive 4-5-day field trips that expose executives to cutting-edge innovations and disruptive technologies. Our curated trips include high-level meetings with Strategy Chiefs of global tech giants and CEOs of disruptive startups. These expeditions provide unparalleled insights into emerging and forthcoming trends, boosting innovation mindsets and strategic foresight for participants.
             </p>
 
             <p className="para wide blackColor italics" style={{ animationDelay: '0.7s' }}>
@@ -1256,7 +1260,7 @@ const handleOpenPartner = (det: any) => {
         <SwiperSlide className="slide">
           <div className="slide-content">
             <h1 className="blackColor" style={{ animationDelay: '0.02s' }}>
-              our team + partners
+              our setup
             </h1>
             <p className="blackColor para " style={{ animationDelay: '0.3s' }}>
               <span
@@ -1276,16 +1280,15 @@ const handleOpenPartner = (det: any) => {
         <SwiperSlide className="slide">
           <div className="slide-content">
             <h1 className="blackColor" style={{ animationDelay: '0.02s' }}>
-              ideation
+              leadership team
             </h1>
             <p
               className="para wide blackColor"
               style={{ animationDelay: '0.3s' }}
             >
-              Strategists, technologists, futurists, and creatives, BLVCK
-              <span className="italics">PIXEL</span> is driven by our desire to
-              prepare humanity for the incredible changes to come in our
-              societies.
+              Visionaries, strategists, technologists, and creatives, our leadership team brings over twelve decades of 
+              combined excellence across diverse sectors and regions. United by a commitment to shaping a future-ready
+              society, we leverage innovation to prepare humanity for the transformative changes to come.
             </p>
 
             {/* <p
@@ -1429,14 +1432,14 @@ const handleOpenPartner = (det: any) => {
         {/* slide 15 */}
         <SwiperSlide className="slide last-slide">
           <div className="slide-content">
-            <h1 className="blackColor">production</h1>
+            <h1 className="blackColor">ecosystem</h1>
             <p
               className="para wide extra blackColor"
               style={{ animationDelay: '0.02s' }}
             >
-              In addition, our partners bring complementary services that assure
-              the readiness and scalability of our use cases and new business
-              models.
+              Through a global network of trusted partners, top tech integrators and specialized experts, we provide services 
+              that assure the readiness, scalability, and impact of our innovative solutions. With this approach we deliver
+              seamless, end-to-end implementations, empowering clients to thrive an ever-evolving digital landscape.      
             </p>
             <div
               className="swiper-container"
@@ -1531,7 +1534,7 @@ const handleOpenPartner = (det: any) => {
         >
           <div className="slide-content">
             <h1 className="fade-animation w-fit" style={{ animationDelay: '0.02s', display: 'flex', fontWeight: '700' }}>
-              &nbsp;&nbsp;the BLVCK<span className='italic'>BOOK</span>&nbsp;&nbsp;
+              &nbsp;&nbsp;BLVCK<span className='italic'>BOOK</span>&nbsp;&nbsp;
             </h1>
             <p
               className="italics fade-animation"
@@ -1542,9 +1545,9 @@ const handleOpenPartner = (det: any) => {
             <ul className="para wide tick" style={{ animationDelay: '0.6s' }}>
               <li className="" style={{ marginBottom: '15px' }}>
                 <span className="">
-                  Read our last papers and forecasts to see [ what’s after
-                  next]. You have to [ subscribe ], but hey, it’s addictive. The
-                  first one is free … ;
+                Dive into our latest insights and bold forecasts on what lies beyond the horizon. Each quarterly issue unpacks
+                future-focused themes that are reshaping business and society. You&apos;ll need to subscribe, but fair warning: it&apos;s
+                addictive. Get a taste... and see [ what&apos;s after next ].;)
                 </span>
               </li>
             </ul>
@@ -1689,7 +1692,7 @@ const handleOpenPartner = (det: any) => {
                 bureau.{' '}
               </li>
               <li className="blackColor">
-                And yes, we’re always looking for{' '}
+                And yes, we&apos;re always looking for{' '}
                 <a href="#" className="purpleColor" onClick={openTalentsPopup}>
                   talents
                 </a>

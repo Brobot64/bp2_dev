@@ -640,6 +640,12 @@ const goToSpecificSlide = (slideIndex: number) => {
               [ contents ]
             </h1>
 
+            <p className='text-[14px] md:text-[16px] lg:text-[24px]'>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore
+            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo 
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            </p>
+
             <div className='relative kunli'>
              <button
                 onClick={handleTPrev}
@@ -776,9 +782,9 @@ const goToSpecificSlide = (slideIndex: number) => {
           textAlign: 'right'
         }}
       >
-        <button onClick={() => handleButtonClick(1, () => swiperRef.current?.slideTo(0))} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === 1 ? 'active' : ''}`}>
+        {/* <button onClick={() => handleButtonClick(1, () => swiperRef.current?.slideTo(0))} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === 1 ? 'active' : ''}`}>
           {activeButton === 1 ? `[ home ]` : 'home'}
-        </button>
+        </button> */}
 
         <button onClick={() => handleButtonClick(2, () => swiperRef.current?.slideTo(1))} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === 2 ? 'active' : ''}`}>
           {activeButton === 2 ? `[ foreward ]` : 'foreward'}

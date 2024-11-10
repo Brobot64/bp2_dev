@@ -18,6 +18,8 @@ const PartnerPopup = ({ onClose, pic}) => {
     };
   }, [mainRef]);
 
+// , &apos;
+
   return (
     <div className={style.popupContainer}>
       <div className={` ${style.popup} ${style.talents} `} ref={mainRef}>
