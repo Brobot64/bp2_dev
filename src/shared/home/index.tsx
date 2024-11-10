@@ -1547,7 +1547,7 @@ const handleOpenPartner = (det: any) => {
                 <span className="">
                 Dive into our latest insights and bold forecasts on what lies beyond the horizon. Each quarterly issue unpacks
                 future-focused themes that are reshaping business and society. You&apos;ll need to subscribe, but fair warning: it&apos;s
-                addictive. Get a taste... and see [ what's after next ].;)
+                addictive. Get a taste... and see [ what&apos;s after next ].;)
                 </span>
               </li>
             </ul>
