@@ -414,7 +414,7 @@ function SharedJournalEditionPage({ slug, edition }: { slug?: string, edition?: 
                     if (activeBullet) activeBullet.style.backgroundColor = `${borderColor.replace(/"/g, '')}`;
                   }}
                   loop={true}
-                  className={`mySwiper1 border-[5px] rounded-[15px] overflow-hidden [&>*span]:!bg-black ${borderColor ? `border-[${borderColor.replace(/"/g, '')}]` : 'border-white'} [&>span.swiper-pagination-bullet-active]:bg-[${borderColor.replace(/"/g, '')}]`}  swiper-pagination-bullet-active
+                  className={`mySwiper1 border-[5px] rounded-[2px] overflow-hidden [&>*span]:!bg-black ${borderColor ? `border-[${borderColor.replace(/"/g, '')}]` : 'border-white'} [&>span.swiper-pagination-bullet-active]:bg-[${borderColor.replace(/"/g, '')}]`}  swiper-pagination-bullet-active
                   spaceBetween={0}
                   modules={[
                     Autoplay,

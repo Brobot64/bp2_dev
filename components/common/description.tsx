@@ -41,7 +41,7 @@ function Description({ text }: { text: string }) {
             color: isHovered ? `${borderColor.replace(/"/g, '')}` : "white"//"#DD47F7"
           }}
         >
-          &nbsp;[ &nbsp;{isExpanded ? 'read less' : 'read more'} &nbsp;]
+          &nbsp;[ &nbsp;{isExpanded ? 'fold back' : 'read more'} &nbsp;]
         </button>
       )}
     </div>

@@ -154,7 +154,7 @@
   .popup.default .close,
   .popup.talents .close {
     color: #d6d6d6;
-    z-index: 999;
+    z-index: 10;
     font-family: 'HelveticaNeueCyr-UltraLight';
     font-weight: 100;
     font-size: 25px;
