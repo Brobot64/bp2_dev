@@ -1107,7 +1107,7 @@ const handleOpenPartner = (det: any) => {
         <SwiperSlide className="slide">
           <div className="slide-content">
             <h1 className="blackColor" style={{ animationDelay: '0.02s' }}>
-              what’s beyond
+              what&apos;s beyond
             </h1>
             <p className="blackColor" style={{ animationDelay: '0.3s' }}>
               <span className="purpleColor italics">Learning
@@ -1692,7 +1692,7 @@ const handleOpenPartner = (det: any) => {
                 bureau.{' '}
               </li>
               <li className="blackColor">
-                And yes, we’re always looking for{' '}
+                And yes, we&apos;re always looking for{' '}
                 <a href="#" className="purpleColor" onClick={openTalentsPopup}>
                   talents
                 </a>
