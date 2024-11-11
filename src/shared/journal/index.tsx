@@ -730,7 +730,7 @@ const goToSpecificSlide = (slideIndex: number) => {
                 </button>
             </div>
 
-            <div
+            {/* <div
               className="swiper-container partner"
               style={{ animationDelay: '0.3s' }}
             >
@@ -807,7 +807,7 @@ const goToSpecificSlide = (slideIndex: number) => {
               <button className="navigationArrow right hover:text-[#DD47F7] transition !text-white" onClick={handleNextPart}>
                 <SlArrowRight />
               </button>
-            </div>
+            </div> */}
           </div>
         </SwiperSlide>
 
