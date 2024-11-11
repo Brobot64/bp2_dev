@@ -106,7 +106,7 @@ function JournalSharedPage({ slug }: { slug?: string }) {
   const scrollToActive = (index: any) => {
     if (divRef.current[index]) {
       // @ts-ignore
-      divRef.current[index].scrollIntoView({ behavior: 'smooth', inline: 'center' });
+      divRef.current[index].scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -125,23 +125,25 @@ const handleTPrev = () => {
 
 const handlePrevPart = () => {
   if (swiperRefContent.current) {
-    swiperRefContent.current.slidePrev();
-    // setActiveIndex((prevIndex) => {
-    //   const newIndex = prevIndex === 0 ? contentcards.length - 1 : prevIndex - 1;
-    //   scrollToActive(newIndex);
-    //   return newIndex;
-    // });
+    setActiveIndex((prevIndex) => {
+      const newIndex = prevIndex === 0 ? contentcards.length - 1 : prevIndex - 1;
+      scrollToActive(newIndex);
+      // @ts-ignore
+      swiperRefContent.current.slidePrev();
+      return newIndex;
+    });
   }
 };
 
 const handleNextPart = () => {
   if (swiperRefContent.current) {
-    swiperRefContent.current.slideNext();
-    // setActiveIndex((prevIndex) => {
-    //   const newIndex = prevIndex === contentcards.length - 1 ? 0 : prevIndex + 1;
-    //   scrollToActive(newIndex);
-    //   return newIndex;
-    // });
+    setActiveIndex((prevIndex) => {
+      const newIndex = prevIndex === contentcards.length - 1 ? 0 : prevIndex + 1;
+      scrollToActive(newIndex);
+      // @ts-ignore
+      swiperRefContent.current.slideNext();
+      return newIndex;
+    });
   }
 };
 
@@ -396,7 +398,7 @@ const goToSpecificSlide = (slideIndex: number) => {
     const tile: any = sessionStorage.getItem('blackboxBx');
     setJournalBlackBox(JSON.parse(tile));
     
-    goToSpecificSlide(1);
+    goToSpecificSlide(0);
     
     // Check the search parameters
     const fint = searchies.has('bnxn');
@@ -544,10 +546,10 @@ const goToSpecificSlide = (slideIndex: number) => {
           thresholdDelta: 1,
         }}
         onSlideChange={(swiper) => {
-          if (swiper.activeIndex >= 1 && swiper.activeIndex < tuneNum) {
-            setActiveButton(2)
-          } else if (swiper.activeIndex >= tuneNum + 2) {
-            setActiveButton(tuneNum + 2)
+          if (swiper.activeIndex >= 1 && swiper.activeIndex < tuneNum - 1) {
+            setActiveButton(1)
+          } else if (swiper.activeIndex >= tuneNum + 1) {
+            setActiveButton(tuneNum + 1)
           } else {
             setActiveButton(swiper.activeIndex + 1);  
           }
@@ -564,7 +566,7 @@ const goToSpecificSlide = (slideIndex: number) => {
         autoHeight={true}
         // threshold={isMobile ? 15 : 2}
       >
-        <SwiperSlide
+        {/* <SwiperSlide
           className="slide-banner banner-slider bg-overlay"
           style={{
             // @ts-ignore
@@ -581,17 +583,17 @@ const goToSpecificSlide = (slideIndex: number) => {
             <p>[ scroll to read ]</p>
           </div>
           <div className="banner-slider-content relative app_container" >
-            {/* @ts-ignore */}
+             @ts-ignore 
             <h3>{journalBlackBox ? journalBlackBox?.title : 'Cognitives cities'}</h3>
-            {/* @ts-ignore */}
+            {/* @ts-ignore 
             <p>The foresight journal - Edition of {journalBlackBox ? getFullMonth(journalBlackBox?.date) : 'November'}</p>
             <p>
-            {/* @ts-ignore */}
+             @ts-ignore
             {journalBlackBox?.description ? journalBlackBox?.description : 
               'BLVCKPIXEL is a new-age company combining human ingenuity with   machine intelligence to provide niche expertise on foresight.'}
             </p>
           </div>
-        </SwiperSlide>
+        </SwiperSlide> */}
 
         {/* Editorials */}
         {
@@ -674,7 +676,7 @@ const goToSpecificSlide = (slideIndex: number) => {
             <div className='relative kunli'>
              <button
                 onClick={handleTPrev}
-                className='hover:text-[#DD47F7] transition'
+                className='hover:text-[#DD47F7] left transition'
                 style={{
                   left: '-25px'
                 }}
@@ -890,16 +892,16 @@ const goToSpecificSlide = (slideIndex: number) => {
           {activeButton === 1 ? `[ home ]` : 'home'}
         </button> */}
 
-        <button onClick={() => handleButtonClick(2, () => swiperRef.current?.slideTo(1))} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === 2 ? 'active' : ''}`}>
-          {activeButton === 2 ? `[ foreward ]` : 'foreward'}
+        <button onClick={() => handleButtonClick(1, () => swiperRef.current?.slideTo(0))} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === 1 ? 'active' : ''}`}>
+          {activeButton === 1 ? `[ foreward ]` : 'foreward'}
         </button>
 
-        <button onClick={() => handleButtonClick(tuneNum, () => swiperRef.current?.slideTo(tuneNum))} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === tuneNum + 1 ? 'active' : ''}`}>
-          {activeButton === tuneNum + 1 ? `[ content ]` : 'content'}
+        <button onClick={() => handleButtonClick(tuneNum, () => swiperRef.current?.slideTo(tuneNum - 1))} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === tuneNum ? 'active' : ''}`}>
+          {activeButton === tuneNum ? `[ content ]` : 'content'}
         </button>
 
-        <button onClick={() => handleButtonClick(3, () => swiperRef.current?.slideTo(tuneNum + 1))} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === tuneNum + 2 ? 'active' : ''}`}>
-          {activeButton === tuneNum + 2 ? `[ afterword ]` : 'afterword'}
+        <button onClick={() => handleButtonClick(3, () => swiperRef.current?.slideTo(tuneNum))} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === tuneNum + 1 ? 'active' : ''}`}>
+          {activeButton === tuneNum + 1 ? `[ afterword ]` : 'afterword'}
         </button>
 
         <button onClick={() => {

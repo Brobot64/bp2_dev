@@ -844,6 +844,10 @@ a:hover {
     max-width: 250px !important;
     height: 140px !important;
   }
+  .trush {
+    width: 100% !important;
+    margin: 20px 0px !important;
+  }
 }
 
 .swiper-container.journal .navigationArrow.left {
@@ -1007,6 +1011,9 @@ a:hover {
   position: relative;
   padding-bottom: 10px;
   margin: 60px 20px;
+  width: calc(100% - 300px);
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .kunli button {
@@ -1068,6 +1075,11 @@ a:hover {
   } 
   .kunli button {
     font-size: 20px;
+    right: 10px !important;
+  }
+
+  .kunli button.left {
+    left: 10px !important;
   }
   .cursor-pointer {
     min-width: 180px !important;
@@ -1107,6 +1119,8 @@ a:hover {
               0 0 60px 5px rgba(75, 0, 130, 0.7),
               0 0 70px 5px rgba(238, 130, 238, 0.7);
 }
+
+
 
 
 
