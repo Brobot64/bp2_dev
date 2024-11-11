@@ -29,8 +29,8 @@ const MobileMenuPopup: React.FC<MenuPopupProps> = ({
 }) => {
   return (
     <>
-      <a href='#' className={` ${style.mobileMenu} ${invert ? style.invert : style.invert}`} style={{ display: shouldDisplayMenuButton ? 'block' : 'none' }} id='mobileMenu' onClick={toggleMenuPopup}>
-        {isMenuPopupVisible ? <SlArrowUp /> : <SlArrowDown />}
+      <a href='#' className={` ${style.mobileMenu} ${invert ? style.invert : style.invert}`} style={{ display: shouldDisplayMenuButton ? 'block' : 'none'}} id='mobileMenu' onClick={toggleMenuPopup}>
+        {isMenuPopupVisible ? <SlArrowUp className={` ${ activeMenu === 5 ? '!text-white' : '!text-black' }`} /> : <SlArrowDown className={` ${ activeMenu === 5 ? '!text-white' : '!text-black' }`}/>}
       </a>
       {isMenuPopupVisible && (
         <div ref={menuRef} className={`${style.popupContainer} ${invert ? style.invert : ''}`}>
