@@ -102,7 +102,8 @@ const SharedHomeComponent: React.FC = () => {
   const [showSecondImage, setShowSecondImage] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [bannerBg, setBannerBg] = useState('');
-  const [years, setYears] = useState<number[]>([2024, 2023, 2022, 2021, 2020]);
+  // const [years, setYears] = useState<number[]>([2024, 2023, 2022, 2021, 2020]);
+  const [years, setYears] = useState<number[]>([2024]);
   const [partnerDet, setPartnerDet] = useState(null);
   const [selectedYear, setSelectedYear] = useState<number>(2024);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -1308,7 +1309,7 @@ const handleOpenPartner = (det: any) => {
               <button className="navigationArrow left" onClick={handlePrevPart}>
                 <SlArrowLeft />
               </button>
-              
+
               <Swiper
                 onInit={(swiper) => (swiperRefPartner.current = swiper)}
                 slidesPerView={5}
@@ -1343,7 +1344,7 @@ const handleOpenPartner = (det: any) => {
                 {partnersDetails.map((src, index) => (
                   <SwiperSlide
                     key={index}
-                    onMouseEnter={() => handleOpenPartner(src)}
+                    onClick={() => handleOpenPartner(src)}
                     className="slide partner-img"
                   >
                     <img src={src.src} width={100} alt={`Slide ${index}`} />
