@@ -60,11 +60,11 @@ export const useSessionStorage = (key: any, initialValue: any) => {
 
 
 const partnersDetails = [
-  {src: '/Aline Reiniche (6).png', name: 'Chafik Zerrouki', details: 'Chafik Zerrouki is a futurist and visionary architect known for seamlessly integrating generative AI, biomimicry, and urban innovation into immersive, intelligent design. With experience at Zaha Hadid Architects and award-winning projects across multiple continents, Chafik redefines architecture\'s future in physical spaces and the Metaverse. \n At BLVCKPIXEL, his approach to cognitive transformation merges advanced technologies with human creativity, pushing the boundaries of urban planning and design. His work shapes environments that adapt, evolve, and interact, creating spaces that are not only functional but intuitively responsive to human behavior and the complexities of modern cities.'},
-  {src: '/Aline Reiniche (8).png', name: 'Lans King', details: 'Lans is a visionary in cognitive transformation with 25 years of experience in digital innovation. He has collaborated with major brands like LVMH and Goldman Sachs focusing on strategy and implementation. \n At BLVCKPIXEL, he combines creativity and technology to redefine digital experiences and drive business evolution. Additionally, Lans is an interdisciplinary artist who integrates traditional art with digital media. Lans challenges everyone at BP to see things from radically new. For him, cognitive transformation innovates our mindset as much as technology in order to thrive in this new world.'},
-  {src: '/Aline Reiniche (7).png', name: 'Edouard De Miollis', details: 'Édouard de Miollis, a true pioneer in the digital space with over two decades of trailblazing innovation! From founding early internet companies in Europe to serving as a State Counselor for Technologies at the French Presidency, Édouard has been at the forefront of transformative efforts across industries, and society. \n At BLVCKPIXEL, Édouard drives key initiatives in AI, GreenTech, and Cognitive Transformation, advising governments, global organizations, and investment funds on how to harness technology for impactful, future-oriented solutions. His expertise perfectly aligns with our mission to shape the Cognitive Organisations, Enterprises, and Cities of tomorrow, where technology, sustainability, and human ingenuity converge as driving forces to create more adaptive, resilient,  and smarter ecosystems.'},
-  {src: '/Aline Reiniche (9).png', name: 'Vincent Binet', details: 'Vincent is a senior expert in digital marketing with nearly three decades of experience, specialising in brand visibility & awareness since 1997. Vincent has worked with top agencies and prestigious global brands, mastering the art of e-marketing, branding, and digital strategy. As a former Google Ambassador, he has shared his expertise on SEO, AI-driven marketing, and branding at Google Academies and industry-leading conferences. \n At BLVCKPIXEL, Vincent will spearhead our educational and training programs for leading corporations. His deep understanding of branding and emerging technologies like AI fuels our mission of Cognitive Transformation, turning innovative strategies into actionable business operations that foster growth. By bridging digital strategy with brand development, Vincent helps businesses not only to thrive but also adapt and excel in the rapidly evolving digital landscape.'},
-  {src: '/Aline Reiniche (1).png', name: 'Aline Reiniche', details: 'Business oriented, I have proven experience in establishing lasting and profitable relationships with international top clients & partners on behalf of advertising houses (Lagardère Advertising),  media agencies (Starcom from Publicis Group) and SaaS Adtechs (Adjust from Applovin Group) ever since +20 years.'},
+  {src: '/AlineReiniche6.png', name: 'Chafik Zerrouki', details: 'Chafik Zerrouki is a futurist and visionary architect known for seamlessly integrating generative AI, biomimicry, and urban innovation into immersive, intelligent design. With experience at Zaha Hadid Architects and award-winning projects across multiple continents, Chafik redefines architecture\'s future in physical spaces and the Metaverse. \n\n At BLVCKPIXEL, his approach to cognitive transformation merges advanced technologies with human creativity, pushing the boundaries of urban planning and design. His work shapes environments that adapt, evolve, and interact, creating spaces that are not only functional but intuitively responsive to human behavior and the complexities of modern cities.'},
+  {src: '/AlineReiniche8.png', name: 'Lans King', details: 'Lans is a visionary in cognitive transformation with 25 years of experience in digital innovation. He has collaborated with major brands like LVMH and Goldman Sachs focusing on strategy and implementation. \n\n At BLVCKPIXEL, he combines creativity and technology to redefine digital experiences and drive business evolution. Additionally, Lans is an interdisciplinary artist who integrates traditional art with digital media. Lans challenges everyone at BP to see things from radically new. For him, cognitive transformation innovates our mindset as much as technology in order to thrive in this new world.'},
+  {src: '/AlineReiniche7.png', name: 'Edouard De Miollis', details: 'Édouard de Miollis, a true pioneer in the digital space with over two decades of trailblazing innovation! From founding early internet companies in Europe to serving as a State Counselor for Technologies at the French Presidency, Édouard has been at the forefront of transformative efforts across industries, and society. \n\n At BLVCKPIXEL, Édouard drives key initiatives in AI, GreenTech, and Cognitive Transformation, advising governments, global organizations, and investment funds on how to harness technology for impactful, future-oriented solutions. His expertise perfectly aligns with our mission to shape the Cognitive Organisations, Enterprises, and Cities of tomorrow, where technology, sustainability, and human ingenuity converge as driving forces to create more adaptive, resilient,  and smarter ecosystems.'},
+  {src: '/AlineReiniche9.png', name: 'Vincent Binet', details: 'Vincent is a senior expert in digital marketing with nearly three decades of experience, specialising in brand visibility & awareness since 1997. Vincent has worked with top agencies and prestigious global brands, mastering the art of e-marketing, branding, and digital strategy. As a former Google Ambassador, he has shared his expertise on SEO, AI-driven marketing, and branding at Google Academies and industry-leading conferences. \n\n At BLVCKPIXEL, Vincent will spearhead our educational and training programs for leading corporations. His deep understanding of branding and emerging technologies like AI fuels our mission of Cognitive Transformation, turning innovative strategies into actionable business operations that foster growth. By bridging digital strategy with brand development, Vincent helps businesses not only to thrive but also adapt and excel in the rapidly evolving digital landscape.'},
+  {src: '/AlineReiniche1.png', name: 'Aline Reiniche', details: 'Business oriented, I have proven experience in establishing lasting and profitable relationships with international top clients & partners on behalf of advertising houses (Lagardère Advertising),  media agencies (Starcom from Publicis Group) and SaaS Adtechs (Adjust from Applovin Group) ever since +20 years.'},
 ]
 
 
@@ -1308,78 +1308,7 @@ const handleOpenPartner = (det: any) => {
               <button className="navigationArrow left" onClick={handlePrevPart}>
                 <SlArrowLeft />
               </button>
-
-              {/* <Swiper
-                onInit={(swiper) => (swiperRefPartner.current = swiper)}
-                slidesPerView={5}
-                navigation={false}
-                autoplay={false}
-                speed={500}
-                loop={true}
-                className="mySwiper1"
-                spaceBetween={0}
-                style={{ width: '100%' }}
-                modules={[
-                  Pagination,
-                  EffectFade,
-                  Mousewheel,
-                  Keyboard,
-                ]}
-                keyboard={true}
-                breakpoints={{
-                  320: {
-                    slidesPerView: 2,
-                    spaceBetween: 10,
-                  },
-                  768: {
-                    slidesPerView: 3,
-                    spaceBetween: 15,
-                  },
-                  992: {
-                    slidesPerView: 3,
-                    spaceBetween: 20,
-                  },
-                  1200: {
-                    slidesPerView: 3,
-                    spaceBetween: 25,
-                  },
-                }}
-              >
-                <SwiperSlide onClick={() => console.log("Happily Cliecked")} className="slide partner-img">
-                  <img src="/banner1.jpg"  width={100} />
-                </SwiperSlide>
-                <SwiperSlide onClick={() => console.log("Happily Cliecked")} className="slide partner-img">
-                  <img src="/banner.jpg"  width={100} />
-                </SwiperSlide>
-                <SwiperSlide onClick={() => console.log("Happily Cliecked")} className="slide partner-img">
-                  <img src="/banner1.jpg"  width={100} />
-                </SwiperSlide>
-                <SwiperSlide onClick={() => console.log("Happily Cliecked")} className="slide partner-img">
-                  <img src="/img3.png"  width={100} />
-                </SwiperSlide>
-                <SwiperSlide onClick={() => console.log("Happily Cliecked")} className="slide partner-img">
-                  <img src="/banner1.jpg"  width={100} />
-                </SwiperSlide>
-                <SwiperSlide onClick={() => console.log("Happily Cliecked")} className="slide partner-img">
-                  <img src="/banner1.jpg"  width={100} />
-                </SwiperSlide>
-                <SwiperSlide onClick={() => console.log("Happily Cliecked")} className="slide partner-img">
-                  <img src="/banner1.jpg"  width={100} />
-                </SwiperSlide>
-                <SwiperSlide onClick={() => console.log("Happily Cliecked")} className="slide partner-img">
-                  <img src="/banner1.jpg"  width={100} />
-                </SwiperSlide>
-                <SwiperSlide onClick={() => console.log("Happily Cliecked")} className="slide partner-img">
-                  <img src="/banner1.jpg"  width={100} />
-                </SwiperSlide>
-                <SwiperSlide onClick={() => console.log("Happily Cliecked")} className="slide partner-img">
-                  <img src="/banner1.jpg"  width={100} />
-                </SwiperSlide>
-                <SwiperSlide onClick={() => console.log("Happily Cliecked")} className="slide partner-img">
-                  <img src="partners/Tenbeo_small.png"  width={100} />
-                </SwiperSlide>
-              </Swiper> */}
-
+              
               <Swiper
                 onInit={(swiper) => (swiperRefPartner.current = swiper)}
                 slidesPerView={5}

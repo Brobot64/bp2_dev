@@ -75,6 +75,7 @@
 
   .popup .texties span{
     display: flex;
+    gap: 15px;
     margin-bottom: 30px;
   }
 
@@ -130,6 +131,7 @@
   .popup p.demi {
     flex: 1;
     overflow-y: auto;
+    white-space: break-spaces;
   }
 
   @media (max-width: 768px) {
@@ -137,10 +139,17 @@
       padding: 15px;
     }
     .popup .texties span{
+      display: flex;
+      gap: 0;
+      flex-direction: column;
+      text-align: left !important;
       margin-bottom: 10px;
     }
     .popup .texties span h2 {
       font-size: 24px !important;
+      text-align: left;
+      word-wrap: normal;
+      word-break: normal;
       line-height: 28px;
     }
   

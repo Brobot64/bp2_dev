@@ -81,6 +81,7 @@ function JournalSharedPage({ slug }: { slug?: string }) {
   const swiperRef = useRef<SwiperCore | null>(null);
   const swiperRefForeword = useRef<SwiperCore | null>(null);
   const swiperRefConclude = useRef<SwiperCore | null>(null);
+  const swiperRefContent = useRef<SwiperCore | null>(null);
   const [bannerBg, setBannerBg] = React.useState('defalut.jpg');
   const [currentIndex, setCurrentIndex] = React.useState(0);
   const [signInPopupVisible, setSignInPopupVisible] = React.useState(false);
@@ -118,6 +119,30 @@ const handleTPrev = () => {
     scrollToActive(newIndex);
     return newIndex;
   });
+};
+
+
+
+const handlePrevPart = () => {
+  if (swiperRefContent.current) {
+    swiperRefContent.current.slidePrev();
+    // setActiveIndex((prevIndex) => {
+    //   const newIndex = prevIndex === 0 ? contentcards.length - 1 : prevIndex - 1;
+    //   scrollToActive(newIndex);
+    //   return newIndex;
+    // });
+  }
+};
+
+const handleNextPart = () => {
+  if (swiperRefContent.current) {
+    swiperRefContent.current.slideNext();
+    // setActiveIndex((prevIndex) => {
+    //   const newIndex = prevIndex === contentcards.length - 1 ? 0 : prevIndex + 1;
+    //   scrollToActive(newIndex);
+    //   return newIndex;
+    // });
+  }
 };
 
 
@@ -704,6 +729,85 @@ const goToSpecificSlide = (slideIndex: number) => {
                   <SlArrowRight/>
                 </button>
             </div>
+
+            {/* <div
+              className="swiper-container partner"
+              style={{ animationDelay: '0.3s' }}
+            >
+              <button className="navigationArrow left !text-white hover:text-[#DD47F7] transition" onClick={handlePrevPart}>
+                <SlArrowLeft />
+              </button>
+
+              <Swiper
+                onInit={(swiper) => (swiperRefContent.current = swiper)}
+                slidesPerView={5}
+                navigation={false}
+                autoplay={false}
+                speed={500}
+                loop={true}
+                className="mySwiper1"
+                spaceBetween={0}
+                style={{ width: '100%' }}
+                modules={[Pagination, EffectFade, Mousewheel, Keyboard]}
+                keyboard={true}
+                breakpoints={{
+                  320: {
+                    slidesPerView: 2,
+                    spaceBetween: 10,
+                  },
+                  768: {
+                    slidesPerView: 3,
+                    spaceBetween: 15,
+                  },
+                  992: {
+                    slidesPerView: 3,
+                    spaceBetween: 20,
+                  },
+                  1200: {
+                    slidesPerView: 3,
+                    spaceBetween: 25,
+                  },
+                }}
+              >
+                {contentcards.length > 0 && contentcards.map((item, index) => (
+                  <SwiperSlide
+                    key={index + item.blvckbox_id}
+                    onClick={() => {
+                      handleJournalClick(`/journal/${slug}/${item.slug}`);
+                      localStorage.setItem('borderColor', getColor(borderColors, index));
+                    }}
+                    className="cursor-pointer"
+                    // @ts-ignore
+                    ref={(el) => (divRef.current[index] = el)}
+                  >
+                    <div
+                      className={`${uiStyle.vinyl} border-[3px] md:border-[8px] text-center flex items-center justify-center h-[100px] md:h-[200px] w-[100px] md:w-[300px] relative overflow-hidden transition`}
+                      style={{
+                        borderColor:
+                        (hoveredCardIndex === index || activeIndex === index)
+                          ? getColor(borderColors, index) : 'white',
+                        backgroundImage:
+                        (hoveredCardIndex === index || activeIndex === index)
+                              ? item.background ? `url(${process.env.NEXT_PUBLIC_BASE_URL}/${item.background})` : `url(/pixel2.png)`
+                              : 'none',
+                      backgroundPosition: 'center', backgroundSize: 'cover', backgroundRepeat: 'no-repeat', transition: 'background-size 0.5s ease, background-image 0.5s ease',
+                      }}
+                      onMouseEnter={() => setHoveredCardIndex(index)}
+                      onMouseLeave={() => setHoveredCardIndex(null)}
+                    >
+                      <span className='absolute w-full h-full bg-[#1c1c1c3c]'/>
+                      <p className="text-[23px] max-w-[200px] md:text-[15px] font-bold" style={{ fontSize: '25px', fontWeight: 'lighter' }}>
+                        {item.title}
+                      </p>
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+
+              <button className="navigationArrow right hover:text-[#DD47F7] transition !text-white" onClick={handleNextPart}>
+                <SlArrowRight />
+              </button>
+            </div> */}
           </div>
         </SwiperSlide>
 
@@ -798,7 +902,10 @@ const goToSpecificSlide = (slideIndex: number) => {
           {activeButton === tuneNum + 2 ? `[ afterword ]` : 'afterword'}
         </button>
 
-        <button onClick={() => router.push('/')} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === tuneNum + 2 ? 'active' : ''}`}>
+        <button onClick={() => {
+          sessionStorage.setItem('savedNumber', '1');
+          router.push('/');
+        }} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === tuneNum + 2 ? 'active' : ''}`}>
           {activeButton === 190 ? `[ exit ]` : 'exit'}
         </button>
       </div>
