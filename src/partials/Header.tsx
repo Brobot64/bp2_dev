@@ -56,7 +56,7 @@ const Header: React.FC<HeaderProps> = ({
         const payment = loggedUser?.payments[0];
         console.log(loggedUser);
 
-        // if (payment.status === 'pending') {
+        // if (payment && payment.status === 'pending') {
         //   // redirect to payment page
         //   router.push(`/payment/${loggedUser.uuid}`);
         // } else if (payment.status === 'completed') {
