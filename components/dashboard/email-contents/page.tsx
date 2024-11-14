@@ -4,6 +4,7 @@ import EmailComposer from './EmailComposer';
 import axios from 'axios';
 import { useAuth } from '@/src/context/AuthProvider';
 import QuillEditor from './QuillEditor';
+import { SlArrowLeft } from 'react-icons/sl';
 
 
 type User = {
@@ -21,11 +22,18 @@ type User = {
 };
 
 
-const Emails: React.FC = () => {
+interface EmailFormerProps {
+  sbj?: string;
+  bdy?: string;
+  action?: any
+}
+
+
+const Emails: React.FC<EmailFormerProps> = ({ sbj = '', bdy = '', action }) => {
   const [to, setTo] = useState('');
-  const [subject, setSubject] = useState('');
+  const [subject, setSubject] = useState(sbj);
   const [body, setBody] = useState('');
-  const [message, setMessage] = useState<string>('');
+  const [message, setMessage] = useState<string>(bdy);
   const handleBodyChange = (content: string) => {
     setMessage(content); 
   };
@@ -163,8 +171,11 @@ const closeErrorMessage = () => {
   return (
     <div className='flex flex-col w-full h-5/6 bg-white rounded-[12px] overflow-hidden'>
       <div className='bg-black text-white p-3 pl-4'>
-        Compose Email
+        <button title='Go Back' onClick={action}><SlArrowLeft/></button> &nbsp; &nbsp; Compose Email
       </div>
+      {/* <div className='bg-black text-white p-3 pl-4'>
+        Compose Email
+      </div> */}
       <form onSubmit={handleSubmit} className='relative flex-1 flex flex-col gap-2 w-full py-2 px-4'>
         <input
           type="text"
