@@ -4,6 +4,7 @@ import EmailComposer from './EmailComposer';
 import axios from 'axios';
 import { useAuth } from '@/src/context/AuthProvider';
 import QuillEditor from './QuillEditor';
+import { SlArrowLeft } from 'react-icons/sl';
 
 
 type User = {
@@ -20,12 +21,20 @@ type User = {
   lastLogin: string;
 };
 
+interface EmailFormerProps {
+  id?: any;
+  sbj: string;
+  bdy: string;
+  action?: any;
+  newEdit?: boolean;
+}
 
-const EmailFormer: React.FC = () => {
+
+const EmailFormer: React.FC<EmailFormerProps> = ({id, sbj, bdy, action, newEdit = false }) => {
   const [to, setTo] = useState('');
-  const [subject, setSubject] = useState('');
+  const [subject, setSubject] = useState(sbj);
   const [body, setBody] = useState('');
-  const [message, setMessage] = useState<string>('');
+  const [message, setMessage] = useState<string>(bdy);
   const handleBodyChange = (content: string) => {
     setMessage(content); 
   };
@@ -60,19 +69,25 @@ const closeErrorMessage = () => {
     });
 
     try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/send-custom-email`, 
+      const response = await axios.put(`/api/emails/${id}`, 
         {
-          emailArray: filteredEmails,
-          subject,
-          body: message
+          title: subject,
+          content: message
         }
       );
 
+      // const response = await axios.put(`/api/emails/${id}`, 
+      //   {
+      //     title: subject,
+      //     content: message
+      //   }
+      // );
+
       const dial = response.status;
       if(dial === 200 || dial === 200) {
-        setSuccessMessage("Email sent successfully");
+        setSuccessMessage("Email Draft Updated successfully");
       } else {
-        setError("Error sending Emails");
+        setError("Error Saving Draft");
       }
     } catch (error: any) {
       setError(error?.message);
@@ -163,18 +178,18 @@ const closeErrorMessage = () => {
   return (
     <div className='flex flex-col w-full h-5/6 bg-white rounded-[12px] overflow-hidden'>
       <div className='bg-black text-white p-3 pl-4'>
-        Compose Email
+        <button title='Go Back' onClick={action}><SlArrowLeft/></button> &nbsp; &nbsp; Edit Email
       </div>
       <form onSubmit={handleSubmit} className='relative flex-1 flex flex-col gap-2 w-full py-2 px-4'>
-        <input
+        {/* <input
           type="text"
           className='p-1 outline-none border-b-2'
           placeholder='To'
           onMouseEnter={() => setIsEmailSelect(true)}
           value={filteredEmails.join(", ")}
           onChange={(e) => setTo(e.target.value)}
-        />
-        {isEmailSelect && <div className='email-select absolute z-10 bg-slate-200 w-full mt-9 rounded-lg max-h-[400px] left-0' ref={emailRef}>
+        /> */}
+        {/* {isEmailSelect && <div className='email-select absolute z-10 bg-slate-200 w-full mt-9 rounded-lg max-h-[400px] left-0' ref={emailRef}>
           <ul className=''>
             {
               users.map((user) => (
@@ -189,7 +204,7 @@ const closeErrorMessage = () => {
             }
              
           </ul>
-        </div>}
+        </div>} */}
         <input
           type="text"
           className='p-1 outline-none border-b-2'
@@ -212,8 +227,8 @@ const closeErrorMessage = () => {
 
         <input
           type="submit"
-          value="Send"
-          className='w-fit py-2 px-7 cursor-pointer capitalize bg-blue-600 hover:bg-blue-400 text-white font-[600] rounded-full text-[17px]'
+          value="Save"
+          className='w-fit py-2 px-7 cursor-pointer capitalize bg-green-600 hover:bg-green-400 text-white font-[600] rounded-full text-[17px]'
         />
       </form>
 

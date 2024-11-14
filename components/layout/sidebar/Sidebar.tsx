@@ -220,7 +220,7 @@ const Sidebar: React.FC = () => {
                     pathname === '/dashboard/email' ? style.active : ''
                   } w-full`}
                 >
-                  Emails
+                  Manage Emails
                 </a>
               </Link>
 
