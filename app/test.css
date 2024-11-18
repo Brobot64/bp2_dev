@@ -948,7 +948,7 @@ a:hover {
 }
 
 .nweton {
-  max-height: 280px;
+  max-height: 200px;
   overflow-y: auto;
   list-style: circle !important;
 }
@@ -1002,6 +1002,9 @@ a:hover {
   .cursor-pointer {
     width: 75%;
     margin: 0 auto;
+  }
+  .nweton {
+    max-height: 180px;
   }
 
 }
