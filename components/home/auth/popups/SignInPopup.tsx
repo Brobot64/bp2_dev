@@ -64,6 +64,7 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
   const [confirmPassword, setConfirmPassword] = useState('');
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [selectedPackage, setSelectedPackage] = useState<number | null>(null);
+  const [selectedPackagePrice, setSelectedPackagePrice] = useState<number | null>(null);
   const [selectedPackageName, setSelectedPackageName] = useState<string | null>(
     null
   );
@@ -286,6 +287,10 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
       );
 
       console.log('SignUp successful', response.data);
+      const resp = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/user/${response.data.user.id}/payments`, {
+        amount: selectedPackagePrice,
+        package_id: selectedPackage
+      })
       setLoading(false);
       setSuccess(true);
       setButtonText('✔');
@@ -373,9 +378,10 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
   const toggleConfirmPasswordVisibility = () =>
     setConfirmPasswordVisible(!confirmPasswordVisible);
 
-  const handlePackageSelect = (pkgID: number, pkgName: string) => {
+  const handlePackageSelect = (pkgID: number, pkgName: string, price?: any) => {
     setSelectedPackage(pkgID);
     setSelectedPackageName(pkgName);
+    setSelectedPackagePrice(price)
   };
 
   const handlePackageUpdate = async (pkgID: number, pkgName: string) => {
@@ -751,7 +757,7 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                       <div
                         key={pkg.id}
                         className={style.package}
-                        onClick={() => handlePackageSelect(pkg.id, pkg.name)}
+                        onClick={() => handlePackageSelect(pkg.id, pkg.name, pkg.price)}
                       >
                         <span>{pkg.name}</span>
                         <span>

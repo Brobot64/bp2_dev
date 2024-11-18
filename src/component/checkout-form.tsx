@@ -56,6 +56,7 @@ export default function CheckoutForm() {
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>
+      <button className='absolute top-4 right-4'>X</button>
       {message === 'Payment succeeded!' ? (
         <>
           <div className="text-center mb-4">
