@@ -1,7 +1,7 @@
 /* body {
   overflow-y: hidden;
 } */
-
+ 
 
 
 a:hover {
@@ -821,6 +821,127 @@ a:hover {
 .swiper-container.journal {
   padding: 0 30px !important;
 }
+
+.renewedPackages {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  color: #fff !important;
+  max-height: 500px;
+  max-width: 100%;
+  /* overflow-y: auto; */
+}
+
+.renewedPackages .packs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #fff;
+  padding: 20px;
+  padding-bottom: 55px;
+  min-width: 270px;
+  border-radius: 30px;
+  position: relative;
+  height: 100%;
+}
+
+.renewedPackages .packs p {
+  margin: 0;
+}
+
+.renewedPackages .packs .pkgname {
+  font-size: 24px;
+  letter-spacing: .5px;
+  line-height: 30px;
+  text-transform: lowercase;
+  margin-bottom: 20px;
+}
+
+.renewedPackages .packs .pkgprice {
+  font-size: 36px;
+  letter-spacing: .5px;
+  font-weight: 600;
+  line-height: 40px;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.renewedPackages .packs .pkgprice sub {
+  font-size: 20px;
+  font-family: 'HelveticaNeueCyr-Light' !important;
+  font-weight: 300;
+}
+
+.renewedPackages .packs .features {
+  margin-top: 20px;
+}
+
+.renewedPackages .packs .features ul {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.renewedPackages .packs .features li {
+  font-size: 16px;
+  font-family: 'HelveticaNeueCyr-Light' !important;
+  font-weight: 200;
+  text-align: center;
+}
+
+.renewedPackages .packs .select {
+  margin-top: 20px;
+  font-size: 20px !important;
+  letter-spacing: .5px;
+  line-height: 25px;
+  font-family: 'HelveticaNeueCyr-Roman' !important;
+  font-weight: 200 !important;
+  position: absolute;
+  bottom: 10px;
+  transform: translateX(50%);
+  right: 50%;
+  transition: color .3s ease-in-out;
+}
+
+.renewedPackages .packs .select:hover {
+  color: #DD47F7;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @media (max-width: 768px) {
   .swiper-container.journal {

@@ -2,11 +2,14 @@
 import React, { useState, FormEvent, ChangeEvent, useEffect } from 'react';
 import style from './SignInPopup.module.css';
 import axios, { AxiosError } from 'axios';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaEuroSign, FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useAuth } from '../../context/AuthProvider';
 import { useRouter } from 'next/navigation';
 import { RiCloseCircleLine } from 'react-icons/ri';
 import { AiOutlineClose } from 'react-icons/ai';
+import StripeCheckoutWithSummary from '@/src/component/StripeCheckoutWithSummary';
+import SharePaymentPaged from '@shared/payment';
+import SubcriptionChangeJourney from '@/src/component/SubcriptionChangeJourney';
 
 interface SignInPopupProps {
   onClose: () => void;
@@ -54,13 +57,16 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
   const [buttonText, setButtonText] = useState<JSX.Element | string>(
-    '[ enter ]'
+    '[ continue ]'
   );
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const [confirmPassword, setConfirmPassword] = useState('');
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [selectedPackage, setSelectedPackage] = useState<number | null>(null);
   const [selectedPackageName, setSelectedPackageName] = useState<string | null>(
+    null
+  );
+  const [selectedPackagePrice, setSelectedPackagePrice] = useState<number | null>(
     null
   );
   const [name, setName] = useState<string>('');
@@ -76,6 +82,7 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
   const [demFeatures, setDemFeatures] = useState<Feature[]>([]);
   const [authUser, setAuthUser] = useState<boolean>(false);
   const [packages, setPackages] = useState<any[]>([]);
+  const [authResp, setAuthResp] = useState<any>(null);
   const [showPackageSelection, setShowPackageSelection] =
     useState<boolean>(false);
 
@@ -85,6 +92,8 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
   const [selectedPayment, setSelectedPayment] = useState('Bitcoin');
 
   const paymentTypes = ['Cypto', 'Card', 'PayPal', 'Bank Transfer'];
+
+  const [termsAccepted, setTermsAccepted] = useState(false);
 
   const handlePaymentChange = async (payment: string) => {
     setSelectedPayment(payment);
@@ -147,20 +156,20 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
     }
   }, [authUser, router]);
 
-  useEffect(() => {
-    if (registrationSuccess) {
-      const timer = setInterval(() => {
-        setCounter((prevCounter) => {
-          if (prevCounter === 1) {
-            clearInterval(timer);
-            window.location.href = '/';
-          }
-          return prevCounter - 1;
-        });
-      }, 1000);
-      return () => clearInterval(timer);
-    }
-  }, [registrationSuccess]);
+  // useEffect(() => {
+  //   if (registrationSuccess) {
+  //     const timer = setInterval(() => {
+  //       setCounter((prevCounter) => {
+  //         if (prevCounter === 1) {
+  //           clearInterval(timer);
+  //           window.location.href = '/';
+  //         }
+  //         return prevCounter - 1;
+  //       });
+  //     }, 1000);
+  //     return () => clearInterval(timer);
+  //   }
+  // }, [registrationSuccess]);
 
   useEffect(() => {
     if (onEditProfile) {
@@ -295,6 +304,7 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
       );
 
       console.log('SignUp successful', response.data);
+      setAuthResp(response.data);
       setLoading(false);
       setSuccess(true);
       setButtonText('✔');
@@ -382,9 +392,10 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
   const toggleConfirmPasswordVisibility = () =>
     setConfirmPasswordVisible(!confirmPasswordVisible);
 
-  const handlePackageSelect = (pkgID: number, pkgName: string) => {
+  const handlePackageSelect = (pkgID: number, pkgName: string, pkgprice: number) => {
     setSelectedPackage(pkgID);
     setSelectedPackageName(pkgName);
+    setSelectedPackagePrice(pkgprice);
   };
 
   const handlePackageUpdate = async (pkgID: number, pkgName: string) => {
@@ -547,64 +558,66 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                 </div>
               )}
               {activeProfileTab === 'subscription' && (
-                <div className={style.searchInput}>
-                  <form onSubmit={handleUpdateProfile}>
-                    <h2>Hello, [{name}]</h2>
-                    <div className={`${style.subscription} ${style.frmGrp}`}>
-                      <div className={` ${style.muted} `}>
-                        Your Current plan is:{' '}
-                      </div>
-                      <div className={` ${style.cPlan} `}>
-                        {hasPackage || 'No Package Selected'}
-                      </div>
-                      <div className={` ${style.action} `}>
-                        {hasPackage ? (
-                          <button onClick={handleChangeClick}>[Change]</button>
-                        ) : (
-                          <button onClick={handleChangeClick}>[Select]</button>
-                        )}
-                      </div>
-                    </div>
-                    <div className={`${style.subscription} ${style.frmGrp}`}>
-                      <div className={` ${style.muted}`}>
-                        Method of payment:{' '}
-                      </div>
-                      <div className={` ${style.cPlan}`}>
-                        {selectedPayment}
-                      </div>
-                      <div className={` ${style.action} cursor-pointer`} onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-                        [Change]
-                      </div>
-                      {isDropdownOpen && (
-                        <div className={style.dropdown}>
-                          {paymentTypes.map((payment, index) => (
-                            <div key={index} className={style.dropdownItem} onClick={() => handlePaymentChange(payment)}>
-                              {payment}
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
+                // <div className={style.searchInput}>
+                //   <form onSubmit={handleUpdateProfile}>
+                //     <h2>Hello, [{name}]</h2>
+                //     <div className={`${style.subscription} ${style.frmGrp}`}>
+                //       <div className={` ${style.muted} `}>
+                //         Your Current plan is:{' '}
+                //       </div>
+                //       <div className={` ${style.cPlan} `}>
+                //         {hasPackage || 'No Package Selected'}
+                //       </div>
+                //       <div className={` ${style.action} `}>
+                //         {hasPackage ? (
+                //           <button onClick={handleChangeClick}>[Change]</button>
+                //         ) : (
+                //           <button onClick={handleChangeClick}>[Select]</button>
+                //         )}
+                //       </div>
+                //     </div>
+                //     <div className={`${style.subscription} ${style.frmGrp}`}>
+                //       <div className={` ${style.muted}`}>
+                //         Method of payment:{' '}
+                //       </div>
+                //       <div className={` ${style.cPlan}`}>
+                //         {selectedPayment}
+                //       </div>
+                //       <div className={` ${style.action} cursor-pointer`} onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+                //         [Change]
+                //       </div>
+                //       {isDropdownOpen && (
+                //         <div className={style.dropdown}>
+                //           {paymentTypes.map((payment, index) => (
+                //             <div key={index} className={style.dropdownItem} onClick={() => handlePaymentChange(payment)}>
+                //               {payment}
+                //             </div>
+                //           ))}
+                //         </div>
+                //       )}
+                //     </div>
 
-                    <div
-                      className={`${style.subscription} ${style.buttonWrapper}`}
-                    >
-                      <button
-                        type="button"
-                        className={style.submit}
-                        onClick={handleUpdateProfile}
-                      >
-                        [save]
-                      </button>
-                    </div>
-                  </form>
-                </div>
+                //     <div
+                //       className={`${style.subscription} ${style.buttonWrapper}`}
+                //     >
+                //       <button
+                //         type="button"
+                //         className={style.submit}
+                //         onClick={handleUpdateProfile}
+                //       >
+                //         [save]
+                //       </button>
+                //     </div>
+                //   </form>
+                // </div>
+                <SubcriptionChangeJourney />
               )}
 
               {activeProfileTab === 'subscribe' && !selectedPackage && (
                 <>
-                  <p>Select a package to subscribe</p>
-                  <div className={style.packages}>
+                  <p>the right plan for you</p>
+                  {/* <div className={style.packages}>  */}
+                  <div className="renewedPackages"> 
                     {packages.map((pkg) => (
                       <div
                         key={pkg.id}
@@ -758,12 +771,39 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
 
               {activeTab === 'subscribe' && !selectedPackage && (
                 <>
-                  <p>Select a package to subscribe</p>
-                  <div className={style.packages}>
+                  <p>the right plan for you</p>
+                  <div className="renewedPackages"> 
                     {packages.map((pkg) => (
                       <div
                         key={pkg.id}
-                        className={style.package}
+                        className='packs relative pb-[40px]'
+                      >
+                        <p className='pkgname'>{pkg.name}</p>
+                        <p className='pkgprice'>
+                          {pkg.price}
+                          <sub>€ per year</sub>
+                        </p>
+                        <div className='features'>
+                          <ul className=''>
+                            {pkg.features.map((featureId: any, index: number) => (
+                              <li key={index}>{getFeatureNameById(featureId) || 'Unknown Feature'}</li>
+                              
+                            ))}
+                            {/* <li>Lorem, ipsum dolor sit amet consectetur adipisicing elit. At eos sint reiciendis. Veritatis cum rerum sint. Quibusdam voluptates itaque ad. Eligendi, accusantium optio corrupti harum libero obcaecati ab tempora officiis.</li>
+                            <li>Lorem, ipsum dolor sit amet consectetur adipisicing elit. At eos sint reiciendis. Veritatis cum rerum sint. Quibusdam voluptates itaque ad. Eligendi, accusantium optio corrupti harum libero obcaecati ab tempora officiis.</li> */}
+                          </ul>
+                        </div>
+                        <button 
+                        onClick={() => handlePackageSelect(pkg.id, pkg.name, pkg.price)} className='select'> [ &nbsp;select&nbsp; ] </button>
+                      </div>
+                    ))}
+                  </div>
+                  {/* <div className={style.packages}>  */}
+                  {/* <div className="renewedPackages"> 
+                    {packages.map((pkg) => (
+                      <div
+                        key={pkg.id}
+                        className='{style.package}'
                         onClick={() => handlePackageSelect(pkg.id, pkg.name)}
                       >
                         <span>{pkg.name}</span>
@@ -780,14 +820,14 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                         </span>
                       </div>
                     ))}
-                  </div>
+                  </div> */}
                 </>
               )}
 
               {activeTab === 'subscribe' && selectedPackage && (
                 <>
                   <p>
-                    You have selected the {selectedPackageName} plan. Enter your
+                    You have selected the {selectedPackageName} plan. <br /> Enter your
                     personal information to create your account.
                   </p>
                   <div className={style.searchInput}>
@@ -879,8 +919,20 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                           )}
                         </div>
                       </div>
+                      <div className='flex w-full items-center justify-center gap-2 mt-[20px] mb-[10px]'>
+                        <span 
+                          className='text-white cursor-pointer' 
+                          onClick={() => setTermsAccepted(!termsAccepted)}
+                          style={{ color: termsAccepted ? '#dd47f7' : 'white' }}
+                        >
+                          [{termsAccepted ? '✔' : '\u00A0\u00A0' }]
+                        </span>
+                        <p className='text-[12px] m-0' style={{ margin: 0 }}>
+                          i agree to the <a href="#">terms and conditions</a> and <a href="#">privacy policy.</a>
+                        </p>
+                      </div>
                       <div className={style.frmGrp}>
-                        <button type="submit" className={style.submit}>
+                        <button type="submit" disabled={!termsAccepted} className={style.submit}>
                           {buttonText}
                         </button>
                       </div>
@@ -889,13 +941,13 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                   <p>or sign in with</p>
                   <ul className={style.socialLogin}>
                     <li>
-                      <a href="#">Google</a>
+                      <a href="#">[ google ]</a>
                     </li>
                     <li>
-                      <a href="#">Apple</a>
+                      <a href="#">[ apple ]</a>
                     </li>
                     <li>
-                      <a href="#">Discord</a>
+                      <a href="#">[ discord ]</a>
                     </li>
                   </ul>
                 </>
@@ -904,11 +956,16 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
           )}
 
           {registrationSuccess && (
-            <p className={`${style.thankYou} ${style.fadeIn}`}>
-              Thank you for registering! Check your email to activate your
-              account. You will be redirected to the homepage in {counter}{' '}
-              seconds.
-            </p>
+            // <p className={`${style.thankYou} ${style.fadeIn}`}>
+            //   Thank you for registering! Check your email to activate your
+            //   account. You will be redirected to the homepage in {counter}{' '}
+            //   seconds.
+            // </p>
+            <StripeCheckoutWithSummary 
+              packageName={selectedPackageName || ''}
+              amount={selectedPackagePrice || 0}
+              userId={authResp?.user?.uuid}
+            />
           )}
           {showCloseButton && (
             <button onClick={onClose} className={style.close} >
