@@ -1,0 +1,164 @@
+* {
+    /* color: white; */
+    font-family: HelveticaNeueCyr-Light!important;
+}
+
+div.plansummary {
+    color: white;
+}
+
+.plansum {
+}
+
+.plansum .main {
+    padding: 30px;
+    width: fit-content !important;
+    height: fit-content !important;
+    border-radius: 30px;
+    border: 1px solid #DD47F7;
+    text-align: center !important;
+}
+
+.plansum svg {
+    width: 100px;
+}
+
+.plansum .main h4 {
+    font-size: 30px;
+    text-transform: lowercase;
+    font-weight: 550;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+.plansum .main span.prices sub {
+    font-size: 25px;
+    font-weight: 400;
+}
+.plansum .available div, .plansum .decline div {
+    display: flex;
+    text-decoration-thickness: 200;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    gap: 20px;
+}
+
+.plansum .available div p, .plansum .decline div p{
+    margin: 0;
+}
+
+.plansum .available div span, .plansum .decline div span {
+    color: #DD47F7 !important;
+}
+
+.planconfirm .gai {
+    margin-bottom: 30px;
+}
+
+.planconfirm .gai p {
+    margin-bottom: 10px !important;
+    font-size: 24px;
+}
+
+.planconfirm .gai p span {
+    color: gray !important;
+    width: 100px;
+}
+
+.plannings {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 400;
+    align-items: center;
+}
+
+.plannings h4 {
+    font-size: 30px;
+    text-transform: lowercase;
+    font-weight: 550;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+}
+
+span.prices {
+    font-size: 45px;
+    font-weight: 650;
+    line-height: 50px;
+    margin: 20px 0 10px 0 !important;
+}
+
+span.prices sub {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.myplan, .actplan {
+    min-width: 250px;
+    max-width: 260px;
+    padding: 15px;
+    border: 1px solid white;
+    border-radius: 40px;
+    height: fit-content !important;
+}
+
+.myplan {
+    border-color: #DD47F7 !important;
+}
+
+.featurings {
+    text-align: center !important;
+}
+
+.plannings button, .otherplans button {
+    width: fit-content !important;
+    margin: 10px auto !important;
+}
+
+button:hover {
+    color: #DD47F7 !important;
+}
+
+button:disabled {
+    color: gray !important;
+}
+
+button:disabled:hover {
+    color: gray !important;
+}
+
+.actplan {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    /* align-items: center; */
+}
+
+.arrowdis span {
+    display: block !important;
+    height: 4px;
+    background-color: white;
+}
+
+.arrowdis .head {
+    position: absolute;
+    width: 10px !important;
+    top: calc(-20px + 16px);
+    right: 0;
+    /* top: 50%;
+    transform: translateY(-50%); */
+}
+
+.arrowdis .head.top {
+    rotate: 45deg;
+}
+
+.arrowdis .head.bottom {
+    rotate: -45deg;
+    /* top: -50%; */
+    bottom: calc(20px - 12px);
+    /* transform: translateY(50%); */
+}
+

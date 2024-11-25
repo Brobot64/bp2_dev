@@ -608,8 +608,9 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
 
               {activeProfileTab === 'subscribe' && !selectedPackage && (
                 <>
-                  <p>Select a package to subscribe</p>
-                  <div className={style.packages}>
+                  <p>the right plan for you</p>
+                  {/* <div className={style.packages}>  */}
+                  <div className="renewedPackages"> 
                     {packages.map((pkg) => (
                       <div
                         key={pkg.id}
@@ -751,12 +752,13 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
 
               {activeTab === 'subscribe' && !selectedPackage && (
                 <>
-                  <p>Select a package to subscribe</p>
-                  <div className={style.packages}>
+                  <p>the right plan for you</p>
+                  {/* <div className={style.packages}>  */}
+                  <div className="renewedPackages"> 
                     {packages.map((pkg) => (
                       <div
                         key={pkg.id}
-                        className={style.package}
+                        className='{style.package}'
                         onClick={() => handlePackageSelect(pkg.id, pkg.name, pkg.price)}
                       >
                         <span>{pkg.name}</span>
