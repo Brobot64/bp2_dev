@@ -279,7 +279,9 @@ export const ChangeInit = ({ activePlan, otherPlan, nextStep, prevStep } : { act
                     {
                         // @ts-ignore
                         otherPlan && otherPlan.map((data: any, index: number) => (
-                            <div className="actplan">
+                            <div 
+                            key={index} 
+                            className="actplan">
                                 {/* @ts-ignore */}
                                 <h4>{data?.name}</h4>
                                 <span className='prices mt-[20px] mb-[10px]'>
