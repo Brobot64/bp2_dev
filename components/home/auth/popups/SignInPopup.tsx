@@ -610,7 +610,7 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                 <>
                   <p>the right plan for you</p>
                   {/* <div className={style.packages}>  */}
-                  <div className="renewedPackages"> 
+                  <div className="renewedPackages scrolltab"> 
                     {packages.map((pkg) => (
                       <div
                         key={pkg.id}
@@ -627,6 +627,10 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                             {pkg.features.map((featureId: any, index: number) => (
                               <li key={index}>{getFeatureNameById(featureId) || 'Unknown Feature'}</li>
                             ))}
+                            <li>Lorem ipsum dolor sit, amet cont.</li>
+                            <li>Lorem ipsum dolor sit amet.</li>
+                            <li>Lorem ipsum dolor sit amet.</li>
+                            <li>Lorem ipsum dolor sit amet.</li>
                           </ul>
                             
                         </span>
@@ -754,7 +758,7 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                 <>
                   <p>the right plan for you</p>
                   {/* <div className={style.packages}>  */}
-                  <div className="renewedPackages"> 
+                  <div className="renewedPackages scrolltab"> 
                     {packages.map((pkg) => (
                       <div
                         key={pkg.id}
@@ -771,6 +775,10 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                             {pkg.features.map((featureId: any, index: number) => (
                               <li key={index}>{getFeatureNameById(featureId) || 'Unknown Feature'}</li>
                             ))}
+                            <li>Lorem ipsum dolor sit, amet cont.</li>
+                            <li>Lorem ipsum dolor sit amet.</li>
+                            <li>Lorem ipsum dolor sit amet.</li>
+                            <li>Lorem ipsum dolor sit amet.</li>
                           </ul>
                         </span>
                       </div>

@@ -622,7 +622,7 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                 <>
                   <p>the right plan for you</p>
                   {/* <div className={style.packages}>  */}
-                  <div className="renewedPackages"> 
+                  <div className="renewedPackages scrolltab"> 
                     {packages.map((pkg) => (
                       <div
                         key={pkg.id}
@@ -777,7 +777,7 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
               {activeTab === 'subscribe' && !selectedPackage && (
                 <>
                   <p>the right plan for you</p>
-                  <div className="renewedPackages"> 
+                  <div className="renewedPackages scrolltab"> 
                     {packages.map((pkg) => (
                       <div
                         key={pkg.id}
@@ -794,6 +794,11 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                               <li key={index}>{getFeatureNameById(featureId) || 'Unknown Feature'}</li>
                               
                             ))}
+                            
+                            <li>Lorem ipsum dolor sit, amet cont.</li>
+                            <li>Lorem ipsum dolor sit amet.</li>
+                            <li>Lorem ipsum dolor sit amet.</li>
+                            <li>Lorem ipsum dolor sit amet.</li>
                             {/* <li>Lorem, ipsum dolor sit amet consectetur adipisicing elit. At eos sint reiciendis. Veritatis cum rerum sint. Quibusdam voluptates itaque ad. Eligendi, accusantium optio corrupti harum libero obcaecati ab tempora officiis.</li>
                             <li>Lorem, ipsum dolor sit amet consectetur adipisicing elit. At eos sint reiciendis. Veritatis cum rerum sint. Quibusdam voluptates itaque ad. Eligendi, accusantium optio corrupti harum libero obcaecati ab tempora officiis.</li> */}
                           </ul>

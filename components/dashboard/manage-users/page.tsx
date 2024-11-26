@@ -129,6 +129,12 @@ const ManageUsers: React.FC = () => {
     }
   };
 
+  const singDelete = (userId: number) => {
+    console.log(userId);
+    setSelectedUsers([...selectedUsers, userId])
+    handleDelete()
+  }
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -278,7 +284,7 @@ const ManageUsers: React.FC = () => {
                         <div ref={menuRef} className={style.menu}>
                           {Number(loggedUser?.id) !== user.id &&
                             user.role_id !== 1 && ( // Hide Delete button if loggedUser?.id matches user.id
-                              <button onClick={() => handleDelete()}>
+                              <button onClick={() => singDelete(user.id)}>
                                 <FaTrash /> Delete
                               </button>
                             )}
