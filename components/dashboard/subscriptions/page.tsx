@@ -15,6 +15,7 @@ type Package = {
   id: number;
   name: string;
   price: number;
+  stripe_price_id?: string,
   features: string[]; // Array of feature IDs as strings
 };
 
@@ -29,7 +30,7 @@ const Subscriptions: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [packagesPerPage] = useState(10);
   const [openMenuId, setOpenMenuId] = useState<number | null>(null);
-  const [newPackage, setNewPackage] = useState<Package>({ id: 0, name: '', price: 0, features: [] });
+  const [newPackage, setNewPackage] = useState<Package>({ id: 0, name: '', price: 0, features: [], stripe_price_id: '' });
   const [isAddingPackage, setIsAddingPackage] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string>('');
   const [editPackage, setEditPackages] = useState<Package>();
@@ -71,6 +72,9 @@ const Subscriptions: React.FC = () => {
         pkg.id === updatedPackage.id ? updatedPackage : pkg
       )
     );
+
+    // const createdStripePlan = await axios.post()
+
       await axios.put(`${process.env.NEXT_PUBLIC_API_BASE_URL}/dashboard/packages/${id}`, updatedPackage, {
         headers: {
           Authorization: `${token}`,
@@ -196,9 +200,22 @@ const Subscriptions: React.FC = () => {
   const handlePackageSubmit = async () => {
     setError('');
     const token = localStorage.getItem('token');
+    const onBoardSub = await axios.post('/api/admin/subscription', {
+      name: newPackage.name,
+      description:  `This is for ${newPackage.name} premium`,
+      unit_amount: newPackage.price,
+      interval: 'month',
+      currency: 'eur'
+    });
+
+    console.log(onBoardSub.data);
+
+    const idPrice = onBoardSub.data.data.price.id;
+
     const data = {
       ...newPackage,
       features: newPackage.features.map((featureId) => featureId.toString()), 
+      stripe_price_id: idPrice,
     };
 
     try {

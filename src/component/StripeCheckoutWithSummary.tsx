@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Elements } from '@stripe/react-stripe-js';
 import { Appearance, loadStripe } from '@stripe/stripe-js';
 import axios from 'axios';
-import CheckoutForm from '@/src/component/checkout-form';
+import CheckoutFormy from './checkout-formy';
 
 interface StripeCheckoutWithSummaryProps {
   packageName: string;
   amount: number;
   userId: string;
+  packageId?: any,
 }
 
 const stripePromise = loadStripe(`${process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY}`);
@@ -16,7 +17,7 @@ const appearance: Appearance = {
   theme: 'night',
 };
 
-const StripeCheckoutWithSummary: React.FC<StripeCheckoutWithSummaryProps> = ({ packageName, amount, userId }) => {
+const StripeCheckoutWithSummary: React.FC<StripeCheckoutWithSummaryProps> = ({ packageName, amount, userId, packageId }) => {
   const [clientSecret, setClientSecret] = useState('');
   const [error, setError] = useState('');
 
@@ -43,7 +44,8 @@ const StripeCheckoutWithSummary: React.FC<StripeCheckoutWithSummaryProps> = ({ p
     };
 
     fetchClientSecret();
-  }, [userId]);
+  }, []);
+
 
   return (
     <>
@@ -54,13 +56,13 @@ const StripeCheckoutWithSummary: React.FC<StripeCheckoutWithSummaryProps> = ({ p
             <p className='text-lg !m-0'><b>Amount:</b>&nbsp; € &nbsp;{amount}</p>
         </div>
         <div className="popup default !h-fit black" style={{ width: '100%' }}>
-            <div className="desc " style={{ paddingTop: '10px', paddingBottom: '10px' }}>
+            <div className="desc " style={{ paddingTop: '10px', paddingBottom: '10px', height: '90%' }}>
             {clientSecret && stripePromise ? (
                 <Elements
                 stripe={stripePromise}
                 options={{ clientSecret, appearance }}
                 >
-                <CheckoutForm />
+                <CheckoutFormy userid={userId} package_id={packageId || ''}/>
                 </Elements>
             ) : error ? (
                 <p>{error}</p>

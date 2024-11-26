@@ -66,6 +66,9 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
   const [selectedPackageName, setSelectedPackageName] = useState<string | null>(
     null
   );
+  const [selectedPackageId, setSelectedPackageId] = useState<string | null>(
+    null
+  );
   const [selectedPackagePrice, setSelectedPackagePrice] = useState<number | null>(
     null
   );
@@ -610,7 +613,9 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                 //     </div>
                 //   </form>
                 // </div>
-                <SubcriptionChangeJourney />
+                // @ts-ignore
+                <SubcriptionChangeJourney id={String(loggedUser?.package_id
+                )} />
               )}
 
               {activeProfileTab === 'subscribe' && !selectedPackage && (
@@ -965,6 +970,7 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
               packageName={selectedPackageName || ''}
               amount={selectedPackagePrice || 0}
               userId={authResp?.user?.uuid}
+              packageId={selectedPackage}
             />
           )}
           {showCloseButton && (
