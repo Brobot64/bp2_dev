@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './miniout.css'
-import { MdOutlineArrowRightAlt } from "react-icons/md";
+import { MdArrowRightAlt, MdOutlineArrowRightAlt } from "react-icons/md";
 import axios from 'axios';
 
 // const features = [
@@ -56,28 +56,23 @@ const comparePlanFeatures = (
     planId1: string,
     planId2: string
   ) => {
-
-    console.log("bright: ", planId1, planId2)
     // Find the two plans by their IDs
+    // plans.find(plan => plan.id === planId);
     const plan1 = plans.find(plan => plan.id === planId1);
     const plan2 = plans.find(plan => plan.id === planId2);
 
-    console.log("plans: ", plan1, " : ", plan2)
+    console.log(plan1, plan2)
   
     if (!plan1 || !plan2) {
-      throw new Error("One or both plans not found");
+      throw new Error(`Plan(s) not found: ${!plan1 ? planId1 : ''}${!plan1 && !plan2 ? ' and ' : ''}${!plan2 ? planId2 : ''}`);
     }
   
-    // Convert feature IDs to feature names
-    const plan1Features = plan1.features.map(id => {
-      const feature = features.find(f => f.id === id);
-      return feature ? feature.name : "Unknown Feature";
-    });
+    // Map feature IDs to names for quick lookup
+    const featureMap = new Map(features.map(f => [f.id, f.name]));
   
-    const plan2Features = plan2.features.map(id => {
-      const feature = features.find(f => f.id === id);
-      return feature ? feature.name : "Unknown Feature";
-    });
+    // Convert feature IDs to feature names
+    const plan1Features = plan1.features.map(id => featureMap.get(id) || "Unknown Feature");
+    const plan2Features = plan2.features.map(id => featureMap.get(id) || "Unknown Feature");
   
     // Features present in both plans
     const commonFeatures = plan1Features.filter(feature => plan2Features.includes(feature));
@@ -89,7 +84,8 @@ const comparePlanFeatures = (
       commonFeatures,
       extraFeaturesInPlan2,
     };
-};
+  };
+  
   
 //   // Example Usage
 //   const comparison = comparePlanFeatures(
@@ -121,7 +117,6 @@ const SubcriptionChangeJourney = ({id}: { id?: any }) => {
     useEffect(() => {
         const tripid = getPlanById(plans, id);
         const lumpy = filterPlansById(plans, id);
-        console.log("fret: ", tripid, lumpy)
         // @ts-ignore
         setActivePlan(tripid)
         // @ts-ignore
@@ -185,7 +180,7 @@ const SubcriptionChangeJourney = ({id}: { id?: any }) => {
     <React.Fragment>
        {step === 1 && <ChangeInit activePlan={activePlan} otherPlan={otherPlan} nextStep={nextStep} features={features} handleClick={naiveDev}/>}
 
-       {step === 2 && <PlanSummary activePlan={activePlan} otherPlan={otherPlan} nextStep={nextStep} features={features} id={id} nextPackage={nextPackage}/>}
+       {step === 2 && <PlanSummary activePlan={activePlan} otherPlan={otherPlan} nextStep={nextStep} features={features} id={id} nextPackage={nextPackage} plans={plans}/>}
 
         {step === 3 && <div className="planconfirm">
             <h2>confirm your subscription change</h2>
@@ -369,17 +364,21 @@ export const ChangeInit = ({ activePlan, otherPlan, nextStep, prevStep, features
     )
 }
 
-export const PlanSummary = ({ activePlan, otherPlan, nextStep, prevStep, features, id, nextPackage } : { activePlan: any, otherPlan: any, nextStep?: any, prevStep?: any, features?: any, id?: any, nextPackage?: any }) => {
+export const PlanSummary = ({ activePlan, otherPlan, nextStep, prevStep, features, id, nextPackage, plans } : { activePlan: any, otherPlan: any, nextStep?: any, prevStep?: any, features?: any, id?: any, nextPackage?: any, plans?: any }) => {
     const comparison = comparePlanFeatures(
         plans,
         features,
         String(id),
         String(nextPackage)
     );
+
+    
+    
     return (
         <div className="plansummary">
             <h2>new plan summary</h2>
-            <p>this is what you will have following you new plan</p>
+            <p>your old plan compared to your new plan</p>
+            {/* <p>this is what you will have following you new plan</p> */}
             <div className="plansum flex justify-between items-center">
                 <div className="main">
                     {/* @ts-ignore */}
@@ -395,12 +394,15 @@ export const PlanSummary = ({ activePlan, otherPlan, nextStep, prevStep, feature
                 </div>
 
 
-                <div className="arrowdis relative ">
+                <MdArrowRightAlt size={50}/>
+
+
+                {/* <div className="arrowdis relative ">
                     <span className='rounded-full w-[100px]'></span>
                     <span className="head top rounded-full"></span>
                     <span className="head bottom rounded-full"></span>
 
-                </div>
+                </div> */}
 
                 <div className='flex gap-5'>
                     <div className='available flex flex-col gap-2'>
