@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react'
 import './miniout.css'
 import { MdOutlineArrowRightAlt } from "react-icons/md";
+import axios from 'axios';
 
-const features = [
-    { id: "1", name: "Custom Domain" },
-    { id: "2", name: "Priority Support" },
-    { id: "3", name: "Advanced Analytics" },
-    { id: "4", name: "Unlimited Storage" },
-    { id: "5", name: "Multi-User Access" },
-];
+// const features = [
+//     { id: "1", name: "Custom Domain" },
+//     { id: "2", name: "Priority Support" },
+//     { id: "3", name: "Advanced Analytics" },
+//     { id: "4", name: "Unlimited Storage" },
+//     { id: "5", name: "Multi-User Access" },
+// ];
 
 
 const plans = [
@@ -55,9 +56,13 @@ const comparePlanFeatures = (
     planId1: string,
     planId2: string
   ) => {
+
+    console.log("bright: ", planId1, planId2)
     // Find the two plans by their IDs
     const plan1 = plans.find(plan => plan.id === planId1);
     const plan2 = plans.find(plan => plan.id === planId2);
+
+    console.log("plans: ", plan1, " : ", plan2)
   
     if (!plan1 || !plan2) {
       throw new Error("One or both plans not found");
@@ -101,7 +106,11 @@ const comparePlanFeatures = (
 const activeUserPlan = "102";
 
 
-const SubcriptionChangeJourney = ({id = activeUserPlan}) => {
+const SubcriptionChangeJourney = ({id}: { id?: any }) => {
+    console.log("if id: ", id)
+    const [features, setDemFeatures] = useState<any[]>([]);
+    const [plans, setPackages] = useState<any[]>([]);
+
     const [step, setStep] = useState<number>(1);
     const [activePlan, setActivePlan] = useState(null);
     const [otherPlan, setOtherPlan] = useState(null);
@@ -112,27 +121,71 @@ const SubcriptionChangeJourney = ({id = activeUserPlan}) => {
     useEffect(() => {
         const tripid = getPlanById(plans, id);
         const lumpy = filterPlansById(plans, id);
+        console.log("fret: ", tripid, lumpy)
         // @ts-ignore
         setActivePlan(tripid)
         // @ts-ignore
         setOtherPlan(lumpy)
-    }, []);
+    }, [plans, features]);
 
-    const comparison = comparePlanFeatures(
-        plans,
-        features,
-        id,
-        "103"
-    );
+    // const comparison = comparePlanFeatures(
+    //     plans,
+    //     features,
+    //     String(id),
+    //     "15"
+    // );
 
     const [termsAccepted, setTermsAccepted] = useState(false);
+
+    useEffect(() => {
+        const fetchPackages = async () => {
+          try {
+            // const [featuresResponse, packagesResponse] = await Promise.all([
+            //   axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/features`),
+            //   axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/packages`),
+            // ]);
+    
+            // setDemFeatures(featuresResponse.data.data || []); // Ensure it’s an array
+            // setPackages(packagesResponse.data || []);
+
+            const [featuresResponse, packagesResponse] = await Promise.all([
+                axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/features`),
+                axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/packages`),
+              ]);
+      
+              const featuresData = featuresResponse.data.data.map((feature: any) => ({
+                id: String(feature.id),
+                name: feature.name,
+              }));
+      
+              const plansData = packagesResponse.data.map((plan: any) => ({
+                id: String(plan.id),
+                name: plan.name,
+                price: plan.price,
+                features: plan.features.map((id: any) => String(id)),
+              }));
+      
+              setDemFeatures(featuresData);
+              setPackages(plansData);
+            // setDemFeatures(featuresResponse);
+            // setPackages(plansData);
+          } catch (error) {
+            console.error('Failed to fetch packages', error);
+          }
+        };
+    
+        fetchPackages();
+      }, []);
+
+      const [nextPackage, setNextPackage] = useState('');
+      const naiveDev = (id: string) => setNextPackage(id);
     
 
   return (
     <React.Fragment>
-       {step === 1 && <ChangeInit activePlan={activePlan} otherPlan={otherPlan} nextStep={nextStep}/>}
+       {step === 1 && <ChangeInit activePlan={activePlan} otherPlan={otherPlan} nextStep={nextStep} features={features} handleClick={naiveDev}/>}
 
-       {step === 2 && <PlanSummary activePlan={activePlan} otherPlan={otherPlan} nextStep={nextStep}/>}
+       {step === 2 && <PlanSummary activePlan={activePlan} otherPlan={otherPlan} nextStep={nextStep} features={features} id={id} nextPackage={nextPackage}/>}
 
         {step === 3 && <div className="planconfirm">
             <h2>confirm your subscription change</h2>
@@ -243,7 +296,12 @@ const SubcriptionChangeJourney = ({id = activeUserPlan}) => {
   )
 }
 
-export const ChangeInit = ({ activePlan, otherPlan, nextStep, prevStep } : { activePlan: any, otherPlan: any, nextStep?: any, prevStep?: any }) => {
+export const ChangeInit = ({ activePlan, otherPlan, nextStep, prevStep, features, handleClick } : { activePlan: any, otherPlan: any, nextStep?: any, prevStep?: any, features?: any, handleClick?: any  }) => {
+    
+    const mainClick = (id: string) => {
+        nextStep();
+        handleClick(id)
+    }
     return (
         <div style={{ color: 'white' }}>
             <h2>plans</h2>
@@ -259,8 +317,9 @@ export const ChangeInit = ({ activePlan, otherPlan, nextStep, prevStep } : { act
                         {/* @ts-ignore */}
                           {activePlan?.price}
                           {/* @ts-ignore */}
-                          <sub>&nbsp;€  per {activePlan?.recurrence}</sub>
+                          <sub>&nbsp;€  per </sub>
                         </span>
+                        {/* {activePlan?.recurrence} */}
 
                         <div className="featurings flex flex-col gap-2">
                             {/* @ts-ignore */}
@@ -288,7 +347,8 @@ export const ChangeInit = ({ activePlan, otherPlan, nextStep, prevStep } : { act
                                 {/* @ts-ignore */}
                                 {data?.price}
                                 {/* @ts-ignore */}
-                                <sub>&nbsp;€  per {data?.recurrence}</sub>
+                                <sub>&nbsp;€  per </sub>
+                                {/* {data?.recurrence} */}
                                 </span>
                                 <div className="featurings flex flex-col gap-2 mt-[20px]">
                                     {/* @ts-ignore */}
@@ -296,7 +356,7 @@ export const ChangeInit = ({ activePlan, otherPlan, nextStep, prevStep } : { act
                                         <span key={featuresId}>{getFeatureNameById(features, featuresId)}</span>
                                     ))}
                                 </div>
-                                <button onClick={nextStep} style={{ width: 'fit-content', margin: 'auto' }}>
+                                <button onClick={() => mainClick(String(data?.id))} style={{ width: 'fit-content', margin: 'auto' }}>
                                     {/* @ts-ignore */}
                                     {Number(activePlan?.price) > Number(data?.price) ? '[ downgrade ]' : '[ upgrade ]'}
                                 </button>
@@ -309,12 +369,12 @@ export const ChangeInit = ({ activePlan, otherPlan, nextStep, prevStep } : { act
     )
 }
 
-export const PlanSummary = ({ activePlan, otherPlan, nextStep, prevStep } : { activePlan: any, otherPlan: any, nextStep?: any, prevStep?: any }) => {
+export const PlanSummary = ({ activePlan, otherPlan, nextStep, prevStep, features, id, nextPackage } : { activePlan: any, otherPlan: any, nextStep?: any, prevStep?: any, features?: any, id?: any, nextPackage?: any }) => {
     const comparison = comparePlanFeatures(
         plans,
         features,
-        '102',
-        "103"
+        String(id),
+        String(nextPackage)
     );
     return (
         <div className="plansummary">
@@ -329,7 +389,8 @@ export const PlanSummary = ({ activePlan, otherPlan, nextStep, prevStep } : { ac
                     {/* @ts-ignore */}
                         {activePlan?.price}
                         {/* @ts-ignore */}
-                        <sub>&nbsp;€  per {activePlan?.recurrence}</sub>
+                        <sub>&nbsp;€  per </sub>
+                        {/* {activePlan?.recurrence} */}
                     </span>
                 </div>
 
