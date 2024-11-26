@@ -610,7 +610,7 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                 <>
                   <p>the right plan for you</p>
                   {/* <div className={style.packages}>  */}
-                  <div className="renewedPackages"> 
+                  <div className="renewedPackages scrolltab"> 
                     {packages.map((pkg) => (
                       <div
                         key={pkg.id}
@@ -754,7 +754,7 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                 <>
                   <p>the right plan for you</p>
                   {/* <div className={style.packages}>  */}
-                  <div className="renewedPackages"> 
+                  <div className="renewedPackages scrolltab"> 
                     {packages.map((pkg) => (
                       <div
                         key={pkg.id}

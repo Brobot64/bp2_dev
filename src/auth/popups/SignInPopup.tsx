@@ -615,14 +615,14 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                 // </div>
                 // @ts-ignore
                 <SubcriptionChangeJourney id={String(loggedUser?.package_id
-                )} />
+                )} loggedUser={loggedUser} />
               )}
 
               {activeProfileTab === 'subscribe' && !selectedPackage && (
                 <>
                   <p>the right plan for you</p>
                   {/* <div className={style.packages}>  */}
-                  <div className="renewedPackages"> 
+                  <div className="renewedPackages scrolltab"> 
                     {packages.map((pkg) => (
                       <div
                         key={pkg.id}
@@ -777,7 +777,7 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
               {activeTab === 'subscribe' && !selectedPackage && (
                 <>
                   <p>the right plan for you</p>
-                  <div className="renewedPackages"> 
+                  <div className="renewedPackages scrolltab"> 
                     {packages.map((pkg) => (
                       <div
                         key={pkg.id}
@@ -794,6 +794,7 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                               <li key={index}>{getFeatureNameById(featureId) || 'Unknown Feature'}</li>
                               
                             ))}
+                            
                             {/* <li>Lorem, ipsum dolor sit amet consectetur adipisicing elit. At eos sint reiciendis. Veritatis cum rerum sint. Quibusdam voluptates itaque ad. Eligendi, accusantium optio corrupti harum libero obcaecati ab tempora officiis.</li>
                             <li>Lorem, ipsum dolor sit amet consectetur adipisicing elit. At eos sint reiciendis. Veritatis cum rerum sint. Quibusdam voluptates itaque ad. Eligendi, accusantium optio corrupti harum libero obcaecati ab tempora officiis.</li> */}
                           </ul>
@@ -831,13 +832,13 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
 
               {activeTab === 'subscribe' && selectedPackage && (
                 <>
-                  <p>
+                  <p className='frendel'>
                     You have selected the {selectedPackageName} plan. <br /> Enter your
                     personal information to create your account.
                   </p>
                   <div className={style.searchInput}>
-                    <form onSubmit={handleSignUp} className={style.formz}>
-                      <div className={style.row}>
+                    <form onSubmit={handleSignUp} className={style.formz} id='mandem'>
+                      <div className={`${style.row} flint`}>
                         <div className={style.frmGrp}>
                           <input
                             type="text"
@@ -924,15 +925,15 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                           )}
                         </div>
                       </div>
-                      <div className='flex w-full items-center justify-center gap-2 mt-[20px] mb-[10px]'>
+                      <div className='trimmers flex w-full items-center justify-center gap-2 mt-[20px] mb-[10px]'>
                         <span 
-                          className='text-white cursor-pointer' 
+                          className='text-white cursor-pointer flint' 
                           onClick={() => setTermsAccepted(!termsAccepted)}
                           style={{ color: termsAccepted ? '#dd47f7' : 'white' }}
                         >
                           [{termsAccepted ? '✔' : '\u00A0\u00A0' }]
                         </span>
-                        <p className='text-[12px] m-0' style={{ margin: 0 }}>
+                        <p className='text-[12px] m-0 tale' style={{ margin: 0 }}>
                           i agree to the <a href="#">terms and conditions</a> and <a href="#">privacy policy.</a>
                         </p>
                       </div>
@@ -943,8 +944,8 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                       </div>
                     </form>
                   </div>
-                  <p>or sign in with</p>
-                  <ul className={style.socialLogin}>
+                  <p className='paintra'>or sign in with</p>
+                  <ul className={`${style.socialLogin} grendel`}>
                     <li>
                       <a href="#">[ google ]</a>
                     </li>

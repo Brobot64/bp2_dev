@@ -19,6 +19,10 @@ div.plansummary {
     text-align: center !important;
 }
 
+.formyz .FadeWrapper {
+    display: none !important;
+}
+
 .plansum svg {
     width: 100px;
 }
@@ -107,6 +111,9 @@ span.prices sub {
 }
 
 .featurings {
+    max-height: 200px;
+    overflow-y: auto;
+    scrollbar-width: 5px;
     text-align: center !important;
 }
 
