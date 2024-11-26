@@ -627,10 +627,6 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                             {pkg.features.map((featureId: any, index: number) => (
                               <li key={index}>{getFeatureNameById(featureId) || 'Unknown Feature'}</li>
                             ))}
-                            <li>Lorem ipsum dolor sit, amet cont.</li>
-                            <li>Lorem ipsum dolor sit amet.</li>
-                            <li>Lorem ipsum dolor sit amet.</li>
-                            <li>Lorem ipsum dolor sit amet.</li>
                           </ul>
                             
                         </span>
@@ -775,10 +771,6 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
                             {pkg.features.map((featureId: any, index: number) => (
                               <li key={index}>{getFeatureNameById(featureId) || 'Unknown Feature'}</li>
                             ))}
-                            <li>Lorem ipsum dolor sit, amet cont.</li>
-                            <li>Lorem ipsum dolor sit amet.</li>
-                            <li>Lorem ipsum dolor sit amet.</li>
-                            <li>Lorem ipsum dolor sit amet.</li>
                           </ul>
                         </span>
                       </div>

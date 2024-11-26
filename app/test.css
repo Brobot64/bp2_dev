@@ -1027,10 +1027,44 @@ a:hover {
     min-width: 95% !important;
     width: 95% !important;
   }
+
+  .trimmers {
+    margin: 10px 0;
+  }
+
+  .trimmers .flint {
+    width: fit-content !important;
+    min-width: fit-content !important;
+    max-width: fit-content !important;
+    font-size: 12.5px !important;
+  }
+
+  .trimmers .tale {
+    font-size: 12px !important;
+    margin-top: 5px;
+  }
+
+  .paintra {
+    margin-bottom: 10px !important;
+  }
+
+  .grendel li a {
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  .frendel {
+    font-size: 14px !important;
+    margin-bottom: 15px !important;
+  }
 }
 
 .swiper-container.journal .navigationArrow.left {
   left: 0px !important;
+}
+
+.formyz .FadeWrapper {
+  display: none !important;
 }
 
 .swiper-container.journal .navigationArrow.right {

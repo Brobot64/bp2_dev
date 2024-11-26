@@ -56,7 +56,7 @@ const StripeCheckoutWithSummary: React.FC<StripeCheckoutWithSummaryProps> = ({ p
             <p className='text-lg !m-0'><b>Amount:</b>&nbsp; € &nbsp;{amount}</p>
         </div>
         <div className="popup default !h-fit black" style={{ width: '100%' }}>
-            <div className="desc " style={{ paddingTop: '10px', paddingBottom: '10px', height: '90%' }}>
+            <div className="desc " style={{ paddingTop: '10px', paddingBottom: '10px', height: '100%' }}>
             {clientSecret && stripePromise ? (
                 <Elements
                 stripe={stripePromise}

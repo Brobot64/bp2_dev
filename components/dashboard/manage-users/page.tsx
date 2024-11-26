@@ -84,13 +84,43 @@ const ManageUsers: React.FC = () => {
     setFilteredUsers(filtered);
   }, [searchQuery, users]);
 
+  // const handleDelete = async () => {
+  //   if (window.confirm('Are you sure you want to delete the selected users?')) {
+  //     setLoading(true);
+  //     const token = localStorage.getItem('token');
+  //     try {
+  //       await Promise.all(
+  //         selectedUsers.map(async (userId) => {
+  //           await axios.delete(
+  //             `${process.env.NEXT_PUBLIC_API_BASE_URL}/dashboard/users/${userId}`,
+  //             {
+  //               headers: {
+  //                 Authorization: `${token}`,
+  //               },
+  //             }
+  //           );
+  //         })
+  //       );
+  //       setUsers(users.filter((user) => !selectedUsers.includes(user.id)));
+  //       setSelectedUsers([]);
+  //     } catch (error: any) {
+  //       setError('Failed to delete users.');
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
+  // };
+
   const handleDelete = async () => {
     if (window.confirm('Are you sure you want to delete the selected users?')) {
       setLoading(true);
       const token = localStorage.getItem('token');
+      const deletedUsers: typeof selectedUsers = []; // Array to store users before deletion
+  
       try {
-        await Promise.all(
-          selectedUsers.map(async (userId) => {
+        // Loop through selected users, delete each, and add to deletedUsers
+        for (const userId of selectedUsers) {
+          try {
             await axios.delete(
               `${process.env.NEXT_PUBLIC_API_BASE_URL}/dashboard/users/${userId}`,
               {
@@ -99,17 +129,23 @@ const ManageUsers: React.FC = () => {
                 },
               }
             );
-          })
-        );
-        setUsers(users.filter((user) => !selectedUsers.includes(user.id)));
+            deletedUsers.push(userId); // Add successfully deleted user to list
+          } catch (error) {
+            console.error(`Failed to delete user with ID ${userId}`, error);
+          }
+        }
+  
+        // Update state to remove deleted users
+        setUsers(users.filter((user) => !deletedUsers.includes(user.id)));
         setSelectedUsers([]);
       } catch (error: any) {
-        setError('Failed to delete users.');
+        setError('Failed to delete one or more users.');
       } finally {
         setLoading(false);
       }
     }
   };
+  
 
   const handleExport = () => {
     // setSelUsers(users.filter((user) => !selectedUsers.includes(user.id)));
@@ -132,7 +168,9 @@ const ManageUsers: React.FC = () => {
   const singDelete = (userId: number) => {
     console.log(userId);
     setSelectedUsers([...selectedUsers, userId])
-    handleDelete()
+    setTimeout(() => {
+      handleDelete()
+    }, 3000);
   }
 
   useEffect(() => {

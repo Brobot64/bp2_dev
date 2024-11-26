@@ -529,8 +529,12 @@
   .frmGrp {
     margin: 0;
     padding: 0 !important;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
   }
+
+  /* .frmGrp input {
+    padding: 4px !important;
+  } */
 
   .popup.black .searchInput input{
     min-width: 100%;
@@ -549,6 +553,10 @@
 
   .popup.black .packages .package {
     min-width: 200px;
+  }
+
+  .navTabs h2 {
+    font-size: 16px !important;
   }
   
 }

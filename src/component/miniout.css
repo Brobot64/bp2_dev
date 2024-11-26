@@ -19,6 +19,10 @@ div.plansummary {
     text-align: center !important;
 }
 
+.formyz .FadeWrapper {
+    display: none !important;
+}
+
 .plansum svg {
     width: 100px;
 }
