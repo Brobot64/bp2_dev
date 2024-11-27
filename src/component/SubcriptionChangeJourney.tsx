@@ -329,13 +329,13 @@ export const ChangeInit = ({ activePlan, otherPlan, nextStep, prevStep, features
         handleClick(id)
     }
     return (
-        <div style={{ color: 'white' }}>
+        <div className='bnxvn' style={{ color: 'white' }}>
             <h2>plans</h2>
             <p>upgrade or downgrade?</p>
 
             <div className="plannings">
                 <div className="myplan flex flex-col justify-center items-center text-center">
-                    {activePlan && (
+                    {activePlan ? (
                         <>
                         {/* @ts-ignore */}
                         <h4>{activePlan?.name}</h4>
@@ -353,6 +353,12 @@ export const ChangeInit = ({ activePlan, otherPlan, nextStep, prevStep, features
                                 <span key={featuresId}>{getFeatureNameById(features, featuresId)}</span>
                             ))}
                         </div>
+                        </>
+                    ) : (
+                        <>
+                            <div className='text-center'>
+                                No Active Plan
+                            </div>
                         </>
                     )}
                     <button disabled className='cursor-pointer'>
