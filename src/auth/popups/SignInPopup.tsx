@@ -986,7 +986,7 @@ const SignInPopup: React.FC<SignInPopupProps> = ({
           style={{ display: onEditProfile ? 'block' : 'none' }}
           className={style.footer}
         >
-          --{userRole ? 'yes' : 'no'}
+          {/* --{userRole ? 'yes' : 'no'} */}
           {onEditProfile ? (
             <>
               <div className={style.navTabs}>
