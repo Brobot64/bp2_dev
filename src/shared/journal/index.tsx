@@ -893,7 +893,7 @@ const goToSpecificSlide = (slideIndex: number) => {
         </button> */}
 
         <button onClick={() => handleButtonClick(1, () => swiperRef.current?.slideTo(0))} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === 1 ? 'active' : ''}`}>
-          {activeButton === 1 ? `[ foreward ]` : 'foreward'}
+          {activeButton === 1 ? `[ foreword ]` : 'foreword'}
         </button>
 
         <button onClick={() => handleButtonClick(tuneNum, () => swiperRef.current?.slideTo(tuneNum - 1))} className={`jornbtn text-white py-1 px-2 rounded ${activeButton === tuneNum ? 'active' : ''}`}>

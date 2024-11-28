@@ -108,13 +108,24 @@ span.prices sub {
 
 .myplan {
     border-color: #DD47F7 !important;
+    margin-right: 30px;
 }
 
 .featurings {
     max-height: 200px;
     overflow-y: auto;
     scrollbar-width: 5px;
-    text-align: center !important;
+    text-align: left !important;
+}
+
+.featurings ul {
+    list-style: disc !important;
+}
+
+.otherplans {
+    display: flex;
+    max-width: 550px !important;
+    overflow-x: auto;
 }
 
 .plannings button, .otherplans button {
@@ -140,6 +151,7 @@ button:disabled:hover {
     justify-content: center;
     align-items: center;
     text-align: center;
+    max-height: 350px;
     /* align-items: center; */
 }
 
@@ -168,4 +180,129 @@ button:disabled:hover {
     bottom: calc(20px - 12px);
     /* transform: translateY(50%); */
 }
+
+
+@media (max-width: 1024px) {
+    .actplan {
+        max-height: 350px !important;
+    }
+    h2, p {
+        margin-bottom: 15px !important;
+    }
+}
+
+
+
+@media (max-width: 768px) {
+   .bnxvn h2, .bnxvn p {
+    margin-bottom: 15px;
+   } 
+
+   .plannings {
+    flex-direction: column !important;
+    gap: 20px;
+   }
+
+   .plannings .featurings {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-top: 0 !important;
+   }
+
+   .plannings h4 {
+    font-size: 22px;
+    margin-bottom: 10px;
+   }
+
+   span.prices {
+    font-size: 32px;
+    margin: 10px 0 !important;
+    line-height: 40px;
+   }
+
+   .actplan {
+    padding: 10px !important;
+   }
+
+   .plannings button {
+    margin-bottom: 0 !important;
+   }
+
+   .otherplans .featurings span {
+    font-size: 14px !important;
+   }
+
+   .greetaesr {
+    width: 100%;
+    margin-bottom: 10px;
+   }
+
+   .myplan {
+    margin: 0;
+    padding: 0;
+   }
+
+   .myplan .featurings {
+    display: none !important;
+   }
+
+   .actplan {
+    max-height: 200px;
+    width: 95% !important;
+    min-width: 75% !important;
+    max-width: 500px !important;
+    max-height: 270px !important;
+   }
+
+   .actplan .featurings {
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 20px;
+   }
+
+   .actplan .featurings span {
+    min-width: 170px;
+   }
+
+   .tytmt {
+    font-size: 20px !important;
+    line-height: 22px !important;
+   }
+
+
+
+}
+
+
+.featurings::-webkit-scrollbar {
+    height: 0px;
+    width: 0px;
+  }
+  
+  .plannings:hover .featurings::-webkit-scrollbar, .otherplans::-webkit-scrollbar {
+    height: 3px;
+    width: 3px;
+  }
+  
+  .featurings::-webkit-scrollbar-track, .otherplans::-webkit-scrollbar-track {
+    border-radius: 2px;
+    background-color: #f0eeeb00;
+  }
+  
+  *::-webkit-scrollbar-track:hover {
+    background-color: #b8c0c20d;
+  }
+  
+  *::-webkit-scrollbar-track:active {
+    background-color: #b8c0c21c;
+  }
+  
+  .featurings::-webkit-scrollbar-thumb, .otherplans::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: #B8B3BC;
+  }
+  
+  .featurings::-webkit-scrollbar-thumb:hover, .otherplans::-webkit-scrollbar-thumb:hover {
+    background-color: #A19CA4;
+  }
 

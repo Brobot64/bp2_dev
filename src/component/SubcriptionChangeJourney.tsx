@@ -329,13 +329,13 @@ export const ChangeInit = ({ activePlan, otherPlan, nextStep, prevStep, features
         handleClick(id)
     }
     return (
-        <div style={{ color: 'white' }}>
+        <div className='bnxvn' style={{ color: 'white' }}>
             <h2>plans</h2>
-            <p>upgrade or downgrade?</p>
+            <p className='tytmt'>upgrade or downgrade?</p>
 
             <div className="plannings">
                 <div className="myplan flex flex-col justify-center items-center text-center">
-                    {activePlan && (
+                    {activePlan ? (
                         <>
                         {/* @ts-ignore */}
                         <h4>{activePlan?.name}</h4>
@@ -354,13 +354,19 @@ export const ChangeInit = ({ activePlan, otherPlan, nextStep, prevStep, features
                             ))}
                         </div>
                         </>
+                    ) : (
+                        <>
+                            <div className='text-center'>
+                                No Active Plan
+                            </div>
+                        </>
                     )}
                     <button disabled className='cursor-pointer'>
                         [ actual plan ]
                     </button>
                 </div>
 
-                <div className="otherplans flex gap-[30px] items-center">
+                <div className="otherplans greetaesr flex gap-[30px] items-center">
                     {
                         // @ts-ignore
                         otherPlan && otherPlan.map((data: any, index: number) => (
@@ -378,9 +384,16 @@ export const ChangeInit = ({ activePlan, otherPlan, nextStep, prevStep, features
                                 </span>
                                 <div className="featurings flex flex-col gap-2 mt-[20px]">
                                     {/* @ts-ignore */}
-                                    {data.features.map((featuresId: string) => (
-                                        <span key={featuresId}>{getFeatureNameById(features, featuresId)}</span>
+                                    {data.features.map((featuresId: string, index: number) => (
+                                        <span key={featuresId}>- {getFeatureNameById(features, featuresId)}</span>
                                     ))}
+                                    <span>Lorem ipsum dolor sit amet.</span>
+                                    <span>Lorem ipsum dolor sit amet.</span>
+                                    <span>Lorem ipsum dolor sit amet.</span>
+                                    <span>Lorem ipsum dolor sit amet.</span>
+                                    <span>Lorem ipsum dolor sit amet.</span>
+                                    <span>Lorem ipsum dolor sit amet.</span>
+                                    <span>Lorem ipsum dolor sit amet.</span>
                                 </div>
                                 <button onClick={() => mainClick(String(data?.id))} style={{ width: 'fit-content', margin: 'auto' }}>
                                     {/* @ts-ignore */}
